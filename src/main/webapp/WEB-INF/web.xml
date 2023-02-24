@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app version="3.0" xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd">
+    <welcome-file-list>
+        <welcome-file>pd-menu</welcome-file>
+    </welcome-file-list>
+    <context-param>
+        <param-name>appName</param-name>
+        <param-value>Presenter</param-value>
+    </context-param>
+    <context-param>
+        <param-name>appShortName</param-name>
+        <param-value>Presenter</param-value>
+    </context-param>
+    <context-param>
+        <description>Resource revision number used to bust caches</description>
+        <param-name>resourceVersionNumber</param-name>
+        <param-value>@RESOURCE_VERSION@</param-value>
+    </context-param>
+    <context-param>
+        <param-name>releaseNumber</param-name>
+        <param-value>@VERSION@</param-value>
+    </context-param>
+    <context-param>
+        <param-name>releaseDate</param-name>
+        <param-value>@RELEASE_DATE@</param-value>
+    </context-param>
+    <context-param>
+        <param-name>contentContact</param-name>
+        <param-value>Tom Oren (tomoren)</param-value>
+    </context-param>
+    <context-param>
+        <param-name>technicalContact</param-name>
+        <param-value>Ryan Slominski (ryans)</param-value>
+    </context-param>
+    <context-param>
+        <param-name>documentationUrl</param-name>
+        <param-value>http://opsntsrv.acc.jlab.org/ops_docs/online_document_files/MCC_online_files/shiftlog_examples.pdf</param-value>
+    </context-param>
+    <filter>
+        <filter-name>UrlRewriteFilter</filter-name>
+        <filter-class>org.tuckey.web.filters.urlrewrite.UrlRewriteFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>UrlRewriteFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+        <dispatcher>REQUEST</dispatcher>
+        <dispatcher>FORWARD</dispatcher>
+    </filter-mapping>
+    <error-page>
+        <error-code>500</error-code>
+        <location>/error</location>
+    </error-page>
+    <error-page>
+        <exception-type>java.lang.Throwable</exception-type>
+        <location>/error</location>
+    </error-page>
+    <session-config>
+        <session-timeout>30</session-timeout>
+        <cookie-config>
+            <http-only>true</http-only>
+            <secure>true</secure>
+        </cookie-config>
+        <tracking-mode>COOKIE</tracking-mode>
+    </session-config>
+    <security-constraint>
+        <display-name>Enforce Authenticated on SSO Redirect Page</display-name>
+        <web-resource-collection>
+            <web-resource-name>SSO Page</web-resource-name>
+            <url-pattern>/sso</url-pattern>
+            <url-pattern>/relogin</url-pattern>
+        </web-resource-collection>
+        <auth-constraint>
+            <role-name>ipausers</role-name>
+        </auth-constraint>
+        <user-data-constraint>
+            <transport-guarantee>CONFIDENTIAL</transport-guarantee>
+        </user-data-constraint>
+    </security-constraint>
+    <login-config>
+        <auth-method>KEYCLOAK</auth-method>
+        <realm-name>jlab</realm-name>
+    </login-config>
+    <security-role>
+        <role-name>pd</role-name>
+    </security-role>
+    <security-role>
+        <role-name>cc</role-name>
+    </security-role>
+    <security-role>
+        <role-name>oability</role-name>
+    </security-role>
+    <security-role>
+        <role-name>ipausers</role-name>
+    </security-role>
+    <distributable/>
+</web-app>

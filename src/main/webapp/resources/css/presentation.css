@@ -1,0 +1,710 @@
+/* Core Layout */
+body, 
+html {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+body.fullscreen {
+    background-color: black;
+}
+.fullscreen #slide-list,
+.fullscreen #new-slide-button,
+.fullscreen #main-menu-button,
+.fullscreen #import-shift-logs-button,
+.fullscreen #import-summary-button,
+.fullscreen #send-to-elog-button {
+    display: none;
+}
+.fullscreen #viewport {
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 35px;
+}
+.fullscreen .slide {
+    border: none;
+    border-radius: 0;
+    box-shadow: none;
+}
+/*BEGIN IMPROVE FULLSCREEN IFRAME APPEARANCE*/
+.fullscreen.iframe-selected #viewport .slide {
+    -moz-transform: none !important;
+    -ms-transform: none !important;
+    -webkit-transform: none !important;
+    -o-transform: none !important;     
+    transform: none !important;
+    width: 100%;
+    height: 100%;
+}
+.fullscreen.iframe-selected #viewport .slide iframe {
+    width: 100%;
+    height: 100%;
+    -moz-transform: none !important;
+    -ms-transform: none !important;
+    -webkit-transform: none !important;
+    -o-transform: none !important;    
+    transform: none;
+}
+/*END IMPROVE FULLSCREEN IFRAME APPEARANCE*/
+#nav {
+    position: fixed;
+    left: 500px;
+    bottom: 0;                
+    right: 0;
+    height: 35px; 
+    padding: 0;
+    margin: 0;
+    z-index: 4;
+    text-align: center;
+    min-width: 625px;
+    background-color: white;
+}
+.fullscreen #nav {
+    left: 0;
+    background-color: black;
+}
+#iframe-message {
+    color: red;
+    text-decoration: blink;
+    border: 1px dotted red;
+    cursor: pointer;
+    padding: 1px;
+    display: none;
+    position: absolute;
+    bottom: 1px;
+    right: 1px;
+    background-color: white;
+}
+.iframe-focused #iframe-message {
+    display: inline;
+}
+/* Slide / Template Lists */
+.slide-cover {
+    position: absolute;
+    top: 25px;
+    left: 25px;
+    z-index: 2;
+    width: 400px;
+    height: 300px;
+    /*w.r.t. intercepting clicks, IE will ignore empty div w/transparent background, but will honor div w/transparent image!'*/
+    background: transparent 0 0 repeat scroll url("data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7");    
+}
+#slide-list .slide-cover {
+    left: 50px;
+}
+#slide-list-wrapper {
+    -moz-box-sizing: border-box;
+    box-sizing: border-box; 
+    height: 100%;
+    padding: 0 0 50px 0;
+    width: 502px;
+}
+#slide-list-buttons {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    height: 35px;
+    width: 500px;
+    text-align: center;
+}
+#need-to-login-message {
+    margin: 0 0.25em;
+}
+#slide-list {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    border: 1px solid black;
+    overflow: scroll;
+    overflow-x: auto;
+    width: 500px;
+    height: 100%;
+}
+#slide-list ul,
+#template-list ul {
+    list-style-type: disc;
+}
+#slide-list ul ul,
+#template-list ul ul {
+    list-style-type: circle;
+}      
+#slide-list ul ul ul,
+#template-list ul ul ul {
+    list-style-type: square;
+}            
+#slide-list > li,
+#template-list > li {
+    position: relative;    
+    border-radius: 8px;
+    width: 400px;
+    height: 300px;
+}
+#template-list > li {
+    padding: 25px;
+    margin: 0;
+}
+#slide-list > li {
+    padding: 25px 25px 25px 50px;
+    margin: 4px;
+}
+#slide-list .slide-label {
+    display: none;
+}
+.slide-number {
+    position: absolute;
+    top: 22px;
+    left: 3px;
+    width: 44px;
+    text-align: center;
+    z-index: 1;
+    line-height: 1em;
+    font-size: 36px;
+}
+.selected-list-item {
+    background-color: yellow;
+}
+.ui-sortable-helper {
+    background-color: transparent !important;
+}
+.ui-sortable-helper .delete,
+.ui-sortable-helper .slide-number,
+.ui-sortable-helper .order-indicator,
+.ui-sortable-helper .sync-indicator {
+    display: none !important;
+}
+.delete {
+    position: absolute !important;
+    top: 8px;
+    right: 8px;
+    height: 16px;
+    width: 16px;
+    z-index: 4;
+    font-size: 16px !important;
+    line-height: 16px !important;
+}
+.order-indicator {
+    position: absolute;
+    bottom: 28px;
+    left: 13px;
+    filter:alpha(opacity=30);
+    opacity: 0.3;
+}
+.sync-indicator {
+    position: absolute;
+    top: 60px;
+    left: 10px;
+    filter:alpha(opacity=30);
+    opacity: 0.3;    
+}
+.fullscreen .title,
+#slide-list .title {
+    background-color: navy;
+}
+.fullscreen .lerf-slide .title,
+#slide-list .lerf-slide .title {
+    background-color: rgb(25, 107, 172);
+}
+.fullscreen .uitf-slide .title,
+#slide-list .uitf-slide .title {
+    background-color: rgb(0, 170, 79);
+}
+.fullscreen .laso-slide .title,
+#slide-list .laso-slide .title {
+    background-color: maroon;
+}
+#slide-list ul.kv-list,
+#template-list ul.kv-list {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;    
+}
+#notification-bar {
+    position: fixed;
+    background-color: orange;
+    color: white;
+    width: 100%;
+    text-align: center;
+    font-size: 24px;
+    box-shadow: 0 8px 8px #979797;
+    z-index: 1000;    
+    font-family: "Verdana",sans-serif;
+}
+.special-notification #slide-toolbar {
+    margin-top: 35px;
+}
+.special-notification #viewport {
+    top: 75px;
+}
+.special-notification .fullscreen #viewport {
+    top: 25px;
+}
+.special-notification #slide-list-wrapper {
+    padding-top: 25px;
+}
+/*Our old webkit-to-pdf printer chokes on these rules so we just only apply them on-screen*/
+@media screen {
+    /* Editable with empty li should have bullet of correct color */
+    .input-wrapper:not(.filled) li {
+        color: #999999;
+    }
+    /* Hide empty li (single bullet) on slide list and fullscreen/read-only */
+    .fullscreen .input-wrapper:not(.filled) li,
+    #slide-list .input-wrapper:not(.filled) li,
+    .read-only .input-wrapper:not(.filled) li,
+    .synced-slide .input-wrapper:not(.filled) li
+    {
+        display: none;
+    }
+}
+.fullscreen .placeholder,
+.read-only .placeholder,
+.synced-slide .placeholder,
+#slide-list .placeholder,
+#slide-list .template-button,
+.fullscreen .template-button {
+    display: none;
+}    
+#nav button {
+    margin: 1px 1.5px 0 1.5px;
+}
+.styled-button {
+    display: inline-block;
+    cursor: pointer;
+    background-color: red;
+    font-size: 1em;
+    line-height: 1em;
+    text-decoration: none;
+    padding: 0.25em;
+    border: 1px solid red;
+    border-radius: 0.5em;
+    box-shadow: 0.2em 0.2em 0.4em #888888;
+    color: white;
+    font-family: arial;
+    text-align: center; 
+    text-shadow: 0 1px 1px rgba(0,0,0,.3);
+    font-weight: bold;
+    vertical-align: middle;
+
+    background-color: red; /* fallback color if gradients are not supported */
+    background-image: -webkit-linear-gradient(top, hsl(0, 80%, 70%), red);
+    background-image:    -moz-linear-gradient(top, hsl(0, 80%, 70%), red); /* For Fx 3.6 to Fx 15 */
+    background-image:     -ms-linear-gradient(top, hsl(0, 80%, 70%), red); /* For IE 10 Platform Previews and Consumer Preview */
+    background-image:      -o-linear-gradient(top, hsl(0, 80%, 70%), red); /* For Opera 11.1 to 12.0 */
+    background-image:         linear-gradient(to bottom, hsl(0, 80%, 70%), red); /* Standard syntax; must be the last statement */      
+}
+.styled-button:hover {
+    background-image: -webkit-linear-gradient(top, hsl(0, 70%, 80%), red);
+    background-image:    -moz-linear-gradient(top, hsl(0, 70%, 80%), red); /* For Fx 3.6 to Fx 15 */
+    background-image:     -ms-linear-gradient(top, hsl(0, 70%, 80%), red); /* For IE 10 Platform Previews and Consumer Preview */
+    background-image:      -o-linear-gradient(top, hsl(0, 70%, 80%), red); /* For Opera 11.1 to 12.0 */
+    background-image:         linear-gradient(to bottom, hsl(0, 70%, 80%), red); /* Standard syntax; must be the last statement */ 
+}
+.styled-button:active {
+    background-image: -webkit-linear-gradient(bottom, hsl(0, 80%, 70%), red);
+    background-image:    -moz-linear-gradient(bottom, hsl(0, 80%, 70%), red); /* For Fx 3.6 to Fx 15 */
+    background-image:     -ms-linear-gradient(bottom, hsl(0, 80%, 70%), red); /* For IE 10 Platform Previews and Consumer Preview */
+    background-image:      -o-linear-gradient(bottom, hsl(0, 80%, 70%), red); /* For Opera 11.1 to 12.0 */
+    background-image:         linear-gradient(to top, hsl(0, 80%, 70%), red); /* Standard syntax; must be the last statement */  
+}
+.styled-button[disabled] {
+    opacity: 0.5;
+}
+.styled-button[disabled]:hover {
+    background-image: -webkit-linear-gradient(top, hsl(0, 80%, 70%), red);
+    background-image:    -moz-linear-gradient(top, hsl(0, 80%, 70%), red); /* For Fx 3.6 to Fx 15 */
+    background-image:     -ms-linear-gradient(top, hsl(0, 80%, 70%), red); /* For IE 10 Platform Previews and Consumer Preview */
+    background-image:      -o-linear-gradient(top, hsl(0, 80%, 70%), red); /* For Opera 11.1 to 12.0 */
+    background-image:         linear-gradient(to bottom, hsl(0, 80%, 70%), red); /* Standard syntax; must be the last statement */        
+}
+.styled-button[disabled]:active {
+    background-image: -webkit-linear-gradient(top, hsl(0, 80%, 70%), red);
+    background-image:    -moz-linear-gradient(top, hsl(0, 80%, 70%), red); /* For Fx 3.6 to Fx 15 */
+    background-image:     -ms-linear-gradient(top, hsl(0, 80%, 70%), red); /* For IE 10 Platform Previews and Consumer Preview */
+    background-image:      -o-linear-gradient(top, hsl(0, 80%, 70%), red); /* For Opera 11.1 to 12.0 */
+    background-image:         linear-gradient(to bottom, hsl(0, 80%, 70%), red); /* Standard syntax; must be the last statement */        
+}
+#login-form a.styled-button {
+    padding: 5px 8px;
+}
+#viewport,
+#slide-list,
+#template-list {
+    font-size: 10px;
+    line-height: 10px;
+}
+
+#viewport {
+    position: absolute;
+    top: 50px;
+    left: 550px;
+    bottom: 75px;
+    right: 50px;
+}
+/* Aloha Editor */
+body .aloha-editable-active, 
+body .aloha-editable-active[contenteditable=true]:focus {
+    outline: 1px solid blue !important;
+}
+/*Cause wrap to occur early while editing ul to allow fudge on pixel-perfect space as tab stops*/
+body .slide .content-container .aloha-editable-active ul {
+    margin: 0.25em 1em 0.25em 0.75em;
+}
+body .aloha-editable,
+body .aloha-editable-highlight {
+    outline: 1px dashed lightgray !important;
+}
+body .aloha-editable {
+    min-height: 1em;
+}
+ul.ui-tabs-nav li:nth-child(2) {
+    display: none !important;
+}
+.aloha-multisplit-toggle {
+    display: none !important;
+}
+.aloha-multisplit {
+    width: 245px !important;
+}
+/* Slide Toolbar */
+#slide-toolbar {
+    position: absolute;
+    top: 0;
+    left: 500px;
+    margin-top: 10px;
+    padding-left: 10px;
+    right: 0;
+    min-width: 625px;
+    z-index: 1001;
+}
+#fileInput {
+    /*display: none; is better, but then input won't respond to programmatic "click()" in Opera or Safari'*/
+    visibility: hidden;
+    height: 0;
+    width: 0; 
+    margin: 0;
+    padding: 0;
+}
+#auth {
+    display: inline-block;
+}
+#right-button-cluster {
+    position: absolute;
+    top: 0;
+    right: 10px;
+}
+#logout-form,
+#login-form,
+#username-container,
+.nav-form {
+    display: inline-block;
+}
+#image-chooser-button,
+#iframe-chooser-button,
+#iframe-opener-button,
+#update-shift-log-button,
+#update-week-log-button,
+#update-week-accesses-button,
+#add-row-button,
+#remove-row-button,
+.fullscreen #slide-toolbar,
+.synced-slide-selected #save-button,
+.fullscreen .change-warning-panel-wrap {
+    display: none;
+}
+.image-selected:not(.synced-slide-selected) #image-chooser-button,
+.iframe-selected:not(.synced-slide-selected) #iframe-chooser-button,
+.iframe-selected #iframe-opener-button,
+.accesses-log-selected:not(.synced-slide-selected) #update-week-accesses-button,
+.week-log-selected:not(.synced-slide-selected) #update-week-log-button,
+.shift-log-selected:not(.synced-slide-selected) #update-shift-log-button,
+.shift-log-selected:not(.synced-slide-selected) #add-row-button,
+.shift-log-selected:not(.synced-slide-selected) #remove-row-button {
+    display: inline;
+}
+/*New Slide Dialog*/
+.slide-label {
+    background-color: black;
+    font-size: 2em;
+    z-index: 3;
+    position: absolute; 
+    left: 65px;
+    right: 65px;
+    top: 275px;
+    bottom: 35px;
+    color: white;
+    line-height: 2em;
+    text-align: center;
+    border-radius: 8px;
+    filter:alpha(opacity=70);
+    opacity: 0.7;
+    cursor: pointer;
+}
+#new-slide-dialog > ul {
+    list-style-type: none;
+    overflow: auto;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: 0;
+    padding: 0;
+}
+#new-slide-dialog > ul > li {
+    float: left !important;
+}
+#new-slide-dialog .delete,
+#new-slide-dialog .slide-number,
+#new-slide-dialog .order-indicator {
+    display: none;
+}
+.ui-widget-overlay {
+    z-index: 999 !important; /*Oddly default in IE interferes with dialog*/
+}
+#template-list .slide-cover {
+    cursor: pointer;
+}
+#viewport .image-container,
+#template-list .image-container,
+#template-list .editable {
+    outline: 1px dashed lightgray;
+    min-height: 1em;
+}
+.fullscreen #viewport .image-container,
+#viewport .synced-slide .image-container,
+.read-only #viewport .image-container {
+    outline: none;
+}
+.dialog {
+    display: none;
+}
+.fullscreen .slide > iframe {
+    border-radius: 0;
+}
+.indicator16x16 {
+    display: none;
+}
+#out-of-bounds-message {
+    display: none;
+    color: red;
+    font-weight: bold;
+    text-transform: uppercase;
+    text-decoration: blink;
+    position: absolute;
+    left: 5px;
+    right: 5px;
+    top: -25px;
+}
+.out-of-bounds #out-of-bounds-message {
+    display: block;
+}
+.out-of-bounds #viewport .slide {
+    background-color: red;
+}
+.fullscreen.out-of-bounds #viewport .slide {
+    background-color: white;
+}
+.fullscreen.out-of-bounds #out-of-bounds-message {
+    display: none;
+}
+
+.button-panel {
+    bottom: 0;
+    right: 0;
+    left: 0;
+    position: absolute;
+    width: auto;
+    text-align: right;
+    padding: 1em;
+}
+
+#preceding-day-count {
+    width: 3em;
+}
+
+.ui-spinner-button {
+    cursor: pointer;
+}
+
+:not(.fullscreen).writable #viewport .slide:not(.synced-slide) .datepicker-target {
+    outline: 1px dashed lightgray;
+    cursor: default;
+}
+
+.ui-datepicker-inline {
+    margin: 0 auto;
+}
+
+.ui-widget-overlay {
+    opacity: 0.9 !important;
+}
+
+#import-shift-logs-dialog h3 {
+    font-size: 1em;
+}
+
+@media print {
+    html, 
+    body {
+        overflow: auto;
+        width: auto;
+        height: auto;
+    }
+    #viewport,
+    #nav,
+    #slide-toolbar,
+    #slide-list-buttons,
+    .delete,
+    .slide-number,
+    .slide-cover,
+    .order-indicator,
+    .sync-indicator {
+        display: none !important;
+    }
+    #slide-list-wrapper {
+        height: auto;
+        width: auto;
+        overflow: auto;
+    }
+    #slide-list {
+        width: auto;
+        height: auto;
+        border: none;
+        overflow: hidden !important;
+    }
+    #slide-list > li {
+        margin: 0;
+        padding: 0;
+        width: auto;
+        height: auto;
+    }
+    .slide {
+        -webkit-box-shadow: none !important;
+        box-shadow: none !important;
+        overflow: visible !important;
+        font-size: 200% !important;
+        width: 800px !important;
+        position: relative !important;
+        min-height: 600px !important;
+        height: auto !important;    
+    }
+    .slide iframe {
+        width: 1280px !important;
+        height: 960px !important;
+        -moz-transform: scale(0.625) !important;
+        -ms-transform: scale(0.625) !important;
+        -webkit-transform: scale(0.625) !important;
+        -o-transform: scale(0.625) !important;    
+        transform: scale(0.625) !important;
+        border-radius: 12px !important;
+    }
+    .selected-list-item {
+        background-color: white;
+    }
+    #slide-list > li {
+        border: 1px solid white;
+        page-break-after: always !important;
+    }
+    #slide-list > li:last-child {
+        page-break-after: auto !important;
+    }
+
+    .slide .title-container,
+    .slide .content-container,
+    .slide .content,
+    .slide .input-wrapper,
+    .slide .left-column-container,
+    .slide .left-column,
+    .slide .right-column-container,
+    .slide .right-column {
+        position: static !important;
+    }
+    .slide .flow-container {
+        background-color: white;
+        /*.flow-container:last-child contains floats that need to be cleared*/
+        overflow: hidden;
+    }
+    .slide .left-column-container,
+    .slide .right-column-container {
+        height: 500px;
+        float: left;
+        width: 49%;
+    }
+    .slide .right-column {
+        height: 500px;
+    }
+    .slide[data-type="IMAGE_SLIDE"] .img-div {
+        width: 800px !important;
+        height: 600px !important;
+    }
+    .slide[data-type="TITLE_IMAGE_SLIDE"] .img-div {
+        width: 700px !important;
+        height: 525px !important;
+        margin: 0 auto;
+    }
+        .slide[data-type="TITLE_BODY_IMAGE_SLIDE"] .img-div {
+        width: 300px !important;
+        height: 450px !important;
+        margin: 0 auto;
+    }
+    .slide > .image-container {
+        height: 600px !important;
+    } 
+    .slide > .image-container .input-image-wrapper {
+        position: absolute !important;
+    }
+    .slide[data-type="TITLE_IMAGE_SLIDE"] .content-container {
+        height: 600px !important;
+    }
+}
+#helpDialog dt {
+    font-weight: bold;
+}
+#import-shift-logs-dialog {
+    overflow: hidden; /*Fixes Chrome weirdness*/
+}
+.change-warning-panel {
+    position:fixed;
+    bottom: 0px;
+    right: 0px;
+    width: 375px;
+    height: 160px;
+    background-color: white;
+    border-top: 1px solid black;
+    border-left: 1px solid black;
+    border-right: 1px solid black;
+    border-radius: 8px 8px 0 0;
+}
+.close-change-warning { 
+    float: right;
+    margin: 5px !important;
+}
+.change-warning-title {
+    font-weight: bold;
+    text-align: left;
+    margin: 8px 8px 20px 8px;
+}
+#laser-pointer-overlay {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    z-index: 3;
+    width: 100%;
+    height: 100%;
+    cursor: none;
+}
+#laser-pointer-surface {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+}
+body:not(.fullscreen) #laser-pointer-button {
+    display: none;
+}

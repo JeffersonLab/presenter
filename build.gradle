@@ -1,0 +1,49 @@
+plugins {
+    id 'war'  
+}
+
+description = "Presentation app"
+group 'org.jlab'
+version = '3.19.0'
+
+ext {
+    releaseDate = 'Oct 11 2021'
+    resourceVersion = '64'
+}
+
+tasks.withType(JavaCompile) {
+    options.release = 11
+    options.encoding = 'UTF-8'
+    options.compilerArgs += ["-Xlint:deprecation", "-Xlint:unchecked"]
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'org.jsoup:jsoup:1.11.3'
+    providedCompile 'javax:javaee-api:7.0',
+        'org.tuckey:urlrewritefilter:4.0.4',
+        'org.apache.poi:poi:3.12',
+        'org.apache.poi:poi-ooxml:3.12',
+        'org.hibernate:hibernate-core:5.4.2.Final',            
+        'org.hibernate:hibernate-envers:3.6.10.Final',  
+        'org.apache.taglibs:taglibs-standard-impl:1.2.5',
+        'org.jlab:jlog:5.0.0'
+}
+
+war {
+    archiveFileName='presenter.war'
+    filesMatching('WEB-INF/web.xml') {
+        filter {
+            String line -> line.replaceAll("@VERSION@", project.version)
+        }
+        filter {
+            String line -> line.replaceAll("@RESOURCE_VERSION@", resourceVersion)
+        }
+        filter {
+            String line -> line.replaceAll("@RELEASE_DATE@", releaseDate)
+        }
+    }
+}

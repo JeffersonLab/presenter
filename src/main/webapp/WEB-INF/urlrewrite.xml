@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!DOCTYPE urlrewrite
+    PUBLIC "-//tuckey.org//DTD UrlRewrite 4.0//EN"
+    "http://www.tuckey.org/res/dtds/urlrewrite4.0.dtd">
+
+<urlrewrite>
+
+    <!-- -->
+    <!-- View Presentation Rules -->
+    <!-- -->
+
+    <!-- Rewrite presentationId URL query parameter -->
+    <rule>
+        <from>^/presentation/([-0-9]+)$</from>
+        <to>/presentation?presentationId=$1</to>
+    </rule>
+     <!-- Anchor links and redirects can be rewritten -->
+    <outbound-rule>
+        <from>/presentation\?presentationId=([-0-9]*)$</from>
+        <to>/presentation/$1</to>    
+    </outbound-rule>              
+    <outbound-rule>
+        <from>/presentation\?presentationId=([-0-9]*)#([-0-9]*)$</from>
+        <to>/presentation/$1#$2</to>    
+    </outbound-rule> 
+
+    <!-- Resource Versioning -->
+    
+    <!-- Rewrite resource link to strip off directory version -->
+    <rule>
+        <from>^/resources/v([0-9]+)/(.*)$</from>
+        <to>/resources/$2</to>
+    </rule>
+
+</urlrewrite>

@@ -1,0 +1,415 @@
+/* SLIDE TEMPLATE */
+.slide {
+    position: relative;
+    border-radius: 8px;
+    background-color: white; /*FF box-shadow bleads thru otherwise*/
+    border: 1px solid black;
+    -webkit-box-shadow: 10px 10px 5px #888888;
+    box-shadow: 10px 10px 5px #888888;           
+    margin: 0 auto;
+    padding: 0;
+    width: 400px;
+    height: 300px;
+    line-height: 1em;
+    font-size: 1em;
+    font-family: times;
+    overflow: hidden;
+}
+.slide .title-container {
+    position: absolute;
+    top: 0;
+    bottom: 88%;
+    left: 0;
+    right: 0;
+    margin: 1em;
+}
+.slide .content-container {
+    position: absolute;
+    top: 12%;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: 0 1em 1em 1em;
+}
+.slide .title {
+    text-align: center;
+    font-weight: bold;
+    font-size: 1.25em;
+    line-height: 1.25em;    
+    height: 1.25em;
+    font-family: arial;    
+    color: white;
+    text-transform: uppercase;
+    position: relative;    
+}
+.slide .content {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
+.slide .left-column-container {
+    position: absolute;
+    left: 0;
+    right: 50%;
+    top: 0;
+    bottom: 0;
+    margin-right: 0.25em;
+}
+.slide .right-column-container {
+    position: absolute;
+    left: 50%;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    margin-left: 0.25em;
+}
+.slide .right-column,
+.slide .left-column {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
+.slide .image-container {
+    text-align: center; 
+    overflow: hidden;
+}
+.slide .img-div {
+    width: 100%;
+    height: 100%;
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: contain;
+}
+.slide img {
+    width: auto;
+    height: auto;
+    max-width: 100%;  
+    max-height: 100%;
+}
+.slide .dynamic-two-columns {
+    -moz-column-count: 2;
+    -webkit-column-count: 2;
+    column-count: 2;
+    -moz-column-gap: 0.8em;
+    -webkit-column-gap: 0.8em;
+    column-gap: 0.8em;
+    left: 0;
+    right: 0;
+}
+.slide .one-liner {
+    min-width: 8em;
+    min-height: 1em;
+    display: inline-block;
+    position: relative;
+    vertical-align: bottom;
+}
+.slide iframe {    
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 1280px;
+    height: 960px; 
+    margin: 0;
+    padding: 0;
+    border: none;
+    background-color: white;
+    -moz-transform-origin: 0 0;
+    -moz-transform: scale(0.3125);
+    -ms-transform-origin: 0 0;
+    -ms-transform: scale(0.3125);
+    -webkit-transform-origin: 0 0;
+    -webkit-transform: scale(0.3125);  
+    -o-transform-origin: 0 0;
+    -o-transform: scale(0.3125);
+    transform-origin: 0 0;
+    transform: scale(0.3125);               
+}      
+.slide p {
+    margin: 0;
+    padding: 0;
+}
+.slide h1,
+.slide h2,
+.slide h3,
+.slide .kv-key {
+    font-size: 1em;
+    margin: 0 0 0.1em 0;
+    font-family: arial;
+    font-weight: bold;
+}
+.slide .kv-key {
+    color: maroon;
+}
+.slide h1 {
+    color: maroon;
+    text-transform: uppercase;
+}
+.slide h2 {
+    color: maroon;
+    border-bottom: 0.1em solid gray;
+    padding: 0 0 0.1em 0;
+}
+
+.slide.uitf-slide .kv-key,
+.slide.uitf-slide h1,
+.slide.uitf-slide h2,
+.slide.lerf-slide .kv-key,
+.slide.lerf-slide h1,
+.slide.lerf-slide h2 {
+    color: gray;
+}
+
+.slide h3 {
+    color: black;    
+    text-transform: uppercase;
+}
+.slide li {
+    margin: 0.1em 0.3em;
+    padding: 0;
+}
+.slide ul,
+.slide ol {
+    margin: 0.25em 0.75em;
+    padding: 0 0 0 0.5em;
+}           
+.slide .input-wrapper.filled .title,
+.slide .title:not(.editable) {
+    background-color: navy;
+}
+.slide.laso-slide .input-wrapper.filled .title,
+.slide.laso-slide .title:not(.editable) {
+    background-color: maroon;
+}     
+.slide.lerf-slide .input-wrapper.filled .title,
+.slide.lerf-slide .title:not(.editable) {
+    background-color: rgb(25, 107, 172);
+}
+.slide.uitf-slide .input-wrapper.filled .title,
+.slide.uitf-slide .title:not(.editable) {
+    background-color: rgb(0, 170, 79);
+}
+.slide .divider {
+    height: 0.1em;
+    background-color: gray;
+    border: none;
+    margin: 0 0 .2em 0;
+}
+.slide .iframe-placeholder-cover {
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
+.slide .image-placeholder,
+.slide .iframe-placeholder {
+    text-align: center;
+    left: 0;
+    right: 0;
+    font-size: 1em;
+    height: 1em;
+    top: 50%;
+    margin-top: -1em;
+    position: relative;
+}
+.slide .flow-container .kv-list {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+.slide .flow-container .kv-list li {
+    margin: 0;
+    padding: 0;
+}
+.slide .kv-list .input-wrapper {
+    display: inline-block;
+    vertical-align: bottom;
+}
+.slide .kv-key {
+    margin: 0 !important; 
+    padding: 0; 
+    display: inline-block; 
+    min-height: 1.1em;
+    vertical-align: bottom;
+}
+.slide .flow-container {
+    margin: 0 0 1em 0;
+}
+.slide .flow-container:last-child {
+    margin: 0;
+}
+.slide .left-footer-column,
+.slide .right-footer-column {
+    float: left;
+    width: 50%;
+}
+.slide .right-footer-column a {
+    text-decoration: none;
+    color: white;
+}
+.slide .table-caption {
+    font-family: arial;
+    text-align: center;
+    font-weight: bold;
+    font-size: 0.9em;
+}
+.slide .table-subcaption {
+    font-family: arial;
+    text-align: center;
+    font-size: 0.8em;
+}
+.slide table {
+    border-collapse: collapse;
+    border-bottom-width: 0.1em;
+    border-bottom-color: black;
+    border-style: hidden hidden solid hidden;
+    font-size: 0.8em;
+    margin: 0.2em auto;
+}
+.slide .access-times-table tr td:first-child,
+.slide .accelerator-activities-table tr td:first-child {
+    min-width: 50%;
+}
+.slide .beam-to-halls-table tr td:first-child {
+    width: 10%;
+    min-width: 10%;
+}
+.slide th {
+    background-color: gray;
+    border-bottom: hidden;
+    border-left-color: white;
+    border-left-style: solid;
+    border-right-color: white;
+    border-right-style: solid;
+    color: white;
+    font-family: arial;
+    padding: 0.3em;
+    border-width: 0.1em;
+    font-size: 0.9em;
+    text-align: center;
+}
+.slide td {
+    border-width: 0.1em;
+    text-align: center;
+    min-width: 2em;
+    border-style: solid;
+    border-color: black;
+    padding: 0.1em 0.15em;
+}
+.slide tr td:first-child {
+    text-align: left;
+    font-family: arial;
+}
+.slide .table-field {
+    display: block;
+    min-width: 2em;
+    min-height: 1em;
+}
+.slide .total-row {
+    border-top: 0.2em solid black;
+}
+.slide tr.total-row td:first-child {
+    text-align: right;
+}
+.slide .flow-container .input-wrapper,
+.slide .flow-container .input-wrapper .editable {
+    position: relative;
+}
+.slide .input-wrapper {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+}
+.slide .input-wrapper .editable {
+    z-index: 2;
+    /*w.r.t. intercepting clicks, IE will ignore empty div w/transparent background, but will honor div w/transparent image!'*/
+    background: transparent 0 0 repeat scroll url("data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7");
+}
+.slide .input-wrapper .placeholder {
+    z-index: 1;
+    position: absolute;
+    color: #999;
+}
+.slide .content-container .editable,
+.slide .content-container .placeholder,
+.slide .one-liner {
+    padding: 0.1em;
+}
+.slide .title-container > .input-wrapper > .placeholder {
+    left: 0;
+    right: 0;
+    text-align: center;
+    font-size: 1.25em;
+    line-height: 1.25em;
+    min-height: 1.25em;
+    margin: 0;
+    font-family: arial;    
+    text-transform: uppercase;
+    padding: 0;  
+    background-color: navy;    
+}
+.slide.laso-slide .title-container > .input-wrapper > .placeholder {
+    background-color: maroon;
+}
+.slide.lerf-slide .title-container > .input-wrapper > .placeholder {
+    background-color: rgb(25, 107, 172);
+}
+.slide.uitf-slide .title-container > .input-wrapper > .placeholder {
+    background-color: rgb(0, 170, 79);
+}
+.slide .input-wrapper.focus .placeholder {
+    filter:alpha(opacity=50);
+    opacity: 0.4;
+}
+.slide .input-wrapper.filled .placeholder {
+    display: none;
+}    
+.group-order {
+    position: absolute;
+    top: 0;
+    right: 0;
+    color: white;
+    padding: 0.2em 0.3em;
+    z-index: 3;
+    background-color: black;
+    border-radius: 0 0 0 8px;
+}
+.group-order div {
+    font-size: 0.75em;
+}
+.fullscreen .slide[data-type="IFRAME_SLIDE"] .group-order {
+    font-size: 3em;
+    padding: 0.5em 0.6em;
+}
+
+/*BEGIN WORK AROUNDS*/
+.slide > iframe {
+    border-radius: 24px; /*Improves situation on webkit (scrollbars still overhang)*/
+}
+/* Webkit specific CSS Hack */
+/* Webkit can't handle round corners on iframe */            
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+    .slide {
+        border-radius: 0;
+    }
+}             
+/* Opera specific CSS Hack */
+/* Opera can't handle round corners on iframe */
+noindex:-o-prefocus,              
+.slide {
+    border-radius: 0;
+}
+/* Work-around for Webkit bug 55740 (Safari/Chrome) - Chrome bug 65731 */
+/* Webkit sets max height to min-height on 2-columns flow container!*/
+/* We set to inherit (sorta like auto) to override, but we then get issues on*/ 
+/* new slide dialog, but not as severe so we live with it*/
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+    .slide .flow-container .dynamic-two-columns.editable {
+        min-height: inherit !important;
+    }
+}

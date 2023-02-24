@@ -1,0 +1,155 @@
+html,
+body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    font-family: arial;
+}
+header {
+    background-image: -o-linear-gradient(bottom, #FFFFFF 0%, #50BCD7 70%);
+    background-image: -moz-linear-gradient(bottom, #FFFFFF 0%, #50BCD7 70%);
+    background-image: -webkit-linear-gradient(bottom, #FFFFFF 0%, #50BCD7 70%);
+    background-image: -ms-linear-gradient(bottom, #FFFFFF 0%, #50BCD7 70%);
+    filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0,startColorstr='#50BCD7', endColorstr='#FFFFFF');/*For IE7-8-9*/
+    background-image: -webkit-gradient(
+        linear,
+        left bottom,
+        left top,
+        color-stop(0, #FFFFFF),
+        color-stop(0.7, #50BCD7)
+        );
+    background-image: linear-gradient(bottom, #FFFFFF 0%, #50BCD7 70%);
+    overflow: hidden;
+    min-width: 1100px;
+}
+#left-header,
+#center-header,
+#right-header {
+    float: left;
+    width: 33%;
+}
+#center-header {
+    text-align: center;
+}
+#content {
+    background-color: white;
+    margin: 15px;
+    border: 1px solid black;
+    -moz-box-shadow: 10px 10px 5px #888;
+    -webkit-box-shadow: 10px 10px 5px #888;
+    box-shadow: 10px 10px 5px #888; 
+    padding: 10px;
+}
+h1 {
+    margin: 0;
+    color:#CA0000;
+    padding: 20px;
+    text-shadow: 0.1em 0.1em 0.2em #888;
+    font-family: "Gill Sans Ultra Bold";
+    font-size: 3em;
+}
+#content div:first-child h2 {
+    margin-top: 0;
+}
+h2 {
+    padding: 0;
+    margin: 1em;
+}
+th {
+    padding: 5px;
+}
+dt {
+    font-weight: bold;
+}
+body button.ui-datepicker-trigger {
+    width: 38px;
+    height: 30px;
+    border: none;
+    margin-left: 3px;
+    vertical-align: middle;
+}
+body button.ui-datepicker-trigger .ui-button-text {
+    padding: 3px;
+}
+.format {
+    display: block;
+    font-size: 0.75em;
+    font-style: italic;
+    white-space: nowrap;
+}
+nav {
+    margin: 1em;
+}
+nav ul {
+    list-style: none outside none;
+    margin: 0;
+    padding: 0;
+}
+nav li {
+    display: inline;
+    margin: 0;
+    padding: 0;
+}
+nav li a {
+    color: #CA0000;
+    font-weight: bold;
+    margin: 0;
+    padding: 0.5em;
+    text-decoration: none;
+}
+nav li a:hover {
+    background-color: #330066;
+    color: #FFFF00;
+}
+.message-box {
+    margin: 1em 0;
+}
+.error-message,
+.error {
+    color: red;
+    font-weight: bold;
+}
+.success {
+    color: green;
+    font-weight: bold;
+}
+.success a,
+.success a:active,
+.success a:visited {
+    color: green;
+}
+#nav-dialogs {
+    display: none;
+}
+.dialog-button-panel {
+    text-align: center;
+}
+.dialog-button-panel .styled-button {
+    vertical-align: top;
+    font-size: 12px;
+}
+#openDialog li {
+    padding: 0.25em;
+}
+#auth {
+    margin: 15px;
+}
+#logout-form input, #username-container {
+    float: left;
+    margin-right: 10px;
+}
+#username-container {
+    margin-bottom: 3px;
+    margin-top: 3px;
+}
+#auth a,
+button.ui-button,
+input[type='submit'].ui-button,
+.styled-button.ui-button {
+    font-size: 12px !important;
+    font-weight: bold !important;
+}
+.ui-button .ui-button-text {
+    line-height: 16px !important;
+}
