@@ -4,10 +4,10 @@ plugins {
 
 description = "Presentation app"
 group 'org.jlab'
-version = '3.19.0'
+version = '3.20.0'
 
 ext {
-    releaseDate = 'Oct 11 2021'
+    releaseDate = 'Feb 24 2023'
     resourceVersion = '64'
 }
 
