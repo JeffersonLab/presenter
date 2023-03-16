@@ -8,7 +8,6 @@ version = '3.20.0'
 
 ext {
     releaseDate = 'Feb 24 2023'
-    resourceVersion = '64'
 }
 
 tasks.withType(JavaCompile) {
@@ -38,9 +37,6 @@ war {
     filesMatching('WEB-INF/web.xml') {
         filter {
             String line -> line.replaceAll("@VERSION@", project.version)
-        }
-        filter {
-            String line -> line.replaceAll("@RESOURCE_VERSION@", resourceVersion)
         }
         filter {
             String line -> line.replaceAll("@RELEASE_DATE@", releaseDate)

@@ -11,9 +11,9 @@
     <head>        
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title><c:out value="${initParam.appShortName}"/> - ${title}</title>
-        <link rel="shortcut icon" href="${pageContext.request.contextPath}/resources/v${initParam.resourceVersionNumber}/img/favicon.ico"/>        
+        <link rel="shortcut icon" href="${pageContext.request.contextPath}/resources/v${initParam.releaseNumber}/img/favicon.ico"/>
         <link rel="stylesheet" type="text/css" href="${cdnContextPath}/jquery-ui/1.10.3/theme/atlis/jquery-ui.min.css"/>
-        <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/v${initParam.resourceVersionNumber}/css/dialog.css"/>        
+        <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/v${initParam.releaseNumber}/css/dialog.css"/>
         <jsp:invoke fragment="stylesheets"/>
     </head>
     <body>
@@ -73,8 +73,8 @@
         </div>
         <script type="text/javascript" src="${cdnContextPath}/jquery/1.10.2.min.js"></script>
         <script type="text/javascript" src="${cdnContextPath}/jquery-ui/1.10.3/jquery-ui.min.js"></script>
-        <script type="text/javascript" src="${pageContext.request.contextPath}/resources/v${initParam.resourceVersionNumber}/js/presenter.js"></script>        
-        <script type="text/javascript" src="${pageContext.request.contextPath}/resources/v${initParam.resourceVersionNumber}/js/dialog.js"></script> 
+        <script type="text/javascript" src="${pageContext.request.contextPath}/resources/v${initParam.releaseNumber}/js/presenter.js"></script>
+        <script type="text/javascript" src="${pageContext.request.contextPath}/resources/v${initParam.releaseNumber}/js/dialog.js"></script>
         <script type="text/javascript">
             jlab.contextPath = '${pageContext.request.contextPath}';
             jlab.keycloakHostname = '${env["KEYCLOAK_HOSTNAME"]}';

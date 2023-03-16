@@ -9,17 +9,17 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Presenter - <c:out value="${show.name}"/></title>
-        <link rel="shortcut icon" type="image/x-icon" href="${pageContext.request.contextPath}/resources/v${initParam.resourceVersionNumber}/img/favicon.ico"/>
+        <link rel="shortcut icon" type="image/x-icon" href="${pageContext.request.contextPath}/resources/v${initParam.releaseNumber}/img/favicon.ico"/>
         <link rel="stylesheet" type="text/css" href="${cdnContextPath}/jquery-ui/1.10.3/theme/smoothness/jquery-ui.min.css"/>
-        <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/v${initParam.resourceVersionNumber}/css/presentation.css" type="text/css">
-        <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/v${initParam.resourceVersionNumber}/css/slides.css" type="text/css">
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/v${initParam.releaseNumber}/css/presentation.css" type="text/css">
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/v${initParam.releaseNumber}/css/slides.css" type="text/css">
         <link rel="stylesheet" type="text/css" href="${cdnContextPath}/aloha-editor/1.4.1/css/aloha.css"/>
     </head>
     <body class="${show.editable ? 'writable' : 'read-only'} ${fn:toLowerCase(presentation.presentationType).replaceAll('_', '-')}">
         <c:if test="${initParam.notification ne null}">
             <div id="notification-bar"><c:out value="${initParam.notification}"/></div>
         </c:if>        
-        <img class="indicator16x16" alt="Saving..." src="${pageContext.request.contextPath}/resources/v${initParam.resourceVersionNumber}/img/indicator16x16.gif"/>
+        <img class="indicator16x16" alt="Saving..." src="${pageContext.request.contextPath}/resources/v${initParam.releaseNumber}/img/indicator16x16.gif"/>
         <div id="nav">
             <button type="button" id="laser-pointer-button" class="styled-button">Laser On</button>
             <button type="button" id="send-to-elog-button" class="styled-button">Send to ELog</button>
@@ -214,11 +214,11 @@
                <circle id="laser-spot" cx="75" cy="60" r="0.5" fill="red"/>
             </svg>
         </div>
-        <script type="text/javascript" src="${pageContext.request.contextPath}/resources/v${initParam.resourceVersionNumber}/js/editor-config.js"></script>
+        <script type="text/javascript" src="${pageContext.request.contextPath}/resources/v${initParam.releaseNumber}/js/editor-config.js"></script>
         <script type="text/javascript" src="${cdnContextPath}/aloha-editor/1.4.1/lib/aloha-full.min.js" data-aloha-plugins="common/ui,common/format,common/list,common/contenthandler,common/paste,common/link,common/undo,extra/formatlesspaste"></script>
-        <script type="text/javascript" src="${pageContext.request.contextPath}/resources/v${initParam.resourceVersionNumber}/js/editor-ready.js"></script>  
-        <script type="text/javascript" src="${pageContext.request.contextPath}/resources/v${initParam.resourceVersionNumber}/js/presenter.js"></script> 
-        <script type="text/javascript" src="${pageContext.request.contextPath}/resources/v${initParam.resourceVersionNumber}/js/presentation.js"></script>        
+        <script type="text/javascript" src="${pageContext.request.contextPath}/resources/v${initParam.releaseNumber}/js/editor-ready.js"></script>
+        <script type="text/javascript" src="${pageContext.request.contextPath}/resources/v${initParam.releaseNumber}/js/presenter.js"></script>
+        <script type="text/javascript" src="${pageContext.request.contextPath}/resources/v${initParam.releaseNumber}/js/presentation.js"></script>
         <script type="text/javascript">
 
             var jlab = jlab || {};
