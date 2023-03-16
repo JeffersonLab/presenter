@@ -21,7 +21,7 @@
     </context-param>
     <context-param>
         <param-name>contentContact</param-name>
-        <param-value>Tom Oren (tomoren)</param-value>
+        <param-value>Shawn Frierson (frierson)</param-value>
     </context-param>
     <context-param>
         <param-name>technicalContact</param-name>
