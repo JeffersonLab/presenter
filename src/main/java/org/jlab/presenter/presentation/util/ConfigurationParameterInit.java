@@ -17,14 +17,14 @@ public class ConfigurationParameterInit implements ServletContextListener {
     public void contextInitialized(ServletContextEvent sce) {
         ServletContext context = sce.getServletContext();
 
-        String cdnHostname = System.getenv("CDN_HOSTNAME");
+        String cdnHostname = System.getenv("CDN_SERVER");
         if (cdnHostname == null || cdnHostname.trim().isEmpty()) {
             // Let's use a sensible default
             cdnHostname = "cdn.acc.jlab.org";
         }
 
         context.setInitParameter("cdnContextPath", "//" + cdnHostname);
-        LOGGER.log(Level.FINEST, "Setting CDN_HOSTNAME: {0}", cdnHostname);
+        LOGGER.log(Level.FINEST, "Setting CDN_SERVER: {0}", cdnHostname);
 
         String proxyServer = System.getenv("PROXY_HOSTNAME");
 
