@@ -83,7 +83,6 @@ public class SlideFacade extends AbstractFacade<Slide> {
         Staff staff = null;
 
         if (username != null && !username.equalsIgnoreCase("ANONYMOUS")) {
-            username = username.split(":")[2];
             staff = staffFacade.findByUsername(username);
         }
 

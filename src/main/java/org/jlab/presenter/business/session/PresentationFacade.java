@@ -184,8 +184,6 @@ public class PresentationFacade extends AbstractFacade<Presentation> {
                     = "You must be authenticated to perform the requested operation.  Your session may have expired.  Please re-login.";
         } else {
             
-            username = username.split(":")[2];            
-            
             switch (type) {
                 case PD_PRESENTATION:
                     boolean programDeputy = context.isCallerInRole("pd");
@@ -230,8 +228,6 @@ public class PresentationFacade extends AbstractFacade<Presentation> {
         if (username == null || username.isEmpty() || username.equalsIgnoreCase("ANONYMOUS")) {
             throw new EJBAccessException(
                     "You must be authenticated to perform the requested operation.  Your session may have expired.  Please re-login.");
-        } else {
-            username = username.split(":")[2];
         }
 
         return username;
@@ -382,10 +378,6 @@ public class PresentationFacade extends AbstractFacade<Presentation> {
         config.setProperty("FETCH_URL", "https://" + logbookHostname + "/entry");
 
         String entrymaker = context.getCallerPrincipal().getName();
-
-        if(entrymaker != null && entrymaker.contains(":")) {
-            entrymaker = entrymaker.split(":")[2];
-        }
         
         String username = "alarms";
 
