@@ -204,7 +204,7 @@
                     <dt>Technical Contact</dt>
                     <dd>${initParam.technicalContact}</dd>
                 </dl>
-                <a target="_blank" href="${initParam.documentationUrl}">Examples</a>        
+                <a href="https://github.com/JeffersonLab/presenter">Presenter Home</a>
             </div>
         </div>
         <div id="success-dialog" class="dialog" title="Elog Sent Successfully">
