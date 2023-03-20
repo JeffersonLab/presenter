@@ -1,0 +1,3 @@
+services:
+  calendar:
+    image: jeffersonlab/presenter:3.13.0
