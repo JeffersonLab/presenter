@@ -10,10 +10,18 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Presenter - <c:out value="${show.name}"/></title>
         <link rel="shortcut icon" type="image/x-icon" href="${pageContext.request.contextPath}/resources/v${initParam.releaseNumber}/img/favicon.ico"/>
-        <link rel="stylesheet" type="text/css" href="${cdnContextPath}/jquery-ui/1.10.3/theme/smoothness/jquery-ui.min.css"/>
+        <c:choose>
+            <c:when test="${'CDN' eq resourceLocation}">
+                <link type="text/css" rel="stylesheet" href="${cdnContextPath}/jquery-ui/1.10.3/theme/atlis/jquery-ui.min.css"/>
+                <link rel="stylesheet" type="text/css" href="${cdnContextPath}/aloha-editor/1.4.1/css/aloha.css"/>
+            </c:when>
+            <c:otherwise><!-- LOCAL -->
+                <link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/resources/jquery-ui/1.10.3/theme/atlis/jquery-ui.min.css"/>
+                <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/aloha-editor/1.4.1/css/aloha.css"/>
+            </c:otherwise>
+        </c:choose>
         <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/v${initParam.releaseNumber}/css/presentation.css" type="text/css">
         <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/v${initParam.releaseNumber}/css/slides.css" type="text/css">
-        <link rel="stylesheet" type="text/css" href="${cdnContextPath}/aloha-editor/1.4.1/css/aloha.css"/>
     </head>
     <body class="${show.editable ? 'writable' : 'read-only'} ${fn:toLowerCase(presentation.presentationType).replaceAll('_', '-')}">
         <c:if test="${initParam.notification ne null}">
@@ -215,7 +223,14 @@
             </svg>
         </div>
         <script type="text/javascript" src="${pageContext.request.contextPath}/resources/v${initParam.releaseNumber}/js/editor-config.js"></script>
-        <script type="text/javascript" src="${cdnContextPath}/aloha-editor/1.4.1/lib/aloha-full.min.js" data-aloha-plugins="common/ui,common/format,common/list,common/contenthandler,common/paste,common/link,common/undo,extra/formatlesspaste"></script>
+        <c:choose>
+            <c:when test="${'CDN' eq resourceLocation}">
+                <script type="text/javascript" src="${cdnContextPath}/aloha-editor/1.4.1/lib/aloha-full.min.js" data-aloha-plugins="common/ui,common/format,common/list,common/contenthandler,common/paste,common/link,common/undo,extra/formatlesspaste"></script>
+            </c:when>
+            <c:otherwise><!-- LOCAL -->
+                <script type="text/javascript" src="${pageContext.request.contextPath}/resources/aloha-editor/1.4.1/lib/aloha-full.min.js" data-aloha-plugins="common/ui,common/format,common/list,common/contenthandler,common/paste,common/link,common/undo,extra/formatlesspaste"></script>
+            </c:otherwise>
+        </c:choose>
         <script type="text/javascript" src="${pageContext.request.contextPath}/resources/v${initParam.releaseNumber}/js/editor-ready.js"></script>
         <script type="text/javascript" src="${pageContext.request.contextPath}/resources/v${initParam.releaseNumber}/js/presenter.js"></script>
         <script type="text/javascript" src="${pageContext.request.contextPath}/resources/v${initParam.releaseNumber}/js/presentation.js"></script>

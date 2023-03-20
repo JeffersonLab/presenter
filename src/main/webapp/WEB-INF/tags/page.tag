@@ -12,7 +12,14 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title><c:out value="${initParam.appShortName}"/> - ${title}</title>
         <link rel="shortcut icon" href="${pageContext.request.contextPath}/resources/v${initParam.releaseNumber}/img/favicon.ico"/>
-        <link rel="stylesheet" type="text/css" href="${cdnContextPath}/jquery-ui/1.10.3/theme/atlis/jquery-ui.min.css"/>
+        <c:choose>
+            <c:when test="${'CDN' eq resourceLocation}">
+                <link type="text/css" rel="stylesheet" href="${cdnContextPath}/jquery-ui/1.13.2/theme/atlis/jquery-ui.min.css"/>
+            </c:when>
+            <c:otherwise><!-- LOCAL -->
+                <link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/resources/jquery-ui/1.13.2/theme/atlis/jquery-ui.min.css"/>
+            </c:otherwise>
+        </c:choose>
         <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/v${initParam.releaseNumber}/css/dialog.css"/>
         <jsp:invoke fragment="stylesheets"/>
     </head>
@@ -71,8 +78,16 @@
             </div>
             <footer></footer>
         </div>
-        <script type="text/javascript" src="${cdnContextPath}/jquery/1.10.2.min.js"></script>
-        <script type="text/javascript" src="${cdnContextPath}/jquery-ui/1.10.3/jquery-ui.min.js"></script>
+        <c:choose>
+            <c:when test="${'CDN' eq resourceLocation}">
+                <script type="text/javascript" src="${cdnContextPath}/jquery/1.10.2.min.js"></script>
+                <script type="text/javascript" src="${cdnContextPath}/jquery-ui/1.10.3/jquery-ui.min.js"></script>
+            </c:when>
+            <c:otherwise><!-- LOCAL -->
+                <script type="text/javascript" src="${pageContext.request.contextPath}/resources/jquery/1.10.2.min.js"></script>
+                <script type="text/javascript" src="${pageContext.request.contextPath}/resources/jquery-ui/1.10.3/jquery-ui.min.js"></script>
+            </c:otherwise>
+        </c:choose>
         <script type="text/javascript" src="${pageContext.request.contextPath}/resources/v${initParam.releaseNumber}/js/presenter.js"></script>
         <script type="text/javascript" src="${pageContext.request.contextPath}/resources/v${initParam.releaseNumber}/js/dialog.js"></script>
         <script type="text/javascript">
