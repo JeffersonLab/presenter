@@ -116,7 +116,7 @@
         <div id="slide-toolbar">
             <c:if test="${show.editable}">
                 <fmt:formatDate value="${presentation.lastModified}" pattern="dd-MMM-yyyy HH:mm:ss" var="fmtLastModified"/>
-                <button type="button" id="save-button" class="styled-button" disabled="disabled" value="Saved" title="Last Modified ${fmtLastModified} by ${p:formatStaff(presentation.lastModifiedBy)}">Saved</button>
+                <button type="button" id="save-button" class="styled-button" disabled="disabled" value="Saved" title="Last Modified ${fmtLastModified} by ${presentation.lastUsername}">Saved</button>
                 <button type="button" id="update-shift-log-button" class="styled-button" value="Update Shift Info">Update Shift Info</button>
                 <button type="button" id="update-week-log-button" class="styled-button" value="Update Week Info">Update Week Info</button>
                 <button type="button" id="update-week-accesses-button" class="styled-button" value="Update Week Accesses">Update Week Accesses</button>

@@ -9,11 +9,6 @@
     <short-name>presenter</short-name>
     <uri>http://jlab.org/presenter/functions</uri>
     <function>
-        <name>formatStaff</name>
-        <function-class>org.jlab.presenter.presentation.util.Functions</function-class>
-        <function-signature>java.lang.String formatStaff(org.jlab.presenter.persistence.entity.Staff)</function-signature>
-    </function>
-    <function>
         <name>isFriday</name>
         <function-class>org.jlab.presenter.presentation.util.Functions</function-class>
         <function-signature>boolean isFriday(java.util.Date)</function-signature>
