@@ -22,7 +22,7 @@ public class UrlUtil {
     
     static {
             // Wildfly, if configured to acknowledge proxy, may report proxy hostname via ServletRequest.getServerName, but env lookup means we don't have to be in servlet request context
-            hostname = System.getenv("PROXY_HOSTNAME");
+            hostname = System.getenv("PROXY_SERVER");
 
             logger.log(Level.FINEST, "Using proxy hostname: {0}", hostname);
     }
@@ -35,18 +35,18 @@ public class UrlUtil {
         return hostname;
     }
     
-    public static String getHcoUrl() {
-        return "https://" + hostname + "/hco/reports/overall-status?print=Y&fullscreen=Y&qualified=";
+    public static String getSrmUrl() {
+        return System.getenv("SRM_URL") + "/reports/overall-status?print=Y&fullscreen=Y&qualified=";
     }    
      
     public static String getWorkmapUrl(Date date) {
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-        return "https://" + hostname + "/workmap/" + formatter.format(date);
+        return System.getenv("WORKMAP_URL") + "/" + formatter.format(date);
     }     
  
     public static String getCalendarUrl(Date date) {
         SimpleDateFormat formatter = new SimpleDateFormat("?'year='yyyy'&week='w");
-        return "https://" + hostname + "/calendar/view-outlook" + formatter.format(date);
+        return System.getenv("CALENDAR_URL") + "/view-outlook" + formatter.format(date);
     }    
     
     public static String getPresentationUrl(BigInteger presentationId) {
@@ -66,7 +66,7 @@ public class UrlUtil {
         cal.add(Calendar.DATE, -1); // Grab 24 hour period
         Date start = cal.getTime();
         SimpleDateFormat formatter = new SimpleDateFormat("dd-MMM-yyyy'+'HH'%3A'mm");
-        return "https://" + hostname + "/btm/reports/physics-summary?start=" + formatter.format(start) + "&end=" + formatter.format(end) + "&physics-data=available&print=Y&fullscreen=Y";
+        return System.getenv("BTM_URL") + "/reports/physics-summary?start=" + formatter.format(start) + "&end=" + formatter.format(end) + "&physics-data=available&print=Y&fullscreen=Y";
     }    
     
     public static String getDailyFsdUrl(Date date) {
@@ -78,7 +78,7 @@ public class UrlUtil {
         cal.add(Calendar.DATE, -1); // Grab 24 hour period
         Date start = cal.getTime();
         SimpleDateFormat formatter = new SimpleDateFormat("dd-MMM-yyyy'+'HH'%3A'mm");
-        return "https://" + hostname + "/dtm/reports/fsd-summary?start=" + formatter.format(start) + "&end=" + formatter.format(end) + "&maxDuration=5&maxDurationUnits=Minutes&sadTrips=N&rateBasis=program&chart=bar&grouping=cause&binSize=HOUR&legendData=rate&legendData=lost&maxY=30&qualified=&print=Y&fullscreen=Y";
+        return System.getenv("DTM_URL") + "/reports/fsd-summary?start=" + formatter.format(start) + "&end=" + formatter.format(end) + "&maxDuration=5&maxDurationUnits=Minutes&sadTrips=N&rateBasis=program&chart=bar&grouping=cause&binSize=HOUR&legendData=rate&legendData=lost&maxY=30&qualified=&print=Y&fullscreen=Y";
     }      
     
     public static String getWeeklyBeamAccountingUrl(Date date) {
@@ -90,7 +90,7 @@ public class UrlUtil {
         cal.add(Calendar.DATE, -7); // Grab 7 day period (last week)
         Date start = cal.getTime();
         SimpleDateFormat formatter = new SimpleDateFormat("dd-MMM-yyyy'+'HH'%3A'mm");
-        return "https://" + hostname + "/btm/reports/physics-summary?start=" + formatter.format(start) + "&end=" + formatter.format(end) + "&physics-data=available&print=Y&fullscreen=Y";
+        return System.getenv("BTM_URL") + "/reports/physics-summary?start=" + formatter.format(start) + "&end=" + formatter.format(end) + "&physics-data=available&print=Y&fullscreen=Y";
     }       
     
     public static String getWeeklyFsdUrl(Date date) {
@@ -102,7 +102,7 @@ public class UrlUtil {
         cal.add(Calendar.DATE, -7); // Grab 7 day period (last week)
         Date start = cal.getTime();
         SimpleDateFormat formatter = new SimpleDateFormat("dd-MMM-yyyy'+'HH'%3A'mm");
-        return "https://" + hostname + "/dtm/reports/fsd-summary?start=" + formatter.format(start) + "&end=" + formatter.format(end) + "&maxDuration=5&maxDurationUnits=Minutes&sadTrips=N&rateBasis=program&chart=bar&grouping=cause&binSize=DAY&legendData=count&legendData=rate&legendData=lost&legendData=mins&maxY=30&qualified=&print=Y&fullscreen=Y";
+        return System.getenv("DTM_URL") + "/reports/fsd-summary?start=" + formatter.format(start) + "&end=" + formatter.format(end) + "&maxDuration=5&maxDurationUnits=Minutes&sadTrips=N&rateBasis=program&chart=bar&grouping=cause&binSize=DAY&legendData=count&legendData=rate&legendData=lost&legendData=mins&maxY=30&qualified=&print=Y&fullscreen=Y";
     }
 
     public static String getChargeUrl(Date date) {
@@ -114,22 +114,22 @@ public class UrlUtil {
         cal.add(Calendar.DATE, -7); // Grab 7 day period (last week)
         Date start = cal.getTime();
         SimpleDateFormat formatter = new SimpleDateFormat("dd-MMM-yyyy");
-        return "https://" + hostname + "/btm/reports/charge?start=" + formatter.format(start) + "&end=" + formatter.format(end) + "&scale=0.5&print=Y&fullscreen=Y";
+        return System.getenv("BTM_URL") + "/reports/charge?start=" + formatter.format(start) + "&end=" + formatter.format(end) + "&scale=0.5&print=Y&fullscreen=Y";
     }
     
     public static String getWeatherUrl() {
-        return "https://" + hostname + "/weather";
+        return System.getenv("WEATHER_URL");
     }
 
-    public static String getWhiteboardUrl() { return "https://cebaf.jlab.org/files/ops/accboard/"; }
+    public static String getWhiteboardUrl() { return System.getenv("WHITEBOARD_URL"); }
 
     public static String getPowerUrl(Date date) {
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-        return "https://accweb.acc.jlab.org/apps/meters/temp.html?date=" + formatter.format(date);
+        return System.getenv("POWER_URL") + "/temp.html?date=" + formatter.format(date);
     }
     
     public static Slide getHcoSlide() {
-        return new IFrameSlide(getHcoUrl(), "HCO Readiness");
+        return new IFrameSlide(getSrmUrl(), "HCO Readiness");
     }    
     
     public static IFrameSlide getWorkmapSlide(Date date) {
