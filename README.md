@@ -1,5 +1,5 @@
 # presenter [![CI](https://github.com/JeffersonLab/presenter/actions/workflows/ci.yml/badge.svg)](https://github.com/JeffersonLab/presenter/actions/workflows/ci.yml) [![Docker](https://img.shields.io/docker/v/jeffersonlab/presenter?sort=semver&label=DockerHub)](https://hub.docker.com/r/jeffersonlab/presenter)
-Program Deputy presentation app
+A Java EE 8 web application for Program Deputy (PD) presentations at Jefferson Lab.
 
 ![Screenshot](https://github.com/JeffersonLab/presenter/raw/main/Screenshot.png?raw=true "Screenshot")
 
