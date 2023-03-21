@@ -182,38 +182,32 @@ public class PresentationFacade extends AbstractFacade<Presentation> {
             reason
                     = "You must be authenticated to perform the requested operation.  Your session may have expired.  Please re-login.";
         } else {
-            
-            switch (type) {
-                case PD_PRESENTATION:
-                    boolean programDeputy = context.isCallerInRole("pd");
 
-                    if (!programDeputy) {
-                        reason = "You must be a Program Deputy to perform the requested operation";
-                    }
-                    break;
-                case CC_PRESENTATION:
-                    boolean crewChief = context.isCallerInRole("cc");
+            boolean admin = context.isCallerInRole("presenter-admin");
 
-                    if (!crewChief) {
-                        reason = "You must be a Crew Chief to perform the requested operation";
-                    }
-                    break;
-                case LASO_PRESENTATION:
-                    /*boolean laso = context.isCallerInRole("LASO");
+            if(!admin) {
+                switch (type) {
+                    case PD_PRESENTATION:
+                        boolean programDeputy = context.isCallerInRole("pd");
 
-                     if (!laso) {
-                     reason = "You must be a LASO to perform the requested operation";
-                     }*/
-                    break;
-                case LO_PRESENTATION:
+                        if (!programDeputy) {
+                            reason = "You must be a Program Deputy to perform the requested operation";
+                        }
+                        break;
+                    case CC_PRESENTATION:
+                        boolean crewChief = context.isCallerInRole("cc");
 
-                    break;
-                case UITF_PRESENTATION:
-
-
-                    break;
-                default:
-                    reason = "Unknown presentation type: " + type;
+                        if (!crewChief) {
+                            reason = "You must be a Crew Chief to perform the requested operation";
+                        }
+                        break;
+                    case LASO_PRESENTATION:
+                    case LO_PRESENTATION:
+                    case UITF_PRESENTATION:
+                        break;
+                    default:
+                        reason = "Unknown presentation type: " + type;
+                }
             }
         }
 
