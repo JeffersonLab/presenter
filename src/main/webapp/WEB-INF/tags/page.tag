@@ -33,9 +33,6 @@
                     <h1><c:out value="${initParam.appName}"/></h1>
                     <div id="auth">
                         <c:choose>
-                            <c:when test="${fn:startsWith(currentPath, '/login')}">
-                                <%-- Don't show login/logout when on login page itself! --%>
-                            </c:when>
                             <c:when test="${publicProxy}">
 
                             </c:when>
@@ -54,10 +51,13 @@
                                     <c:param name="returnUrl" value="${absHostUrl.concat(domainRelativeReturnUrl)}"/>
                                 </c:url>
                                 <c:url value="/sso" var="suUrl">
-                                    <c:param name="kc_idp_hint" value="ace-su-keycloak-oidc"/>
+                                    <c:param name="kc_idp_hint" value="${env['KEYCLOAK_SU_IDP']}"/>
                                     <c:param name="returnUrl" value="${absHostUrl.concat(domainRelativeReturnUrl)}"/>
                                 </c:url>
-                                <a id="login-link" href="${loginUrl}" class="styled-button">Login</a> <a id="su-link" href="${suUrl}" class="styled-button" href="#">SU</a> 
+                                <a id="login-link" href="${loginUrl}" class="styled-button">Login</a>
+                                <c:if test="${not empty env['KEYCLOAK_SU_IDP']}">
+                                    <a id="su-link" href="${suUrl}" class="styled-button" href="#">SU</a>
+                                </c:if>
                             </c:otherwise>
                         </c:choose>
                     </div>

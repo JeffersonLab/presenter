@@ -148,11 +148,14 @@
                                     <c:param name="returnUrl" value="${absHostUrl.concat(domainRelativeReturnUrl)}"/>
                                 </c:url>
                                 <c:url value="/sso" var="suUrl">
-                                    <c:param name="kc_idp_hint" value="ace-su-keycloak-oidc"/>
+                                    <c:param name="kc_idp_hint" value="${env['KEYCLOAK_SU_IDP']}"/>
                                     <c:param name="returnUrl" value="${absHostUrl.concat(domainRelativeReturnUrl)}"/>
                                 </c:url>                           
                             <form id="login-form" method="get" action="${pageContext.request.contextPath}/login">
-                                <a id="login-link" href="${loginUrl}" class="styled-button">Login</a> <a id="su-link" href="${suUrl}" class="styled-button" href="#">SU</a>  
+                                <a id="login-link" href="${loginUrl}" class="styled-button">Login</a>
+                                <c:if test="${not empty env['KEYCLOAK_SU_IDP']}">
+                                    <a id="su-link" href="${suUrl}" class="styled-button" href="#">SU</a>
+                                </c:if>
                             </form>
                         </c:otherwise>
                     </c:choose>
@@ -237,19 +240,18 @@
         <script type="text/javascript">
 
             var jlab = jlab || {};
-            jlab.keycloakHostname = '${env["KEYCLOAK_HOSTNAME"]}';
-            jlab.clientId = '${env["KEYCLOAK_CLIENT_ID_PRESENTER"]}';
-            <c:url var="url" value="https://${env['KEYCLOAK_HOSTNAME']}/auth/realms/jlab/protocol/openid-connect/auth">
+            jlab.keycloakHostname = '${env["KEYCLOAK_SERVER_FRONTEND"]}';
+            <c:url var="iframeLoginUrl" value="https://${env['KEYCLOAK_HOSTNAME']}/auth/realms/${env['KEYCLOAK_REALM']}/protocol/openid-connect/auth">
             <c:param name="client_id" value="account"/>
-            <c:param name="kc_idp_hint" value="cue-keycloak-oidc"/>
+            <c:param name="kc_idp_hint" value="${env['KEYCLOAK_HEADLESS_IDP']}"/>
             <c:param name="response_type" value="code"/>
-            <c:param name="redirect_uri" value="https://${env['KEYCLOAK_HOSTNAME']}/auth/realms/jlab/account/"/>
+            <c:param name="redirect_uri" value="https://${env['KEYCLOAK_SERVER_FRONTEND']}/auth/realms/${env['KEYCLOAK_REALM']}/account/"/>
             </c:url>
-            jlab.loginUrl = '${url}';
-            <c:url var="url" value="https://${env['KEYCLOAK_HOSTNAME']}/auth/realms/jlab/protocol/openid-connect/logout">
-            <c:param name="redirect_uri" value="https://${env['KEYCLOAK_HOSTNAME']}/auth/realms/jlab/account/"/>
+            jlab.iframeLoginUrl = '${empty env['KEYCLOAK_HEADLESS_IDP'] ? '' : iframeLoginUrl}';
+            <c:url var="suLogoutUrl" value="https://${env['KEYCLOAK_SERVER_FRONTEND']}/auth/realms/${env['KEYCLOAK_REALM']}/protocol/openid-connect/logout">
+                <c:param name="redirect_uri" value="https://${env['KEYCLOAK_SERVER_FRONTEND']}/auth/realms/${env['KEYCLOAK_REALM']}/account/"/>
             </c:url>
-            jlab.logoutUrl = '${url}';
+            jlab.suLogoutUrl = '${suULogoutUrl}';
 
 
             var presenter = presenter || {};
