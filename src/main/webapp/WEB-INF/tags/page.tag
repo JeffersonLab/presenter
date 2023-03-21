@@ -120,7 +120,7 @@
                     <dt>Technical Contact</dt>
                     <dd>${initParam.technicalContact}</dd>
                 </dl>
-                <div class="message-box"><a target="_blank" href="${initParam.documentationUrl}">Examples</a></div>
+                <div class="message-box"><a href="https://github.com/JeffersonLab/presenter">Presenter Home</a></div>
                 <div class="dialog-button-panel">
                     <button class="dialog-close-button">Close</button>
                 </div>
