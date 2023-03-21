@@ -74,8 +74,6 @@ public class PresentationFacade extends AbstractFacade<Presentation> {
     PresentationLogFacade presentationLogFacade;
     @EJB
     SlideFacade slideFacade;
-    @EJB
-    StaffFacade staffFacade;
 
     @Override
     protected EntityManager getEntityManager() {
@@ -116,13 +114,7 @@ public class PresentationFacade extends AbstractFacade<Presentation> {
 
         presentation.setLastModified(TimeUtil.nowWithoutMillis());
 
-        Staff staff = null;
-
-        if (username != null && !username.equals("ANONYMOUS")) {
-            staff = staffFacade.findByUsername(username);
-        }
-
-        presentation.setLastModifiedBy(staff);
+        presentation.setLastUsername(username);
 
         return super.edit(presentation);
     }
@@ -134,13 +126,7 @@ public class PresentationFacade extends AbstractFacade<Presentation> {
 
         presentation.setLastModified(TimeUtil.nowWithoutMillis());
 
-        Staff staff = null;
-
-        if (username != null && !username.equals("ANONYMOUS")) {
-            staff = staffFacade.findByUsername(username);
-        }
-
-        presentation.setLastModifiedBy(staff);
+        presentation.setLastUsername(username);
 
         super.create(presentation);
     }
@@ -890,31 +876,7 @@ public class PresentationFacade extends AbstractFacade<Presentation> {
                 lastModifiedMillis = presentation.getLastModified().getTime();
             }
 
-            Staff staff = presentation.getLastModifiedBy();
-
-            if (staff != null) {
-                String username = staff.getUsername();
-                String lastname = staff.getLastname();
-                String firstname = staff.getFirstname();
-
-                if (username == null) {
-                    username = "";
-                } else {
-                    username = " (" + username + ")";
-                }
-
-                if (lastname == null) {
-                    lastname = "";
-                }
-
-                if (firstname == null) {
-                    firstname = "";
-                } else {
-                    firstname = firstname + " ";
-                }
-
-                user = firstname + lastname + username;
-            }
+            user = presentation.getLastUsername();
 
             PresentationType presentationType = presentation.getPresentationType();
 

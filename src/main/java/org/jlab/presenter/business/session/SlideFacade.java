@@ -5,7 +5,6 @@ import java.util.List;
 import javax.annotation.Resource;
 import javax.annotation.security.DeclareRoles;
 import javax.annotation.security.PermitAll;
-import javax.annotation.security.RolesAllowed;
 import javax.ejb.EJB;
 import javax.ejb.SessionContext;
 import javax.ejb.Stateless;
@@ -14,7 +13,6 @@ import javax.persistence.PersistenceContext;
 import org.jlab.presenter.business.util.TimeUtil;
 import org.jlab.presenter.persistence.entity.Presentation;
 import org.jlab.presenter.persistence.entity.Slide;
-import org.jlab.presenter.persistence.entity.Staff;
 import org.jlab.presenter.persistence.enumeration.PresentationType;
 
 /**
@@ -31,8 +29,6 @@ public class SlideFacade extends AbstractFacade<Slide> {
     private SessionContext context;
     @EJB
     PresentationFacade presentationFacade;
-    @EJB
-    StaffFacade staffFacade;
 
     @Override
     protected EntityManager getEntityManager() {
@@ -56,11 +52,6 @@ public class SlideFacade extends AbstractFacade<Slide> {
         PresentationType presentationType = slide.getPresentation().getPresentationType();
 
         String username = presentationFacade.checkAuthorized(presentationType);
-        Staff staff = null;
-
-        if (username != null && !username.equalsIgnoreCase("ANONYMOUS")) {
-            staff = staffFacade.findByUsername(username);
-        }
 
         Presentation presentation = slide.getPresentation();
 
@@ -70,7 +61,7 @@ public class SlideFacade extends AbstractFacade<Slide> {
         em.remove(slide);
         
         presentation.setLastModified(TimeUtil.nowWithoutMillis());
-        presentation.setLastModifiedBy(staff);
+        presentation.setLastUsername(username);
         
         return presentation;
     }
@@ -78,12 +69,6 @@ public class SlideFacade extends AbstractFacade<Slide> {
     @PermitAll
     public void createSlideListForRefresh(List<Slide> slides) {
         String username = context.getCallerPrincipal().getName();
-
-        Staff staff = null;
-
-        if (username != null && !username.equalsIgnoreCase("ANONYMOUS")) {
-            staff = staffFacade.findByUsername(username);
-        }
 
         for (Slide slide : slides) {
             //presentationFacade.checkAuthorized(slide.getPresentation().getPresentationType());
@@ -94,7 +79,7 @@ public class SlideFacade extends AbstractFacade<Slide> {
 
             presentation.setLastModified(TimeUtil.nowWithoutMillis());
 
-            presentation.setLastModifiedBy(staff);
+            presentation.setLastUsername(username);
         }
     }
 
@@ -116,13 +101,7 @@ public class SlideFacade extends AbstractFacade<Slide> {
 
         presentation.setLastModified(TimeUtil.nowWithoutMillis());
 
-        Staff staff = null;
-
-        if (username != null && !username.equalsIgnoreCase("ANONYMOUS")) {
-            staff = staffFacade.findByUsername(username);
-        }
-
-        presentation.setLastModifiedBy(staff);
+        presentation.setLastUsername(username);
         
         return presentation;
     }
@@ -139,13 +118,7 @@ public class SlideFacade extends AbstractFacade<Slide> {
         
         presentation.setLastModified(TimeUtil.nowWithoutMillis());
 
-        Staff staff = null;
-
-        if (username != null && !username.equals("ANONYMOUS")) {
-            staff = staffFacade.findByUsername(username);
-        }
-
-        presentation.setLastModifiedBy(staff);
+        presentation.setLastUsername(username);
         
         return presentation;
     }

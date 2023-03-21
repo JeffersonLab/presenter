@@ -19,8 +19,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -65,9 +63,9 @@ public class Presentation implements Serializable {
     @Column(name = "LAST_MODIFIED_DATE")
     @Temporal(TemporalType.TIMESTAMP)
     private Date lastModified;
-    @JoinColumn(name = "LAST_MODIFIED_BY", referencedColumnName = "STAFF_ID")
-    @ManyToOne(optional = true)
-    private Staff lastModifiedBy;
+    @Column(name = "LAST_USERNAME")
+    @Basic(optional = true)
+    private String lastUsername;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "presentation", fetch = FetchType.LAZY)
     @OrderBy("orderId asc")
     private List<Slide> slideList;
@@ -101,12 +99,12 @@ public class Presentation implements Serializable {
         this.lastModified = lastModified;
     }
 
-    public Staff getLastModifiedBy() {
-        return lastModifiedBy;
+    public String getLastUsername() {
+        return lastUsername;
     }
 
-    public void setLastModifiedBy(Staff lastModifiedBy) {
-        this.lastModifiedBy = lastModifiedBy;
+    public void setLastUsername(String lastUsername) {
+        this.lastUsername = lastUsername;
     }
 
     public BigInteger getPresentationId() {
