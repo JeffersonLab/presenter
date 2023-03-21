@@ -153,23 +153,8 @@ public class CCMenu extends HttpServlet {
                 presentationId = presentation.getPresentationId();
             }
 
-            if ("Send to eLog".equals(request.getParameter("action"))) {
-                presentationFacade.checkAuthorized();
-                List<String> imageData = new ArrayList<>();
-                String body = presentationFacade.getPresentationHTML(request,
-                        response, presentationId, imageData);
-                PresentationMenuUtil.logAndRedirect(request, response,
-                        presentationId,
-                        "Crew Chief Shift Log " + ShowInfo.getCcShowName(ymd, shift),
-                        body,
-                        ShowInfo.getCcTags(),
-                        ShowInfo.getCcLogbooks(),
-                        "/cc-menu",
-                        presentationFacade,
-                        imageData, PresentationType.CC_PRESENTATION);
-            } else {
-                PresentationMenuUtil.openOrExport(request, response, presentationId);
-            }
+
+            PresentationMenuUtil.openOrExport(request, response, presentationId);
         }
     }
 

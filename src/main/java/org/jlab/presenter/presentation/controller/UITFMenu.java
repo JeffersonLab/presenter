@@ -151,24 +151,7 @@ public class UITFMenu extends HttpServlet {
                 presentationId = presentation.getPresentationId();
             }
 
-            if ("Send to eLog".equals(request.getParameter("action"))) {
-                presentationFacade.checkAuthorized();
-                List<String> imageData = new ArrayList<>();
-                String body = presentationFacade.getPresentationHTML(request,
-                        response, presentationId, imageData);
-                PresentationMenuUtil.logAndRedirect(request, response,
-                        presentationId,
-                        "UITF Shift Log " + ShowInfo.getLoShowName(ymd, shift),
-                        body,
-                        ShowInfo.getUitfTags(),
-                        ShowInfo.getUitfLogbooks(),
-                        "/uitf-menu",
-                        presentationFacade,
-                        imageData,
-                        PresentationType.UITF_PRESENTATION);
-            } else {
-                PresentationMenuUtil.openOrExport(request, response, presentationId);
-            }
+            PresentationMenuUtil.openOrExport(request, response, presentationId);
         }
     }
 

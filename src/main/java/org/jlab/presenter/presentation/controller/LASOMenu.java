@@ -154,24 +154,7 @@ public class LASOMenu extends HttpServlet {
                 presentationId = presentation.getPresentationId();
             }
 
-            if ("Send to eLog".equals(request.getParameter("action"))) {
-                presentationFacade.checkAuthorized();
-                List<String> imageData = new ArrayList<>();
-                String body = presentationFacade.getPresentationHTML(request,
-                        response, presentationId, imageData);
-                PresentationMenuUtil.logAndRedirect(request, response,
-                        presentationId,
-                        "LASO Shift Log " + ShowInfo.getLasoShowName(ymd, shift),
-                        body,
-                        ShowInfo.getLasoTags(),
-                        ShowInfo.getLasoLogbooks(),
-                        "/laso-menu",
-                        presentationFacade,
-                        imageData,
-                        PresentationType.LASO_PRESENTATION);
-            } else {
-                PresentationMenuUtil.openOrExport(request, response, presentationId);
-            }
+            PresentationMenuUtil.openOrExport(request, response, presentationId);
         }
     }
 

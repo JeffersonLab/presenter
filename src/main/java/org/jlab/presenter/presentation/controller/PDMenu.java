@@ -277,24 +277,7 @@ public class PDMenu extends HttpServlet {
                 }
             }
 
-            if ("Send to eLog".equals(request.getParameter("action"))) {
-                presentationFacade.checkAuthorized();
-                List<String> imageData = new ArrayList<>();
-                String body = presentationFacade.getPresentationHTML(request,
-                        response, presentationId, imageData);
-
-                String[] tags = ShowInfo.getPdTags(type);
-
-                PresentationMenuUtil.logAndRedirect(request, response,
-                        presentationId,
-                        ShowInfo.getPdShowName(type, ymd),
-                        body,
-                        tags,
-                        ShowInfo.getPdLogbooks(),
-                        "/pd-menu",
-                        presentationFacade,
-                        imageData, PresentationType.PD_PRESENTATION);
-            } else if ("Delete".equals(request.getParameter("action"))) {
+            if ("Delete".equals(request.getParameter("action"))) {
                 pdPresentationFacade.delete(presentationId);
                 PresentationMenuUtil.delete(request, response, presentationId);
             } else {

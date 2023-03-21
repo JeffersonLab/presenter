@@ -26,7 +26,7 @@ import org.jlab.jlog.exception.MalformedXMLException;
 import org.jlab.jlog.exception.SchemaUnavailableException;
 import org.jlab.presenter.business.session.PresentationFacade;
 import org.jlab.presenter.business.util.IOUtil;
-import org.jlab.presenter.persistence.entity.PDPresentation;
+import org.jlab.presenter.persistence.entity.*;
 import org.jlab.presenter.persistence.enumeration.PresentationType;
 
 /**
@@ -187,81 +187,68 @@ public class PresentationMenuUtil {
         return logId;
     }
 
-    public static void logAndRedirect(HttpServletRequest request,
-                                      HttpServletResponse response,
-                                      BigInteger presentationId,
-                                      String title,
-                                      String body,
-                                      String[] tags,
-                                      String logbooks,
-                                      String redirect,
-                                      PresentationFacade presentationFacade,
-                                      List<String> imageData,
-                                      PresentationType presentationType) throws ServletException, IOException {
-
-        long logId = logWithPdf(request.getContextPath(), presentationId, title, body, tags, logbooks, presentationFacade,
-                imageData, presentationType);
-
-        response.sendRedirect(response.encodeRedirectURL(
-                request.getContextPath() + redirect + "?elogId=" + logId));
-    }
-
-    public static long logWithPdf(String contextPath,
-                                  BigInteger presentationId,
-                                  String title,
-                                  String body,
-                                  String[] tags,
-                                  String logbooks,
-                                  PresentationFacade presentationFacade,
-                                  List<String> imageData,
-                                  PresentationType presentationType) {
-
-        File dir = IOUtil.createTempDir();
-        
-        long logId;
-        
-        try {
-            File pdf = createPdf(dir, title, contextPath, presentationId);
-            List<File> imageFiles = createImageFiles(dir, imageData);
-            
-            List<String> files = new ArrayList<String>();
-            for(File f: imageFiles) {
-                files.add(f.getAbsolutePath());
-            }
-            files.add(pdf.getAbsolutePath());
-            
-            logId = presentationFacade.sendELog(title, body, true, tags, logbooks, files.toArray(new String[0]), presentationId, presentationType);
-        } catch (Exception e) {
-            logId = -1L;
-            logger.log(Level.SEVERE, "Unable to write to elog", e);
-        } finally {
-
-            for (File f : dir.listFiles()) {
-                if (!f.delete()) {
-                    logger.log(Level.WARNING, "Unable to delete temporary file: {0}", f.getAbsolutePath());
-                }
-            }
-
-            if (!dir.delete()) {
-                logger.log(Level.WARNING, "Unable to delete temporary directory: {0}", dir.getAbsolutePath());
-            }
-        }
-        return logId;
-    }
-
     public static long copy(InputStream in, FileOutputStream out) throws IOException {
         ReadableByteChannel rbc = Channels.newChannel(in);
         return out.getChannel().transferFrom(rbc, 0, Long.MAX_VALUE);
     }
 
     public static long logPd(PDPresentation presentation, PresentationFacade facade, String body,
-                             List<String> images) throws ServletException,
-            LogIOException, SchemaUnavailableException, MalformedXMLException, InvalidXMLException,
+                             List<String> images) throws LogIOException, SchemaUnavailableException,
+            MalformedXMLException, InvalidXMLException,
             AttachmentSizeException, IOException, LogCertificateException {
         String title = ShowInfo.getPdShowName(presentation.getPdPresentationType(),
                 presentation.getDeliveryYmd());
         String[] tags = ShowInfo.getPdTags(presentation.getPdPresentationType());
         String logbooks = ShowInfo.getPdLogbooks();
+
+        return PresentationMenuUtil.log(presentation.getPresentationId(),title, body, tags, logbooks,
+                facade, images, presentation.getPresentationType());
+    }
+
+    public static long logLaso(LASOPresentation presentation, PresentationFacade facade, String body,
+                               List<String> images) throws LogIOException, SchemaUnavailableException,
+            MalformedXMLException, InvalidXMLException,
+            AttachmentSizeException, IOException, LogCertificateException {
+        String title = ShowInfo.getLasoShowName(presentation.getYmd(),
+                presentation.getShift());
+        String[] tags = ShowInfo.getLasoTags();
+        String logbooks = ShowInfo.getLasoLogbooks();
+
+        return PresentationMenuUtil.log(presentation.getPresentationId(),title, body, tags, logbooks,
+                facade, images, presentation.getPresentationType());
+    }
+
+    public static long logUitf(UITFPresentation presentation, PresentationFacade facade, String body,
+                               List<String> images) throws LogIOException, SchemaUnavailableException,
+            MalformedXMLException, InvalidXMLException, AttachmentSizeException, IOException, LogCertificateException {
+        String title = ShowInfo.getUitfShowName(presentation.getYmd(),
+                presentation.getShift());
+        String[] tags = ShowInfo.getUitfTags();
+        String logbooks = ShowInfo.getUitfLogbooks();
+
+        return PresentationMenuUtil.log(presentation.getPresentationId(),title, body, tags, logbooks,
+                facade, images, presentation.getPresentationType());
+    }
+
+    public static long logCc(CCPresentation presentation, PresentationFacade facade, String body,
+                             List<String> images) throws LogIOException, SchemaUnavailableException,
+            MalformedXMLException, InvalidXMLException, AttachmentSizeException, IOException, LogCertificateException {
+        String title = ShowInfo.getCcShowName(presentation.getYmd(),
+                presentation.getShift());
+        String[] tags = ShowInfo.getCcTags();
+        String logbooks = ShowInfo.getCcLogbooks();
+
+        return PresentationMenuUtil.log(presentation.getPresentationId(),title, body, tags, logbooks,
+                facade, images, presentation.getPresentationType());
+    }
+
+    public static long logLo(LOPresentation presentation, PresentationFacade facade, String body,
+                             List<String> images) throws LogIOException, SchemaUnavailableException,
+            MalformedXMLException, InvalidXMLException, AttachmentSizeException, IOException, LogCertificateException {
+        String title = ShowInfo.getLoShowName(presentation.getYmd(),
+                presentation.getShift());
+        String[] tags = ShowInfo.getCcTags();
+        String logbooks = ShowInfo.getLoLogbooks();
 
         return PresentationMenuUtil.log(presentation.getPresentationId(),title, body, tags, logbooks,
                 facade, images, presentation.getPresentationType());

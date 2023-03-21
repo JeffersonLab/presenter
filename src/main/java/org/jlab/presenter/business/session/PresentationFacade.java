@@ -441,68 +441,32 @@ public class PresentationFacade extends AbstractFacade<Presentation> {
                             imageData);
                     break;
                 case CC_PRESENTATION:
-                    CCPresentation ccPresentation = (CCPresentation) presentation;
-                    title = ShowInfo.getCcShowName(ccPresentation.getYmd(),
-                            ccPresentation.getShift());
-                    tags = ShowInfo.getCcTags();
-                    logbooks = ShowInfo.getCcLogbooks();
-
-                    logId = PresentationMenuUtil.log(
-                            presentation.getPresentationId(),
-                            title,
-                            body,
-                            tags,
-                            logbooks,
+                    logId = PresentationMenuUtil.logCc(
+                            (CCPresentation) presentation,
                             this,
-                            imageData, presentationType);
+                            body,
+                            imageData);
                     break;
                 case LO_PRESENTATION:
-                    LOPresentation loPresentation = (LOPresentation)presentation;
-                    title = ShowInfo.getLoShowName(loPresentation.getYmd(),
-                            loPresentation.getShift());
-                    tags = ShowInfo.getCcTags();
-                    logbooks = ShowInfo.getLoLogbooks();
-
-                    logId = PresentationMenuUtil.log(
-                            presentation.getPresentationId(),
-                            title,
-                            body,
-                            tags,
-                            logbooks,
+                    logId = PresentationMenuUtil.logLo(
+                            (LOPresentation) presentation,
                             this,
-                            imageData, presentationType);
+                            body,
+                            imageData);
                     break;
                 case LASO_PRESENTATION:
-                    LASOPresentation lasoPresentation = (LASOPresentation) presentation;
-                    title = ShowInfo.getLasoShowName(lasoPresentation.getYmd(),
-                            lasoPresentation.getShift());
-                    tags = ShowInfo.getLasoTags();
-                    logbooks = ShowInfo.getLasoLogbooks();
-
-                    logId = PresentationMenuUtil.log(
-                            presentation.getPresentationId(),
-                            title,
-                            body,
-                            tags,
-                            logbooks,
+                    logId = PresentationMenuUtil.logLaso(
+                            (LASOPresentation) presentation,
                             this,
-                            imageData, presentationType);
+                            body,
+                            imageData);
                     break;
                 case UITF_PRESENTATION:
-                    UITFPresentation uitfPresentation = (UITFPresentation) presentation;
-                    title = ShowInfo.getUitfShowName(uitfPresentation.getYmd(),
-                            uitfPresentation.getShift());
-                    tags = ShowInfo.getUitfTags();
-                    logbooks = ShowInfo.getUitfLogbooks();
-
-                    logId = PresentationMenuUtil.log(
-                            presentation.getPresentationId(),
-                            title,
-                            body,
-                            tags,
-                            logbooks,
+                    logId = PresentationMenuUtil.logUitf(
+                            (UITFPresentation) presentation,
                             this,
-                            imageData, presentationType);
+                            body,
+                            imageData);
                     break;
                 default:
                     throw new IllegalArgumentException("Unknown Presentation Type: " + presentationType);
