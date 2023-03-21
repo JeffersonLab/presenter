@@ -70,7 +70,7 @@ public class PDAfternoon extends HttpServlet {
 
             if (presentationId != null) {
                 if(pdf) {
-                    response.sendRedirect(PresentationMenuUtil.getPdfUrl(presentationId));
+                    response.sendRedirect(PresentationMenuUtil.getPdfUrl(request.getContextPath(), presentationId));
                 } else{
                     response.sendRedirect(response.encodeRedirectURL(
                         request.getContextPath() + "/presentation?presentationId="

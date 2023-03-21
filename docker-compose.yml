@@ -29,4 +29,5 @@ services:
       ORACLE_SERVICE: 'xepdb1'
       PUPPET_SHOW_SERVER_URL: 'http://puppet:3000'
       INTERNAL_SERVER_URL: 'http://presenter:8080'
+      PROXY_SERVER: 'localhost:8443'
       TZ: 'America/New_York'

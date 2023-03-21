@@ -46,9 +46,10 @@ public class PresentationMenuUtil {
         // Can't instantiate publicly
     }
 
-    public static String getPdfUrl(BigInteger presentationId) {
+    public static String getPdfUrl(String contextPath, BigInteger presentationId) {
         LinkedHashMap<String, List<String>> params = new LinkedHashMap<>();
-        params.put("url", List.of("https://accweb.acc.jlab.org/presenter/presentation?presentationId=" + presentationId));
+        params.put("url", List.of(contextPath + "/presentation?presentationId=" + presentationId));
+        params.put("type", List.of("pdf"));
         params.put("filename", List.of("presentation.pdf"));
         params.put("format", List.of("Letter"));
         params.put("landscape", List.of("true"));
@@ -58,15 +59,11 @@ public class PresentationMenuUtil {
         params.put("left", List.of("0.5in"));
         params.put("printBackground", List.of("true"));
         params.put("waitUntil", Arrays.asList("load", "networkidle2"));
-        return "https://accweb.acc.jlab.org/puppet-show/pdf" + ServletUtil.buildQueryString(params, "UTF-8");
+        return contextPath + "/convert" + ServletUtil.buildQueryString(params, "UTF-8");
     }
 
     public static String getAbsolutePdfUrl(HttpServletRequest request, BigInteger presentationId) {
-        String protocol = "http";
-        String host = "localhost";
-        String port = "8080";
-
-        return protocol + "://" + host + ":" + port + getPdfUrl(presentationId);
+        return "https://" + System.getenv("PROXY_SERVER") + getPdfUrl(request.getContextPath(), presentationId);
     }
 
     public static void openOrExport(HttpServletRequest request,
@@ -75,7 +72,7 @@ public class PresentationMenuUtil {
         String action = request.getParameter("action");
 
         if ("Export PDF".equals(action)) {
-            response.sendRedirect(PresentationMenuUtil.getPdfUrl(presentationId));
+            response.sendRedirect(PresentationMenuUtil.getPdfUrl(request.getContextPath(), presentationId));
         } else {
             response.sendRedirect(response.encodeRedirectURL(
                     request.getContextPath() + "/presentation?presentationId="
