@@ -106,9 +106,6 @@ public abstract class ShowInfo {
             case CC_PRESENTATION:
                 info = new CCShowInfo((CCPresentation) presentation);
                 break;
-            case STAFF_PRESENTATION:
-                info = new StaffShowInfo((StaffPresentation) presentation);
-                break;
             case LASO_PRESENTATION:
                 info = new LASOShowInfo((LASOPresentation) presentation);
                 break;
@@ -525,10 +522,6 @@ class UITFShowInfo extends ShowInfo {
         templates.add(new ShiftInfoSlide(presentation.getYmd(), presentation.getShift(),
                 ShiftSlideType.UITF));
         templates.addAll(generalTemplates);
-
-        /*for(Slide s: templates) {
-            s.setSyncFromPresentationType(PresentationType.LO_PRESENTATION);
-        }*/
     }
 
     @Override
@@ -563,45 +556,3 @@ class UITFShowInfo extends ShowInfo {
 }
 
 
-class StaffShowInfo extends ShowInfo {
-
-    private final String name;
-    List<Slide> templates;
-
-    public StaffShowInfo(StaffPresentation presentation) {
-        name = presentation.getStaffId() + " " + presentation.getTitle();
-
-        templates = new ArrayList<>();
-        templates.addAll(generalTemplates);
-    }
-
-    @Override
-    public String getName() {
-        return name;
-    }
-
-    @Override
-    public List<Slide> getTemplateList() {
-        return templates;
-    }
-
-    @Override
-    public String getMenuUrl() {
-        return "staff-menu";
-    }
-
-    @Override
-    public boolean isShiftImport() {
-        return false;
-    }
-
-    @Override
-    public boolean isShiftImportIncludeGraphs() {
-        return false;
-    }
-
-    @Override
-    public boolean isSummaryImport() {
-        return false;
-    }
-}
