@@ -60,7 +60,7 @@ public class SendToElog extends HttpServlet {
                             + "must not be null");
                 }
 
-                logId = presentationFacade.sendELog(presentationId, getServletContext(), request, response);
+                logId = presentationFacade.publicSendELogRequest(presentationId, request, response);
 
                 logger.log(Level.FINE, "Sending to elog; "
                         + "Presentation ID: {0}", presentationId);

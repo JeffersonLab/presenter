@@ -1090,7 +1090,8 @@ presenter.saveSlide = function () {
     request.done(function (data) {
         if ($(".status", data).html() !== "Success") {
             if ($(".code", data).text() === 'SESSION_EXPIRED' || $(".code", data).text() === 'NOT_AUTHORIZED') {
-                presenter.openPageInDialog(presenter.ctx + "/relogin", "Your session has expired");
+                window.open(presenter.ctx + "/relogin", '_blank').focus();
+                //presenter.openPageInDialog(presenter.ctx + "/relogin", "Your session has expired");
             } else {
                 alert('Unable to save slide: ' + $(".reason", data).html());
             }
@@ -1723,7 +1724,8 @@ presenter.sendToElog = function () {
     request.done(function (data) {
         if ($(".status", data).html() !== "Success") {
             if ($(".code", data).text() === 'SESSION_EXPIRED' || $(".code", data).text() === 'NOT_AUTHORIZED') {
-                presenter.openPageInDialog(presenter.ctx + "/relogin", "Your session has expired");
+               window.open(presenter.ctx + "/relogin", '_blank').focus();
+               //presenter.openPageInDialog(presenter.ctx + "/relogin", "Your session has expired");
             } else {
                 alert('Unable to send to eLog: ' + $(".reason", data).html());
             }

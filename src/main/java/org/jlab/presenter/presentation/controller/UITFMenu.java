@@ -152,10 +152,11 @@ public class UITFMenu extends HttpServlet {
             }
 
             if ("Send to eLog".equals(request.getParameter("action"))) {
+                presentationFacade.checkAuthorized();
                 List<String> imageData = new ArrayList<>();
-                String body = presentationFacade.getPresentationHTML(getServletContext(), request,
+                String body = presentationFacade.getPresentationHTML(request,
                         response, presentationId, imageData);
-                PresentationMenuUtil.log(request, response,
+                PresentationMenuUtil.logAndRedirect(request, response,
                         presentationId,
                         "UITF Shift Log " + ShowInfo.getLoShowName(ymd, shift),
                         body,

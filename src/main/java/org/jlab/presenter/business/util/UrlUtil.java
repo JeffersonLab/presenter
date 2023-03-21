@@ -53,8 +53,8 @@ public class UrlUtil {
         return "https://" + hostname + "/presenter/presentation/" + presentationId + "#1";
     }    
     
-    public static String getPresentationLogUrl(BigInteger presentationId) {
-        return "https://" + hostname + "/presenter/send-to-elog?presentationId=" + presentationId;
+    public static String getPresentationELogBodyUrl(BigInteger presentationId) {
+        return "https://" + hostname + "/presenter/elog-html?presentationId=" + presentationId;
     }        
     
     public static String getDailyBeamAccountingUrl(Date date) {

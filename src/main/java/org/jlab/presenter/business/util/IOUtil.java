@@ -142,7 +142,30 @@ public class IOUtil {
         
         return org.apache.taglibs.standard.functions.Functions.escapeXml(input);
     }
-    
+
+
+    public static String doHtmlGet(String urlStr, int connectTimeout, int readTimeout, boolean strictChecking) throws IOException {
+        URL url;
+        HttpURLConnection con;
+
+        url = new URL(urlStr);
+        con = (HttpURLConnection) url.openConnection();
+        con.setRequestMethod("GET");
+
+        con.setConnectTimeout(connectTimeout);
+        con.setReadTimeout(readTimeout);
+
+        if(!strictChecking) {
+            try {
+                relaxCertificateChecking(con);
+            } catch(Exception e) {
+                throw new RuntimeException("Unable to relax certificate checking", e);
+            }
+        }
+
+        return streamToString(con.getInputStream(), "UTF-8");
+    }
+
     public static String doHtmlPost(String urlStr, int connectTimeout, int readTimeout, boolean strictChecking) throws IOException {
         URL url;
         HttpURLConnection con;

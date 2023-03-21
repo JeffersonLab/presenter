@@ -1,7 +1,6 @@
 package org.jlab.presenter.business.session;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Date;
@@ -26,7 +25,6 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
-import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -212,18 +210,30 @@ public class PresentationFacade extends AbstractFacade<Presentation> {
         return username;
     }
 
-    @PermitAll
-    public String getPresentationCSS(ServletContext context) {
-        String css;
+    public List<String> getPresentationImages(BigInteger presentationId) {
+        List<String> images = new ArrayList<>();
 
-        InputStream in = context.getResourceAsStream("/resources/css/slides.css");
-        css = IOUtil.streamToString(in, "UTF-8");
+        Presentation presentation = find(presentationId);
 
-        return css;
+        populateSyncedInfo(presentation);
+
+        if (presentation != null && presentation.getSlideList() != null) {
+            for (Slide slide : presentation.getSlideList()) {
+                if (slide instanceof ImageSlide) {
+                    ImageSlide imageSlide = (ImageSlide) slide;
+                    String image = imageSlide.getImageUrl();
+                    if (image != null && !image.isEmpty()) {
+                        images.add(image);
+                    }
+                }
+            }
+        }
+
+        return images;
     }
 
     @PermitAll
-    public String getPresentationHTML(ServletContext servletContext, HttpServletRequest request,
+    public String getPresentationHTML(HttpServletRequest request,
             HttpServletResponse response, BigInteger presentationId, List<String> imageData) throws
             ServletException, IOException {
 
@@ -235,19 +245,6 @@ public class PresentationFacade extends AbstractFacade<Presentation> {
         
         if (presentation != null && presentation.getSlideList() != null) {
             builder.append("<div class=\"presentation\">\n");
-            //String css = getPresentationCSS(servletContext);
-            //builder.append("<style type=\"text/css\" scoped>\n");
-            //builder.append(css);
-            //builder.append("\n");
-            //builder.append(".presentation {color: black; font-size: 10px; line-height: 10px;}\n");
-            //builder.append(".presentation .slide .placeholder {display: none;}\n");
-            //builder.append(".presentation .slide .title {background-color: navy;}\n");
-            //builder.append(".presentation .slide {margin-bottom: 20px; width: 800px; height: 600px; font-size: 20px;}\n");
-            //builder.append(".presentation .slide iframe {width: 1280px; height: 960px; -moz-transform-origin: 0 0 0; -ms-transform-origin: 0 0 0; -webkit-transform-origin: 0 0 0; -o-transform-origin: 0 0 0; transform-origin: 0 0 0; -moz-transform: scale(0.625); -ms-transform: scale(0.625); -webkit-transform: scale(0.625); -o-transform: scale(0.625); transform: scale(0.625);}\n");
-            //builder.append(".presentation .see-also h2 {color: black; font-size: 16px; margin: 10px; line-height: 16px; font-weight: bold;}\n");
-            //builder.append(".presentation .see-also a, .see-also a:active, .see-also a:visited {color: blue;}\n");
-            //builder.append(".presentation .see-also li {color: black; font-size: 12px; margin: 10px;}");
-            //builder.append("</style>\n");
             ArrayList<String> seeAlsoUrl = new ArrayList<>();
             ArrayList<String> seeAlsoLabel = new ArrayList<>();
             int figureNum = 1;
@@ -278,10 +275,6 @@ public class PresentationFacade extends AbstractFacade<Presentation> {
                         e.text("");
                     }
                     html = doc.body().html();
-                    //System.out.println("After: " + html);
-                    /*System.out.println("Before: " + html);
-                     html = html.replaceAll("(<div class=\"placeholder(.*?)</div>)*", "");
-                     System.out.println("After: " + html);*/
                     builder.append(html);
                 }
             }
@@ -414,13 +407,21 @@ public class PresentationFacade extends AbstractFacade<Presentation> {
     }
 
     @PermitAll
-    public long sendELog(BigInteger presentationId, ServletContext servletContext,
+    public long publicSendELogRequest(BigInteger presentationId,
+                                      HttpServletRequest request, HttpServletResponse response) throws WebAppException {
+        Presentation presentation = find(presentationId);
+
+        checkAuthorized();
+
+        return sendELog(presentation, request, response);
+    }
+
+    @PermitAll
+    public long sendELog(Presentation presentation,
             HttpServletRequest request, HttpServletResponse response) throws WebAppException {
         try {
-            Presentation presentation = find(presentationId);
-
             List<String> imageData = new ArrayList<>();
-            String body = getPresentationHTML(servletContext, request, response, presentationId,
+            String body = getPresentationHTML(request, response, presentation.getPresentationId(),
                     imageData);
 
             String title = "";
@@ -429,13 +430,15 @@ public class PresentationFacade extends AbstractFacade<Presentation> {
 
             PresentationType presentationType = presentation.getPresentationType();
 
+            long logId = -1;
+
             switch (presentationType) {
                 case PD_PRESENTATION:
-                    PDPresentation pdPresentation = (PDPresentation) presentation;
-                    title = ShowInfo.getPdShowName(pdPresentation.getPdPresentationType(),
-                            pdPresentation.getDeliveryYmd());
-                    tags = ShowInfo.getPdTags(pdPresentation.getPdPresentationType());
-                    logbooks = ShowInfo.getPdLogbooks();
+                    logId = PresentationMenuUtil.logPd(
+                            (PDPresentation) presentation,
+                            this,
+                            body,
+                            imageData);
                     break;
                 case CC_PRESENTATION:
                     CCPresentation ccPresentation = (CCPresentation) presentation;
@@ -443,6 +446,15 @@ public class PresentationFacade extends AbstractFacade<Presentation> {
                             ccPresentation.getShift());
                     tags = ShowInfo.getCcTags();
                     logbooks = ShowInfo.getCcLogbooks();
+
+                    logId = PresentationMenuUtil.log(
+                            presentation.getPresentationId(),
+                            title,
+                            body,
+                            tags,
+                            logbooks,
+                            this,
+                            imageData, presentationType);
                     break;
                 case LO_PRESENTATION:
                     LOPresentation loPresentation = (LOPresentation)presentation;
@@ -450,6 +462,15 @@ public class PresentationFacade extends AbstractFacade<Presentation> {
                             loPresentation.getShift());
                     tags = ShowInfo.getCcTags();
                     logbooks = ShowInfo.getLoLogbooks();
+
+                    logId = PresentationMenuUtil.log(
+                            presentation.getPresentationId(),
+                            title,
+                            body,
+                            tags,
+                            logbooks,
+                            this,
+                            imageData, presentationType);
                     break;
                 case LASO_PRESENTATION:
                     LASOPresentation lasoPresentation = (LASOPresentation) presentation;
@@ -457,6 +478,15 @@ public class PresentationFacade extends AbstractFacade<Presentation> {
                             lasoPresentation.getShift());
                     tags = ShowInfo.getLasoTags();
                     logbooks = ShowInfo.getLasoLogbooks();
+
+                    logId = PresentationMenuUtil.log(
+                            presentation.getPresentationId(),
+                            title,
+                            body,
+                            tags,
+                            logbooks,
+                            this,
+                            imageData, presentationType);
                     break;
                 case UITF_PRESENTATION:
                     UITFPresentation uitfPresentation = (UITFPresentation) presentation;
@@ -464,19 +494,19 @@ public class PresentationFacade extends AbstractFacade<Presentation> {
                             uitfPresentation.getShift());
                     tags = ShowInfo.getUitfTags();
                     logbooks = ShowInfo.getUitfLogbooks();
+
+                    logId = PresentationMenuUtil.log(
+                            presentation.getPresentationId(),
+                            title,
+                            body,
+                            tags,
+                            logbooks,
+                            this,
+                            imageData, presentationType);
                     break;
                 default:
                     throw new IllegalArgumentException("Unknown Presentation Type: " + presentationType);
             }
-
-            long logId = PresentationMenuUtil.logAsync(request, response,
-                    presentationId,
-                    title,
-                    body,
-                    tags,
-                    logbooks,
-                    this,
-                    imageData, presentationType);
 
             return logId;
         } catch (Exception e) {

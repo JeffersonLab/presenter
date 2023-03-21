@@ -26,6 +26,7 @@ import org.jlab.jlog.exception.MalformedXMLException;
 import org.jlab.jlog.exception.SchemaUnavailableException;
 import org.jlab.presenter.business.session.PresentationFacade;
 import org.jlab.presenter.business.util.IOUtil;
+import org.jlab.presenter.persistence.entity.PDPresentation;
 import org.jlab.presenter.persistence.enumeration.PresentationType;
 
 /**
@@ -62,8 +63,8 @@ public class PresentationMenuUtil {
         return contextPath + "/convert" + ServletUtil.buildQueryString(params, "UTF-8");
     }
 
-    public static String getAbsolutePdfUrl(HttpServletRequest request, BigInteger presentationId) {
-        return "https://" + System.getenv("PROXY_SERVER") + getPdfUrl(request.getContextPath(), presentationId);
+    public static String getAbsolutePdfUrl(String contextPath, BigInteger presentationId) {
+        return "https://" + System.getenv("PROXY_SERVER") + getPdfUrl(contextPath, presentationId);
     }
 
     public static void openOrExport(HttpServletRequest request,
@@ -80,14 +81,14 @@ public class PresentationMenuUtil {
         }
     }
 
-    private static File createPdf(File dir, String name, HttpServletRequest request, BigInteger presentationId) throws IOException {
+    private static File createPdf(File dir, String name, String contextPath, BigInteger presentationId) throws IOException {
         File tmp = new File(dir, name + ".pdf");
 
         if (!tmp.createNewFile()) {
             throw new IllegalStateException("Unable to create a new file: " + tmp.getAbsolutePath());
         }
 
-        URL url = new URL(getAbsolutePdfUrl(request, presentationId));
+        URL url = new URL(getAbsolutePdfUrl(contextPath, presentationId));
 
         InputStream in = null;
         FileOutputStream out = null;      
@@ -147,28 +148,27 @@ public class PresentationMenuUtil {
         return files;
     }
     
-    public static long logAsync(HttpServletRequest request,
-            HttpServletResponse response,
+    public static long log(
             BigInteger presentationId,
             String title,
             String body,
             String[] tags,
             String logbooks,
             PresentationFacade presentationFacade,
-            List<String> imageData, PresentationType presentationType) throws ServletException, IOException, SchemaUnavailableException, MalformedXMLException, InvalidXMLException, LogIOException, AttachmentSizeException, LogCertificateException {
+            List<String> imageData, PresentationType presentationType) throws IOException, SchemaUnavailableException,
+            MalformedXMLException, InvalidXMLException, LogIOException, AttachmentSizeException,
+            LogCertificateException {
         File dir = IOUtil.createTempDir();
         
         long logId;
         
         try {
-            //File pdf = createPdf(dir, title, request, presentationId);
             List<File> imageFiles = createImageFiles(dir, imageData);
             
             List<String> files = new ArrayList<String>();
             for(File f: imageFiles) {
                 files.add(f.getAbsolutePath());
             }
-            //files.add(pdf.getAbsolutePath());
             
             logId = presentationFacade.sendELog(title, body, true, tags, logbooks, files.toArray(new String[0]), presentationId, presentationType);
         } finally {
@@ -186,25 +186,42 @@ public class PresentationMenuUtil {
 
         return logId;
     }
-    
-    public static void log(HttpServletRequest request,
-            HttpServletResponse response,
-            BigInteger presentationId,
-            String title,
-            String body,
-            String[] tags,
-            String logbooks,
-            String redirect,
-            PresentationFacade presentationFacade,
-            List<String> imageData,
-            PresentationType presentationType) throws ServletException, IOException {
+
+    public static void logAndRedirect(HttpServletRequest request,
+                                      HttpServletResponse response,
+                                      BigInteger presentationId,
+                                      String title,
+                                      String body,
+                                      String[] tags,
+                                      String logbooks,
+                                      String redirect,
+                                      PresentationFacade presentationFacade,
+                                      List<String> imageData,
+                                      PresentationType presentationType) throws ServletException, IOException {
+
+        long logId = logWithPdf(request.getContextPath(), presentationId, title, body, tags, logbooks, presentationFacade,
+                imageData, presentationType);
+
+        response.sendRedirect(response.encodeRedirectURL(
+                request.getContextPath() + redirect + "?elogId=" + logId));
+    }
+
+    public static long logWithPdf(String contextPath,
+                                  BigInteger presentationId,
+                                  String title,
+                                  String body,
+                                  String[] tags,
+                                  String logbooks,
+                                  PresentationFacade presentationFacade,
+                                  List<String> imageData,
+                                  PresentationType presentationType) {
 
         File dir = IOUtil.createTempDir();
         
         long logId;
         
         try {
-            File pdf = createPdf(dir, title, request, presentationId);
+            File pdf = createPdf(dir, title, contextPath, presentationId);
             List<File> imageFiles = createImageFiles(dir, imageData);
             
             List<String> files = new ArrayList<String>();
@@ -229,13 +246,24 @@ public class PresentationMenuUtil {
                 logger.log(Level.WARNING, "Unable to delete temporary directory: {0}", dir.getAbsolutePath());
             }
         }
-
-        response.sendRedirect(response.encodeRedirectURL(
-                request.getContextPath() + redirect + "?elogId=" + logId));
+        return logId;
     }
 
     public static long copy(InputStream in, FileOutputStream out) throws IOException {
         ReadableByteChannel rbc = Channels.newChannel(in);
         return out.getChannel().transferFrom(rbc, 0, Long.MAX_VALUE);
+    }
+
+    public static long logPd(PDPresentation presentation, PresentationFacade facade, String body,
+                             List<String> images) throws ServletException,
+            LogIOException, SchemaUnavailableException, MalformedXMLException, InvalidXMLException,
+            AttachmentSizeException, IOException, LogCertificateException {
+        String title = ShowInfo.getPdShowName(presentation.getPdPresentationType(),
+                presentation.getDeliveryYmd());
+        String[] tags = ShowInfo.getPdTags(presentation.getPdPresentationType());
+        String logbooks = ShowInfo.getPdLogbooks();
+
+        return PresentationMenuUtil.log(presentation.getPresentationId(),title, body, tags, logbooks,
+                facade, images, presentation.getPresentationType());
     }
 }

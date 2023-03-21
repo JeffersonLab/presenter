@@ -11,8 +11,6 @@ public class TemplateExecutor {
     public static String execute(HttpServletRequest request, 
             HttpServletResponse response, Slide slide) 
             throws ServletException, IOException {
-        /*InternalRequestWrapper requestWrapper = new InternalRequestWrapper(
-                request, template.getParameterMap());*/
         request.setAttribute("slide", slide);
         InternalResponseWrapper responseWrapper = new InternalResponseWrapper(
                 response);

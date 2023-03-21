@@ -2,6 +2,7 @@ package org.jlab.presenter.business.session;
 
 import java.math.BigInteger;
 import java.util.Date;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
@@ -17,6 +18,7 @@ import org.jlab.presenter.business.util.IOUtil;
 import org.jlab.presenter.business.util.TimeUtil;
 import org.jlab.presenter.business.util.UrlUtil;
 import org.jlab.presenter.persistence.enumeration.PDPresentationType;
+import org.jlab.presenter.presentation.util.PresentationMenuUtil;
 
 @Singleton
 @Startup
@@ -30,6 +32,8 @@ public class DailyScheduledLogger {
     private TimerService timerService;
     @EJB
     PDPresentationFacade pdPresentationFacade;
+    @EJB
+    PresentationFacade presentationFacade;
 
     @PostConstruct
     private void init() {
@@ -71,14 +75,26 @@ public class DailyScheduledLogger {
 
             if (presentationId != null) {
                 // Make an HTTP Request as we need the Servlet Engine to do this
-                String url = UrlUtil.getPresentationLogUrl(presentationId);
+                String url = UrlUtil.getPresentationELogBodyUrl(presentationId);
                 try {
                     boolean strictChecking = !url.contains("accwebtest") && !url.contains("localhost");
 
-                    String response = IOUtil.doHtmlPost(url, 10000, 10000, strictChecking);
+                    String response = IOUtil.doHtmlGet(url, 10000, 10000, strictChecking);
                     logger.log(Level.FINEST, "AutoLog Response: {0}", response);
                     if(response.contains("Error")) {
                         logger.log(Level.WARNING, "Unable to automatically create 8:00 presentation log entry: {0}", response);
+                    }
+
+                    List<String> images = presentationFacade.getPresentationImages(presentationId);
+
+                    long logId = PresentationMenuUtil.logPd(
+                            pdPresentationFacade.find(presentationId),
+                            presentationFacade,
+                            response,
+                            images);
+
+                    if(logId == -1) {
+                        logger.log(Level.WARNING, "Unable to create 1:30 log entry, result is -1");
                     }
                 } catch (Exception e) {
                     logger.log(Level.WARNING,
