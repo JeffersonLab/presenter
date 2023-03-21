@@ -22,6 +22,7 @@ import org.jlab.presenter.persistence.enumeration.PresentationType;
  * @author ryans
  */
 @Stateless
+@DeclareRoles({"pd", "cc", "presenter-admin"})
 public class SlideFacade extends AbstractFacade<Slide> {
 
     @PersistenceContext(unitName = "presenterPU")
@@ -44,8 +45,6 @@ public class SlideFacade extends AbstractFacade<Slide> {
 
     /**
      * Delete slide.
-     *
-     * TODO: This should be restricted to oability, pd, cc, etc?
      *
      * @param slideId Slide ID
      * @return Presentation

@@ -10,7 +10,6 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
-import org.hibernate.Hibernate;
 import org.jlab.presenter.business.exception.WebAppException;
 import org.jlab.presenter.business.util.TimeUtil;
 import org.jlab.presenter.persistence.entity.*;
@@ -25,7 +24,7 @@ import org.jlab.presenter.presentation.util.PDPresentationUtil;
  * @author ryans
  */
 @Stateless
-@DeclareRoles({"pd", "oability"})
+@DeclareRoles({"pd", "presenter-admin"})
 public class PDPresentationFacade extends AbstractFacade<PDPresentation> {
 
     @PersistenceContext(unitName = "presenterPU")
@@ -55,11 +54,6 @@ public class PDPresentationFacade extends AbstractFacade<PDPresentation> {
     @PermitAll
     public PDPresentation findWithSlides(BigInteger id) {
         PDPresentation p = find(id);
-       
-        // Note: the only thing that works now is setting Presentation entity FetchType.EAGER.  Not even Hibernate.initialize(slide) works with current version of Hibernate.     
-        /*if (p != null) {
-            p.getSlideList().size(); // Touch slides to prompt EM to load them (this is a hack due to missing support in JPA!)
-        }*/
 
         return p;
     }
@@ -255,7 +249,7 @@ public class PDPresentationFacade extends AbstractFacade<PDPresentation> {
         return q.getResultList();
     }
 
-    @RolesAllowed({"pd", "oability"})
+    @RolesAllowed({"pd", "presenter-admin"})
     public void delete(BigInteger presentationId) {
         Presentation p = presentationFacade.find(presentationId);
 

@@ -67,7 +67,7 @@
                     </dl>
                     <button type="submit" value="Open" name="action">Open / Create</button>
                     <button type="submit" value="Export PDF" name="action">Export PDF</button>
-                    <c:if test="${pageContext.request.isUserInRole('oability')}">
+                    <c:if test="${pageContext.request.isUserInRole('presenter-admin')}">
                         <button type="submit" value="Delete" name="action" onclick="return confirm('Are you sure you want to delete this presentation?')">Delete</button>
                     </c:if>
                     <c:if test="${param.elogId ne null}">

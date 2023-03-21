@@ -61,7 +61,7 @@ import org.jsoup.select.Elements;
  * @author ryans
  */
 @Stateless
-@DeclareRoles({"pd", "cc", "oability"})
+@DeclareRoles({"pd", "cc", "presenter-admin"})
 public class PresentationFacade extends AbstractFacade<Presentation> {
 
     private final static Logger LOGGER
@@ -97,7 +97,6 @@ public class PresentationFacade extends AbstractFacade<Presentation> {
         return p;
     }
 
-    //@RolesAllowed({"PROGRAM_DEPUTY", "OPERABILITY_MANAGER"})
     @PermitAll
     public int delete(BigInteger presentationId) {
         Query q = em.createNamedQuery("Presentation.delete");
