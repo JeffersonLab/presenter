@@ -58,7 +58,7 @@ public class ShowPresentation extends HttpServlet {
 
         boolean editable = presentationFacade.isAuthorized(presentation.getPresentationType());
 
-        String logbookHostname = System.getenv("LOGBOOK_HOSTNAME");
+        String logbookHostname = System.getenv("LOGBOOK_SERVER");
 
         ShowInfo info = ShowInfo.getShowInfo(presentation, editable, logbookHostname);
 

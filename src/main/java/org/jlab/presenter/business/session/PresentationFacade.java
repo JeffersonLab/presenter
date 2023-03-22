@@ -336,18 +336,16 @@ public class PresentationFacade extends AbstractFacade<Presentation> {
             throws SchemaUnavailableException, MalformedXMLException,
             InvalidXMLException, LogIOException, AttachmentSizeException, LogCertificateException {
 
-        String logbookHostname = System.getenv("LOGBOOK_HOSTNAME");
+        String logbookServer = System.getenv("LOGBOOK_SERVER");
 
-        if(logbookHostname == null) {
-            logbookHostname = "logbooktest.acc.jlab.org";
-            LOGGER.log(Level.WARNING,
-                    "Environment variable 'LOGBOOK_HOSTNAME' not found, using default logbooktest");
+        if(logbookServer == null) {
+            throw new RuntimeException("LOGBOOK_SERVER env not set");
         }
 
         Properties config = Library.getConfiguration();
 
-        config.setProperty("SUBMIT_URL", "https://" + logbookHostname + "/incoming");
-        config.setProperty("FETCH_URL", "https://" + logbookHostname + "/entry");
+        config.setProperty("SUBMIT_URL", "https://" + logbookServer + "/incoming");
+        config.setProperty("FETCH_URL", "https://" + logbookServer + "/entry");
 
         String entrymaker = context.getCallerPrincipal().getName();
         
