@@ -49,7 +49,20 @@ This application requires a Java 11+ JVM and standard library to run, plus a Jav
 Wildfly must be pre-configured before the first deployment of the app.  The [smoothness bash scripts](https://github.com/JeffersonLab/smoothness#configtime) can be used to accomplish this.  See the [Dockerfile](https://github.com/JeffersonLab/presenter/blob/main/Dockerfile) for an example.
 
 ### Runtime
-Uses the [Smoothness Environment Variables](https://github.com/JeffersonLab/smoothness#global-runtime).
+Uses the [Smoothness Environment Variables](https://github.com/JeffersonLab/smoothness#global-runtime) plus the following application specific:
+
+| Name                              | Description                                                                                                                                 |
+|-----------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------|
+| CALENDAR_URL                      | ATLis SAD Calendar URL                                                                                                                      |
+| BTM_URL                           | Beam time mananger URL               |
+| DTM_URL                           | Down time manager URL                |
+| POWER_URL                         | Power meters URL                     |
+| SRM_URL                           | System readiness manager URL         |
+| WEATHER_URL                       | Weather app URL                      |
+| WHITEBOARD_URL                    | Whiteboard app URL                   |
+| WORKMAP_URL                       | ATLis Workmap URL                    |
+
+**See**: Docker [config](https://github.com/JeffersonLab/presenter/blob/main/docker-compose.yml) example.
 
 ### Database
 The application requires an Oracle 18+ database with the following [schema](https://github.com/JeffersonLab/presenter/tree/main/docker/oracle/setup) installed.   The application server hosting the app must also be configured with a JNDI datasource.
