@@ -283,7 +283,7 @@
             </c:forEach>
             presenter.editable = ${show.editable};
             /*Same-origin policy applies*/
-            presenter.resizeUrl = window.location.protocol + '//' + window.location.host + '/image-magic/convert';
+            presenter.resizeUrl = presenter.ctx + '/resize';
             <c:if test="${presentation.presentationType == 'PD_PRESENTATION'}">
                 <fmt:formatDate value="${presentation.deliveryYmd}" var="deliveryDate" pattern="yyyy-MM-dd"/>
             presenter.deliveryDate = "${deliveryDate}";
