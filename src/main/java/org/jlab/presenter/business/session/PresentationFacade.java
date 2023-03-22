@@ -338,6 +338,16 @@ public class PresentationFacade extends AbstractFacade<Presentation> {
 
         String logbookServer = System.getenv("LOGBOOK_SERVER");
 
+        // In the absence of a test server an alternative is to use production server,
+        // but route entries to TLOG
+        String logbookDebug = System.getenv("LOGBOOK_DEBUG");
+
+        if("true".equals(logbookDebug)) {
+            logbooks = "TLOG";
+            LOGGER.log(Level.INFO, "Using logbook TLOG");
+            tags = null;
+        }
+
         if(logbookServer == null) {
             throw new RuntimeException("LOGBOOK_SERVER env not set");
         }
