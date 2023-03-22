@@ -37,5 +37,5 @@ services:
       WORKMAP_URL: 'https://ace.jlab.org/workmap'
       WEATHER_URL: 'https://accweb.acc.jlab.org/weather'
       WHITEBOARD_URL: 'https://cebaf.jlab.org/files/ops/accboard/'
-      POWER_URL: 'https://accweb.acc.jlab.org/apps/meters'
+      POWER_URL: 'https://ace.jlab.org/apps/meters-dashboard'
       TZ: 'America/New_York'
