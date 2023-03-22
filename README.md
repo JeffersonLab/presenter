@@ -80,7 +80,7 @@ gradlew build
 **Note for JLab On-Site Users**: Jefferson Lab has an intercepting [proxy](https://gist.github.com/slominskir/92c25a033db93a90184a5994e71d0b78)
 
 ## Release
-1. Bump the date, version number, and resource number in build.gradle and commit and push to GitHub (using [Semantic Versioning](https://semver.org/)).
+1. Bump the release date and version number in build.gradle and commit and push to GitHub (using [Semantic Versioning](https://semver.org/)).
 2. Create a new release on the GitHub Releases page corresponding to the same version in the build.gradle.   The release should enumerate changes and link issues.   A war artifact can be attached to the release to facilitate easy install by users.
 3. Build and publish a new Docker image [from the GitHub tag](https://gist.github.com/slominskir/a7da801e8259f5974c978f9c3091d52c#8-build-an-image-based-of-github-tag). GitHub is configured to do this automatically on git push of semver tag (typically part of GitHub release) or the [Publish to DockerHub](https://github.com/JeffersonLab/presenter/actions/workflows/docker-publish.yml) action can be manually triggered after selecting a tag.
 4. Bump and commit quick start [image version](https://github.com/JeffersonLab/presenter/blob/main/docker-compose.override.yml)
