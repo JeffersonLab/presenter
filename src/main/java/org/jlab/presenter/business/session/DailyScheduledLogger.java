@@ -77,7 +77,7 @@ public class DailyScheduledLogger {
                 // Make an HTTP Request as we need the Servlet Engine to do this
                 String url = UrlUtil.getPresentationELogBodyUrl(presentationId);
                 try {
-                    boolean strictChecking = !url.contains("accwebtest") && !url.contains("localhost");
+                    boolean strictChecking = true;
 
                     String response = IOUtil.doHtmlGet(url, 10000, 10000, strictChecking);
                     logger.log(Level.FINEST, "AutoLog Response: {0}", response);

@@ -28,11 +28,6 @@ public class ConfigurationParameterInit implements ServletContextListener {
 
         String proxyServer = System.getenv("PROXY_SERVER");
 
-        // If null or empty set to sensible (production) default
-        if (proxyServer == null || proxyServer.trim().isEmpty()) {
-            proxyServer = "accweb.acc.jlab.org";
-        }
-
         context.setInitParameter("PROXY_SERVER", proxyServer);
         LOGGER.log(Level.FINEST, "Setting PROXY_SERVER: {0}", proxyServer);
 
