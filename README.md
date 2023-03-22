@@ -1,5 +1,5 @@
 # presenter [![CI](https://github.com/JeffersonLab/presenter/actions/workflows/ci.yml/badge.svg)](https://github.com/JeffersonLab/presenter/actions/workflows/ci.yml) [![Docker](https://img.shields.io/docker/v/jeffersonlab/presenter?sort=semver&label=DockerHub)](https://hub.docker.com/r/jeffersonlab/presenter)
-A Java EE 8 web application for Program Deputy (PD) presentations at Jefferson Lab.
+A [Java EE 8](https://en.wikipedia.org/wiki/Jakarta_EE) web application for Program Deputy (PD) presentations at Jefferson Lab.
 
 ![Screenshot](https://github.com/JeffersonLab/presenter/raw/main/Screenshot.png?raw=true "Screenshot")
 
@@ -13,7 +13,7 @@ A Java EE 8 web application for Program Deputy (PD) presentations at Jefferson L
 ---
 
 ## Overview
-The JLab presenter app assists crew chiefs in documenting and program deputies reporting on shift activity.  The app tightly integrates with other JLab apps to report downtime ([DTM](https://github.com/JeffersonLab/dtm)), system readiness ([SRM](https://github.com/JeffersonLab/srm)), schedules ([Calendar](https://github.com/JeffersonLab/calendar)), time accounting ([BTM](https://github.com/JeffersonLab/btm)), and geospatial task hazards ([Workmap](https://github.com/JeffersonLab/workmap)).
+The JLab presenter app assists crew chiefs in documenting and program deputies reporting on shift activity.  The app tightly integrates with other JLab apps to report downtime ([DTM](https://github.com/JeffersonLab/dtm)), system readiness ([SRM](https://github.com/JeffersonLab/srm)), schedules ([Calendar](https://github.com/JeffersonLab/calendar)), time accounting ([BTM](https://github.com/JeffersonLab/btm)), and geographical task hazards ([Workmap](https://github.com/JeffersonLab/workmap)).
 
 ## Quick Start with Compose
 1. Grab project
