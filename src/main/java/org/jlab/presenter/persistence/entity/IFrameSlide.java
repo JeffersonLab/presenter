@@ -62,13 +62,6 @@ public class IFrameSlide extends Slide {
         return iframeUrl;
     }
 
-    public String getIframeUrlRelative() {
-
-        String relative = iframeUrl == null ? null : iframeUrl.replace("https://accweb.acc.jlab.org", "");
-
-        return relative;
-    }
-
     public void setIframeUrl(String iframeUrl) {
         this.iframeUrl = iframeUrl;
     }

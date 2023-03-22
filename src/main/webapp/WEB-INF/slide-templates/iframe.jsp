@@ -6,10 +6,10 @@
         <div class="placeholder iframe-placeholder-cover"><div class="iframe-placeholder">Click to add url</div></div>
         <c:choose>
             <c:when test="${lazyLoadFrame eq true}">
-                <div class="lazy-iframe" data-src="${fn:escapeXml(slide.iframeUrlRelative)}"></div>
+                <div class="lazy-iframe" data-src="${fn:escapeXml(slide.iframeUrl)}"></div>
             </c:when>
             <c:otherwise>
-                <iframe src="${fn:escapeXml(slide.iframeUrlRelative)}">This application requires iframes and your browser does not support them.</iframe>
+                <iframe src="${fn:escapeXml(slide.iframeUrl)}">This application requires iframes and your browser does not support them.</iframe>
             </c:otherwise>
         </c:choose>
     </div>
