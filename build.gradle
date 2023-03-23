@@ -21,6 +21,9 @@ repositories {
 }
 
 dependencies {
+    // Java 11 / Java EE 8 oddly doesn't support POSTING multipart/form-data
+    implementation 'org.apache.httpcomponents:httpmime:4.5.14'
+
     // Setup should install these into Wildfly
     providedCompile 'org.tuckey:urlrewritefilter:4.0.4',
                     'org.jlab:jlog:5.0.0'
