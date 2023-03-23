@@ -49,16 +49,25 @@ public class Resize extends HttpServlet {
                     "You must be authenticated to perform the requested operation.  Your session may have expired.  Please re-login.");
         }
 
-        String resizeServer = System.getenv("RESIZE_SERVER_URL");
-
-        if(resizeServer == null) {
-           resizeServer = "https://accweb.acc.jlab.org";
-        }
+        String resizeServer = System.getenv("RESIZE_URL");
 
         //response.setHeader("content-type", "application/png");
-        resizeServer = resizeServer + "/image-magic/convert";
+        resizeServer = resizeServer + "/convert";
 
         LOGGER.log(Level.INFO, "Resize URL Request: " + resizeServer);
+
+        /**
+         * Amazingly, sending multipart (binary data) form post is not supported in Java 11 or Java EE 8.
+         * Looks like maybe supported in Jakarta EE 10, which just came out a few months ago (September 2022).
+         * Uploading a binary file on the web was defined in 1998 (https://www.rfc-editor.org/rfc/rfc2388).
+         *
+         * https://github.com/jakartaee/rest/issues/418
+         *
+         * Apparently gold standard is still https://hc.apache.org/
+         *
+         * We need to POST with multipart/form-data instead of application/x-www-form-urlencoded
+         *
+         * */
 
         HttpClient client = HttpClient.newHttpClient();
 
