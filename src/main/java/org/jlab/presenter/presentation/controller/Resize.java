@@ -42,6 +42,7 @@ public class Resize extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
+        // All of this proxy complexity is really just to ensure only authenticated users are using the resize service.
         String username = request.getUserPrincipal().getName();
 
         if (username == null || username.isEmpty() || username.equalsIgnoreCase("ANONYMOUS")) {
