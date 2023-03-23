@@ -14,6 +14,11 @@ services:
       file: deps.yml
       service: puppet
 
+  resize:
+    extends:
+      file: deps.yml
+      service: resize
+
   presenter:
     hostname: presenter
     container_name: presenter

@@ -14,6 +14,11 @@ services:
       file: docker-compose.yml
       service: puppet
 
+  resize:
+    extends:
+      file: docker-compose.yml
+      service: resize
+
   presenter:
     extends:
       file: docker-compose.yml
