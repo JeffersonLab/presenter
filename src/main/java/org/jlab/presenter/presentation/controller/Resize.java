@@ -71,7 +71,8 @@ public class Resize extends HttpServlet {
          * Looks like maybe supported in Jakarta EE 10, which just came out a few months ago (September 2022).
          * Uploading a binary file on the web was defined in 1998 (https://www.rfc-editor.org/rfc/rfc2388).
          *
-         * Note: receiving multipart data IS supported.
+         * Note: receiving multipart data IS supported.  Though confusingly getParameter() is overloaded to access
+         * parts that are Strings vs getPart() for binary.
          *
          * https://github.com/jakartaee/rest/issues/418
          *
@@ -131,7 +132,7 @@ public class Resize extends HttpServlet {
             }
         }).start();
 
-        System.out.println("Content-Type: " + httpEntity.getContentType().getValue());
+        LOGGER.log(Level.FINE, "Content-Type: " + httpEntity.getContentType().getValue());
 
         HttpRequest resizeRequest = HttpRequest.newBuilder()
                 .uri(URI.create(resizeServer))
