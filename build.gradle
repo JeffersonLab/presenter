@@ -4,10 +4,10 @@ plugins {
 
 description = "Presentation app"
 group 'org.jlab'
-version = '4.0.1'
+version = '4.0.2'
 
 ext {
-    releaseDate = 'Mar 22 2023'
+    releaseDate = 'Mar 23 2023'
 }
 
 tasks.withType(JavaCompile) {
