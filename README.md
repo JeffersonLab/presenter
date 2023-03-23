@@ -57,6 +57,7 @@ Uses the [Smoothness Environment Variables](https://github.com/JeffersonLab/smoo
 | BTM_URL                           | Beam time mananger URL               |
 | DTM_URL                           | Down time manager URL                |
 | POWER_URL                         | Power meters URL                     |
+| RESIZE_URL                        | ImageMagick resize service URL       |
 | SRM_URL                           | System readiness manager URL         |
 | WEATHER_URL                       | Weather app URL                      |
 | WHITEBOARD_URL                    | Whiteboard app URL                   |
