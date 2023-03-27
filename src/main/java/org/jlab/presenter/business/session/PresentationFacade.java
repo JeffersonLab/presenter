@@ -210,6 +210,7 @@ public class PresentationFacade extends AbstractFacade<Presentation> {
         return username;
     }
 
+    @PermitAll
     public List<String> getPresentationImages(BigInteger presentationId) {
         List<String> images = new ArrayList<>();
 
