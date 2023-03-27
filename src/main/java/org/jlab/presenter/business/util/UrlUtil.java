@@ -125,7 +125,7 @@ public class UrlUtil {
 
     public static String getPowerUrl(Date date) {
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-        return System.getenv("POWER_URL") + "/temp.html?date=" + formatter.format(date);
+        return System.getenv("POWER_URL") + "/presenter-graph.html?date=" + formatter.format(date);
     }
     
     public static Slide getHcoSlide() {
