@@ -30,7 +30,9 @@
         <img class="indicator16x16" alt="Saving..." src="${pageContext.request.contextPath}/resources/v${initParam.releaseNumber}/img/indicator16x16.gif"/>
         <div id="nav">
             <button type="button" id="laser-pointer-button" class="styled-button">Laser On</button>
-            <button type="button" id="send-to-elog-button" class="styled-button">Send to ELog</button>
+            <c:if test="${show.editable}">
+                <button type="button" id="send-to-elog-button" class="styled-button">Send to ELog</button>
+            </c:if>
             <form id="menu-form" class="nav-form" action="${pageContext.request.contextPath}/${fn:escapeXml(show.menuUrl)}" method="get">
                 <button type="submit" id="main-menu-button" class="styled-button" value="Menu">Menu</button>
             </form>
