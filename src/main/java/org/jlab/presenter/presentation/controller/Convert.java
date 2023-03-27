@@ -88,7 +88,7 @@ public class Convert extends HttpServlet {
             puppetServer = puppetServer + "/puppet-show/screenshot";
         }
 
-        puppetServer = puppetServer + "?ignoreHTTPSErrors=true&format=Letter&printBackground=true&landscape=true&waitUntil=load&waitUntil=networkidle2" + "&url=" + internalServer;
+        puppetServer = puppetServer + "?ignoreHTTPSErrors=true&format=Letter&printBackground=true&landscape=true&top=0.5in&waitUntil=load&waitUntil=networkidle2" + "&url=" + internalServer;
 
         if (filename != null && !filename.isEmpty()) {
             response.setHeader("content-disposition", "attachment; filename=\"" + filename + "\"");
