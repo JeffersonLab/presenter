@@ -127,6 +127,12 @@ public class IOUtil {
     
     /* My implementation is terrible so just delegate to fn:escapeXml taglib impl instead */
     public static String escapeXml(String input) {
+
+        // Avoid NPE
+        if(input == null) {
+            input = "";
+        }
+
         /*String output = input;
 
         // Note: if input contains entities already this will break!
