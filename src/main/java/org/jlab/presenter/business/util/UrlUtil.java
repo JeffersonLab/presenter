@@ -22,17 +22,13 @@ public class UrlUtil {
     
     static {
             // Wildfly, if configured to acknowledge proxy, may report proxy hostname via ServletRequest.getServerName, but env lookup means we don't have to be in servlet request context
-            hostname = System.getenv("PROXY_SERVER");
+            hostname = System.getenv("FRONTEND_SERVER_URL");
 
-            logger.log(Level.FINEST, "Using proxy hostname: {0}", hostname);
+            logger.log(Level.FINEST, "Using FRONTEND_SERVER_URL: {0}", hostname);
     }
     
     private UrlUtil() {
         // Can't instantiate publicly
-    }
-    
-    public static String getHostname() {
-        return hostname;
     }
     
     public static String getSrmUrl() {
@@ -50,11 +46,11 @@ public class UrlUtil {
     }    
     
     public static String getPresentationUrl(BigInteger presentationId) {
-        return "https://" + hostname + "/presenter/presentation/" + presentationId + "#1";
+        return hostname + "/presenter/presentation/" + presentationId + "#1";
     }    
     
     public static String getPresentationELogBodyUrl(BigInteger presentationId) {
-        return "https://" + hostname + "/presenter/elog-html?presentationId=" + presentationId;
+        return hostname + "/presenter/elog-html?presentationId=" + presentationId;
     }        
     
     public static String getDailyBeamAccountingUrl(Date date) {

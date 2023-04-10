@@ -26,11 +26,6 @@ public class ConfigurationParameterInit implements ServletContextListener {
         context.setInitParameter("cdnContextPath", "//" + cdnHostname);
         LOGGER.log(Level.FINEST, "Setting CDN_SERVER: {0}", cdnHostname);
 
-        String proxyServer = System.getenv("PROXY_SERVER");
-
-        context.setInitParameter("PROXY_SERVER", proxyServer);
-        LOGGER.log(Level.FINEST, "Setting PROXY_SERVER: {0}", proxyServer);
-
         String notification = System.getenv("SERVER_MESSAGE");
 
         // If not null, but empty set to null

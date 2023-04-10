@@ -64,7 +64,7 @@ public class PresentationMenuUtil {
     }
 
     public static String getAbsolutePdfUrl(String contextPath, BigInteger presentationId) {
-        return "https://" + System.getenv("PROXY_SERVER") + getPdfUrl(contextPath, presentationId);
+        return System.getenv("FRONTEND_SERVER_URL") + getPdfUrl(contextPath, presentationId);
     }
 
     public static void openOrExport(HttpServletRequest request,
