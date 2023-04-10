@@ -145,7 +145,7 @@
                             </form>
                         </c:when>
                         <c:otherwise>
-                                <c:set var="absHostUrl" value="${'https://'.concat(pageContext.request.getServerName())}"/>
+                                <c:set var="absHostUrl" value="${env['FRONTEND_SERVER_URL']}"/>
                                 <c:url value="/sso" var="loginUrl">
                                     <c:param name="returnUrl" value="${absHostUrl.concat(domainRelativeReturnUrl)}"/>
                                 </c:url>
