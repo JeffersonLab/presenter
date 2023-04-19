@@ -47,7 +47,7 @@ public class Convert extends HttpServlet {
         String waitForSelector = request.getParameter("waitForSelector");
 
         String puppetServer = System.getenv("PUPPET_SHOW_SERVER_URL");
-        String internalServer = System.getenv("INTERNAL_SERVER_URL");
+        String internalServer = System.getenv("BACKEND_SERVER_URL");
 
         if(puppetServer == null) {
             puppetServer = "http://localhost";
