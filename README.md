@@ -16,7 +16,7 @@ A [Java EE 8](https://en.wikipedia.org/wiki/Jakarta_EE) web application for Prog
 ---
 
 ## Overview
-The JLab presenter app assists crew chiefs in documenting and program deputies reporting on shift activity.  The app tightly integrates with other JLab apps to report downtime ([DTM](https://github.com/JeffersonLab/dtm)), system readiness ([SRM](https://github.com/JeffersonLab/srm)), schedules ([Calendar](https://github.com/JeffersonLab/calendar)), time accounting ([BTM](https://github.com/JeffersonLab/btm)), and geographical task hazards ([Workmap](https://github.com/JeffersonLab/workmap)).  The [resize](https://github.com/JeffersonLab/resize) app ensures images are reasonably sized.
+The JLab presenter app assists crew chiefs in documenting and program deputies reporting on shift activity.  The app tightly integrates with other JLab apps to report downtime ([DTM](https://github.com/JeffersonLab/dtm)), system readiness ([SRM](https://github.com/JeffersonLab/srm)), schedules ([Calendar](https://github.com/JeffersonLab/calendar)), time accounting ([BTM](https://github.com/JeffersonLab/btm)), geographical task hazards ([Workmap](https://github.com/JeffersonLab/workmap)), and even the [weather](https://github.com/JeffersonLab/weather).  The [resize](https://github.com/JeffersonLab/resize) app ensures images are reasonably sized.
 
 ## Quick Start with Compose
 1. Grab project
