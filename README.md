@@ -70,6 +70,8 @@ Uses a subset of the [Smoothness Environment Variables](https://github.com/Jeffe
 | WEATHER_URL                       | Weather app URL                      |
 | WHITEBOARD_URL                    | Whiteboard app URL                   |
 | WORKMAP_URL                       | ATLis Workmap URL                    |
+| ONSITE_WHITELIST_PATTERN          | Regex pattern pf IP addresses to match to ignore forced auth prompt to view content.  If not set, then no forced prompt is made. |
+| ONSITE_WHITELIST_LOCAL            | Use string "true" to ensure localhost (127.0.0.1) users aren't forced into login to view content.  Note: The built-in cron-like facility of Wildfly to fetch HTML version of presentation to submit to the elog daily requires this to be `true` if you're going to restrict IPs |
 
 **See**: Docker [config](https://github.com/JeffersonLab/presenter/blob/main/docker-compose.yml) example.
 
