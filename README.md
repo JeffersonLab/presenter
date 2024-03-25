@@ -108,11 +108,6 @@ The [server](https://github.com/JeffersonLab/wildfly/blob/main/scripts/server-se
     - The [Create release](https://github.com/JeffersonLab/java-workflows/blob/main/.github/workflows/release.yml) GitHub Action to tag the source and create release notes summarizing any pull requests.   Edit the release notes to add any missing details.  A war file artifact is attached to the release.
     - The [Publish docker image](https://github.com/JeffersonLab/container-workflows/blob/main/.github/workflows/docker-publish.yml) GitHub Action to create a new demo Docker image, and bump the [compose.override.yaml](https://github.com/JeffersonLab/presenter/blob/main/compose.override.yaml) to use the new image.
 
-1. Bump the release date and version number in build.gradle and commit and push to GitHub (using [Semantic Versioning](https://semver.org/)).
-2. Create a new release on the GitHub Releases page corresponding to the same version in the build.gradle.   The release should enumerate changes and link issues.   A war artifact can be attached to the release to facilitate easy install by users.
-3. [Publish to DockerHub](https://github.com/JeffersonLab/presenter/actions/workflows/docker-publish.yml) GitHub Action should run automatically.
-4. Bump and commit quick start [image version](https://github.com/JeffersonLab/presenter/blob/main/docker-compose.override.yml)
-
 ## Deploy
 At JLab this app is found at [ace.jlab.org/presenter](https://ace.jlab.org/presenter) and internally at [acctest.acc.jlab.org/presenter](https://acctest.acc.jlab.org/presenter).  However, those servers are proxies for `wildfly6.acc.jlab.org` and `wildflytest6.acc.jlab.org` respectively.   A [deploy script](https://github.com/JeffersonLab/wildfly/blob/main/scripts/deploy.sh) is provided to automate wget and deploy.  Example:
 
