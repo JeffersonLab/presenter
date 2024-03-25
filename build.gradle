@@ -4,11 +4,8 @@ plugins {
 
 description = "Presentation app"
 group 'org.jlab'
-version = '4.0.6'
-
-ext {
-    releaseDate = 'April 19 2023'
-}
+version new File("./VERSION").text
+ext.releaseDate = new Date().format('MMM dd yyyy')
 
 tasks.withType(JavaCompile) {
     options.release = 11
