@@ -40,7 +40,7 @@ http://localhost:8080/presenter
 ## Install
 This application requires a Java 11+ JVM and standard library to run, plus a Java EE 8+ application server (developed with Wildfly).
 
-1. Install service [dependencies](https://github.com/JeffersonLab/presenter/blob/main/deps.yml)
+1. Install service [dependencies](https://github.com/JeffersonLab/presenter/blob/main/deps.yaml)
 2. Download [Wildfly 26.1.3](https://www.wildfly.org/downloads/)
 3. [Configure](https://github.com/JeffersonLab/presenter#configure) Wildfly and start it
 4. Download [presenter.war](https://github.com/JeffersonLab/presenter/releases) and deploy it to Wildfly
@@ -73,7 +73,7 @@ Uses a subset of the [Smoothness Environment Variables](https://github.com/Jeffe
 | ONSITE_WHITELIST_PATTERN          | Regex pattern pf IP addresses to match to ignore forced auth prompt to view content.  If not set, then no forced prompt is made. |
 | ONSITE_WHITELIST_LOCAL            | Use string "true" to ensure localhost (127.0.0.1) users aren't forced into login to view content.  Note: The built-in cron-like facility of Wildfly to fetch HTML version of presentation to submit to the elog daily requires this to be `true` if you're going to restrict IPs |
 
-**See**: Docker [config](https://github.com/JeffersonLab/presenter/blob/main/docker-compose.yml) example.
+**See**: Docker [config](https://github.com/JeffersonLab/presenter/blob/main/compose.yaml) example.
 
 ### Database
 The application requires an Oracle 18+ database with the following [schema](https://github.com/JeffersonLab/presenter/tree/main/docker/oracle/setup) installed.   The application server hosting the app must also be configured with a JNDI datasource.
@@ -93,7 +93,7 @@ gradlew build
 ## Develop
 In order to iterate rapidly when making changes it's often useful to run the app directly on the local workstation, perhaps leveraging an IDE.  In this scenario run the service dependencies with:
 ```
-docker compose -f deps.yml up
+docker compose -f deps.yaml up
 ```
 **Note**: The local install of Wildfly should be [configured](https://github.com/JeffersonLab/presenter#configure) to proxy connections to services via localhost and therefore the environment variables should contain:
 ```
