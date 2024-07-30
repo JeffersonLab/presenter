@@ -74,7 +74,7 @@ public class ShiftInfoSlide extends Slide {
                 + "                    <p><br/></p>"
                 + "                    <p><b>INJ:</b>&nbsp;</p>\n"
                 + "                    <p><br/></p>"
-                + "                    <p><b>INST:</b>&nbsp;</p>\n"
+                + "                    <p><b>MSSG:</b>&nbsp;</p>\n"
                 + "                    <p><br/></p>"
                 + "                    <p><b>RF:</b>&nbsp;</p>\n"
                 + "                    <p><br/></p>"
