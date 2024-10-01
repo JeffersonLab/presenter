@@ -60,7 +60,7 @@
                         <dt><label for="date">Delivery Date</label></dt>
                         <dd>
                             <fmt:formatDate pattern="yyyy-MM-dd" var="dateStr" value="${defaultDate}"/>
-                            <input id="date" name="date" class="datepicker" type="text" value="${empty dateStr ? param.date : dateStr}"/>
+                            <input id="date" name="date" class="datepicker" type="text" value="${empty dateStr ? fn:escapeXml(param.date) : dateStr}"/>
                             <span class="error">${messages.date}</span>
                             <span class="format">(yyyy-mm-dd)</span>
                         </dd>
@@ -73,7 +73,7 @@
                     <c:if test="${param.elogId ne null}">
                         <c:choose>
                             <c:when test="${param.elogId > 0}">
-                                <span class="success">Log Entry <a target="_blank" href="https://logbooks.jlab.org/entry/${param.elogId}">${param.elogId}</a> Saved</span>                            
+                                <span class="success">Log Entry <a target="_blank" href="https://logbooks.jlab.org/entry/${fn:escapeXml(param.elogId)}"><c:out value="${param.elogId}"/></a> Saved</span>
                             </c:when>
                             <c:when test="${param.elogId eq 0}">
                                 <span class="success">Log Entry Queued</span>                            
@@ -133,8 +133,8 @@
                     <div>
                         <h3>Presentations by Category</h3>
                         <ul>
-                            <li><a href="pd-morning?date=${empty dateStr ? param.date : dateStr}">Today Morning</a> | (<a href="pd-morning?date=${empty dateStr ? param.date : dateStr}&amp;pdf=Y">PDF</a>)</li>
-                            <li><a href="pd-afternoon?date=${empty dateStr ? param.date : dateStr}">Today Afternoon</a> | (<a href="pd-afternoon?date=${empty dateStr ? param.date : dateStr}&amp;pdf=Y">PDF</a>)</li>
+                            <li><a href="pd-morning?date=${empty dateStr ? fn:escapeXml(param.date) : dateStr}">Today Morning</a> | (<a href="pd-morning?date=${empty dateStr ? fn:escapeXml(param.date) : dateStr}&amp;pdf=Y">PDF</a>)</li>
+                            <li><a href="pd-afternoon?date=${empty dateStr ? fn:escapeXml(param.date) : dateStr}">Today Afternoon</a> | (<a href="pd-afternoon?date=${empty dateStr ? fn:escapeXml(param.date) : dateStr}&amp;pdf=Y">PDF</a>)</li>
                         </ul>
                     </div>
             <div>
