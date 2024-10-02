@@ -15,7 +15,6 @@ import org.hibernate.annotations.LazyCollectionOption;
 import org.jlab.presenter.persistence.enumeration.SlideType;
 
 /**
- *
  * @author ryans
  */
 @Entity
@@ -23,157 +22,155 @@ import org.jlab.presenter.persistence.enumeration.SlideType;
 @Table(name = "PD_ACCESS_SLIDE", schema = "PRESENTER_OWNER")
 public class PdAccessSlide extends Slide {
 
-    @Lob
-    @Column(name = "BODY")
-    private String body;
-    @LazyCollection(LazyCollectionOption.FALSE)
-    @OneToMany(mappedBy = "slideId", orphanRemoval = true, cascade = CascadeType.ALL)
-    @OrderBy("orderId asc")
-    private List<AccessRecord> accessRecordList;
+  @Lob
+  @Column(name = "BODY")
+  private String body;
 
-    {
-        setSlideType(SlideType.PD_ACCESS_SLIDE);
+  @LazyCollection(LazyCollectionOption.FALSE)
+  @OneToMany(mappedBy = "slideId", orphanRemoval = true, cascade = CascadeType.ALL)
+  @OrderBy("orderId asc")
+  private List<AccessRecord> accessRecordList;
 
-        accessRecordList = new ArrayList<AccessRecord>();
+  {
+    setSlideType(SlideType.PD_ACCESS_SLIDE);
 
-        String[] types = {
-            "PCC - Planned Configuration Change",
-            "Repair/Investigate",
-            "Opportunistic",
-            "Other"};
-        for (int i = 0; i < types.length; i++) {
-            AccessRecord access = new AccessRecord();
-            access.setSlideId(this);
-            access.setOrderId(Long.valueOf(i + 1));
-            access.setAccessType(types[i]);
-            access.setHallA(0f);
-            access.setHallB(0f);
-            access.setHallC(0f);
-            access.setHallD(0f);
-            access.setAccel(0f);
-            accessRecordList.add(access);
-        }
+    accessRecordList = new ArrayList<AccessRecord>();
 
-        body =
-                "                        <h2>TEST PLANS COMPLETED</h2>\n"
-                + "                        <ul>\n"
-                + "                            <li></li>\n"
-                + "                        </ul>    \n"
-                + "                        <h2>SIGNIFICANT ACHIEVEMENTS</h2>\n"
-                + "                        <ul>\n"
-                + "                            <li></li>\n"
-                + "                        </ul>\n"
-                + "                        <h2>SIGNIFICANT MAINTENANCE/MACHINE DEVELOPMENT ACTIVITIES</h2>\n"
-                + "                        <ul>\n"
-                + "                            <li></li>\n"
-                + "                        </ul>\n"
-                + "                        <h2>SIGNIFICANT PROBLEMS PENDING</h2>\n"
-                + "                        <ul>\n"
-                + "                            <li></li>\n"
-                + "                        </ul>";
-        setLabel("PD Summary Type II #3");
+    String[] types = {
+      "PCC - Planned Configuration Change", "Repair/Investigate", "Opportunistic", "Other"
+    };
+    for (int i = 0; i < types.length; i++) {
+      AccessRecord access = new AccessRecord();
+      access.setSlideId(this);
+      access.setOrderId(Long.valueOf(i + 1));
+      access.setAccessType(types[i]);
+      access.setHallA(0f);
+      access.setHallB(0f);
+      access.setHallC(0f);
+      access.setHallD(0f);
+      access.setAccel(0f);
+      accessRecordList.add(access);
     }
 
-    public PdAccessSlide() {
+    body =
+        "                        <h2>TEST PLANS COMPLETED</h2>\n"
+            + "                        <ul>\n"
+            + "                            <li></li>\n"
+            + "                        </ul>    \n"
+            + "                        <h2>SIGNIFICANT ACHIEVEMENTS</h2>\n"
+            + "                        <ul>\n"
+            + "                            <li></li>\n"
+            + "                        </ul>\n"
+            + "                        <h2>SIGNIFICANT MAINTENANCE/MACHINE DEVELOPMENT ACTIVITIES</h2>\n"
+            + "                        <ul>\n"
+            + "                            <li></li>\n"
+            + "                        </ul>\n"
+            + "                        <h2>SIGNIFICANT PROBLEMS PENDING</h2>\n"
+            + "                        <ul>\n"
+            + "                            <li></li>\n"
+            + "                        </ul>";
+    setLabel("PD Summary Type II #3");
+  }
+
+  public PdAccessSlide() {}
+
+  @Override
+  public Slide copySlide() {
+    PdAccessSlide copy = new PdAccessSlide();
+
+    List<AccessRecord> copyOfAccessRecordList = new ArrayList<AccessRecord>();
+
+    long order = 1;
+
+    for (AccessRecord record : getAccessRecordList()) {
+      AccessRecord copyOfRecord = record.copyRecord();
+      copyOfRecord.setSlideId(copy);
+      copyOfRecord.setOrderId(order++);
+
+      copyOfAccessRecordList.add(copyOfRecord);
     }
 
-    @Override
-    public Slide copySlide() {
-        PdAccessSlide copy = new PdAccessSlide();
+    copy.setAccessRecordList(copyOfAccessRecordList);
+    copy.setBody(getBody());
+    copy.setSlideType(getSlideType());
+    copy.setSyncFromSlideId(getSlideId());
 
-        List<AccessRecord> copyOfAccessRecordList = new ArrayList<AccessRecord>();
+    return copy;
+  }
 
-        long order = 1;
+  @Override
+  public void mergeSlide(Slide other) {
+    if (other instanceof PdAccessSlide) {
+      PdAccessSlide slide = (PdAccessSlide) other;
+      this.setBody(slide.getBody());
 
-        for (AccessRecord record : getAccessRecordList()) {
-            AccessRecord copyOfRecord = record.copyRecord();
-            copyOfRecord.setSlideId(copy);
-            copyOfRecord.setOrderId(order++);
+      long order = 1;
 
-            copyOfAccessRecordList.add(copyOfRecord);
-        }
+      this.getAccessRecordList().clear();
 
-        copy.setAccessRecordList(copyOfAccessRecordList);
-        copy.setBody(getBody());
-        copy.setSlideType(getSlideType());
-        copy.setSyncFromSlideId(getSlideId());
+      for (AccessRecord record : slide.getAccessRecordList()) {
+        AccessRecord copyOfRecord = record.copyRecord();
+        copyOfRecord.setSlideId(this);
+        copyOfRecord.setOrderId(order++);
 
-        return copy;
+        this.getAccessRecordList().add(copyOfRecord);
+      }
     }
+  }
 
-    @Override
-    public void mergeSlide(Slide other) {
-        if (other instanceof PdAccessSlide) {
-            PdAccessSlide slide = (PdAccessSlide) other;
-            this.setBody(slide.getBody());
+  public String getBody() {
+    return body;
+  }
 
-            long order = 1;
+  public void setBody(String body) {
+    this.body = body;
+  }
 
-            this.getAccessRecordList().clear();
+  public List<AccessRecord> getAccessRecordList() {
+    return accessRecordList;
+  }
 
-            for (AccessRecord record : slide.getAccessRecordList()) {
-                AccessRecord copyOfRecord = record.copyRecord();
-                copyOfRecord.setSlideId(this);
-                copyOfRecord.setOrderId(order++);
+  public void setAccessRecordList(List<AccessRecord> accessRecordList) {
+    this.accessRecordList = accessRecordList;
+  }
 
-                this.getAccessRecordList().add(copyOfRecord);
-            }
-        }
+  public Float getHallATotal() {
+    float total = 0f;
+    for (AccessRecord record : accessRecordList) {
+      total = total + ((record.getHallA() == null) ? 0f : record.getHallA());
     }
+    return total;
+  }
 
-    public String getBody() {
-        return body;
+  public Float getHallBTotal() {
+    float total = 0f;
+    for (AccessRecord record : accessRecordList) {
+      total = total + ((record.getHallB() == null) ? 0f : record.getHallB());
     }
+    return total;
+  }
 
-    public void setBody(String body) {
-        this.body = body;
+  public Float getHallCTotal() {
+    float total = 0f;
+    for (AccessRecord record : accessRecordList) {
+      total = total + ((record.getHallC() == null) ? 0f : record.getHallC());
     }
+    return total;
+  }
 
-    public List<AccessRecord> getAccessRecordList() {
-        return accessRecordList;
+  public Float getHallDTotal() {
+    float total = 0f;
+    for (AccessRecord record : accessRecordList) {
+      total = total + ((record.getHallD() == null) ? 0f : record.getHallD());
     }
+    return total;
+  }
 
-    public void setAccessRecordList(List<AccessRecord> accessRecordList) {
-        this.accessRecordList = accessRecordList;
+  public Float getAccTotal() {
+    float total = 0f;
+    for (AccessRecord record : accessRecordList) {
+      total = total + ((record.getAccel() == null) ? 0f : record.getAccel());
     }
-
-    public Float getHallATotal() {
-        float total = 0f;
-        for (AccessRecord record : accessRecordList) {
-            total = total + ((record.getHallA() == null) ? 0f : record.getHallA());
-        }
-        return total;
-    }
-
-    public Float getHallBTotal() {
-        float total = 0f;
-        for (AccessRecord record : accessRecordList) {
-            total = total + ((record.getHallB() == null) ? 0f : record.getHallB());
-        }
-        return total;
-    }
-
-    public Float getHallCTotal() {
-        float total = 0f;
-        for (AccessRecord record : accessRecordList) {
-            total = total + ((record.getHallC() == null) ? 0f : record.getHallC());
-        }
-        return total;
-    }
-
-    public Float getHallDTotal() {
-        float total = 0f;
-        for (AccessRecord record : accessRecordList) {
-            total = total + ((record.getHallD() == null) ? 0f : record.getHallD());
-        }
-        return total;
-    }
-
-    public Float getAccTotal() {
-        float total = 0f;
-        for (AccessRecord record : accessRecordList) {
-            total = total + ((record.getAccel() == null) ? 0f : record.getAccel());
-        }
-        return total;
-    }
+    return total;
+  }
 }

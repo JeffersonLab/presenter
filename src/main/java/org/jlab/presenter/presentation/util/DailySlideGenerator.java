@@ -4,5 +4,5 @@ import java.util.Date;
 import org.jlab.presenter.persistence.entity.Slide;
 
 public interface DailySlideGenerator {
-    Slide getSlideForDay(Date day);
+  Slide getSlideForDay(Date day);
 }
