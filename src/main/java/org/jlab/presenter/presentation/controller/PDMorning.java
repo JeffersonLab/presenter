@@ -16,73 +16,76 @@ import org.jlab.presenter.presentation.util.ConvertAndValidateUtil;
 import org.jlab.presenter.presentation.util.PresentationMenuUtil;
 
 /**
- *
  * @author ryans
  */
-@WebServlet(name = "PDMorning", urlPatterns = {"/pd-morning"})
+@WebServlet(
+    name = "PDMorning",
+    urlPatterns = {"/pd-morning"})
 public class PDMorning extends HttpServlet {
 
-    @EJB
-    PDPresentationFacade pdPresentationFacade;
+  @EJB PDPresentationFacade pdPresentationFacade;
 
-    /**
-     * Handles the HTTP <code>GET</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        BigInteger presentationId = null;
+  /**
+   * Handles the HTTP <code>GET</code> method.
+   *
+   * @param request servlet request
+   * @param response servlet response
+   * @throws ServletException if a servlet-specific error occurs
+   * @throws IOException if an I/O error occurs
+   */
+  @Override
+  protected void doGet(HttpServletRequest request, HttpServletResponse response)
+      throws ServletException, IOException {
+    BigInteger presentationId = null;
 
-        boolean pdf = "Y".equals(request.getParameter("pdf"));
+    boolean pdf = "Y".equals(request.getParameter("pdf"));
 
-        Date ymd = null;
+    Date ymd = null;
 
-        String error = null;
+    String error = null;
 
-        try {
-            ymd = ConvertAndValidateUtil.convertAndValidateYMDParam(request,
-                    "date");
+    try {
+      ymd = ConvertAndValidateUtil.convertAndValidateYMDParam(request, "date");
 
-            if (ymd == null) {
-                error = "Date must not be empty";
-            }
-        } catch (ParseException e) {
-            error = "Invalid date format";
-        }
-
-        if (error == null) {
-
-            PDPresentationType[] typeArray = {PDPresentationType.RUN, PDPresentationType.SAD,
-                PDPresentationType.HCO};
-            for (PDPresentationType type : typeArray) {
-                presentationId = pdPresentationFacade.findIdByYmdAndPDType(ymd,
-                        type);
-
-                if (presentationId != null) {
-                    break;
-                }
-            }
-
-            if (presentationId != null) {
-                if (pdf) {
-                    response.sendRedirect(PresentationMenuUtil.getPdfUrl(request.getContextPath(), presentationId));
-                } else {
-                    response.sendRedirect(response.encodeRedirectURL(
-                            request.getContextPath() + "/presentation?presentationId="
-                            + presentationId + "#1"));
-                }
-            } else {
-                error = "No morning presentation exists for this date";
-            }
-        }
-
-        if (error != null) {
-            throw new ServletException(error);
-        }
+      if (ymd == null) {
+        error = "Date must not be empty";
+      }
+    } catch (ParseException e) {
+      error = "Invalid date format";
     }
+
+    if (error == null) {
+
+      PDPresentationType[] typeArray = {
+        PDPresentationType.RUN, PDPresentationType.SAD, PDPresentationType.HCO
+      };
+      for (PDPresentationType type : typeArray) {
+        presentationId = pdPresentationFacade.findIdByYmdAndPDType(ymd, type);
+
+        if (presentationId != null) {
+          break;
+        }
+      }
+
+      if (presentationId != null) {
+        if (pdf) {
+          response.sendRedirect(
+              PresentationMenuUtil.getPdfUrl(request.getContextPath(), presentationId));
+        } else {
+          response.sendRedirect(
+              response.encodeRedirectURL(
+                  request.getContextPath()
+                      + "/presentation?presentationId="
+                      + presentationId
+                      + "#1"));
+        }
+      } else {
+        error = "No morning presentation exists for this date";
+      }
+    }
+
+    if (error != null) {
+      throw new ServletException(error);
+    }
+  }
 }

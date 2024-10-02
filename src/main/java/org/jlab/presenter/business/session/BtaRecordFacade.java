@@ -6,21 +6,19 @@ import javax.persistence.PersistenceContext;
 import org.jlab.presenter.persistence.entity.BtaRecord;
 
 /**
- *
  * @author ryans
  */
 @Stateless
 public class BtaRecordFacade extends AbstractFacade<BtaRecord> {
-    @PersistenceContext(unitName = "presenterPU")
-    private EntityManager em;
+  @PersistenceContext(unitName = "presenterPU")
+  private EntityManager em;
 
-    @Override
-    protected EntityManager getEntityManager() {
-        return em;
-    }
+  @Override
+  protected EntityManager getEntityManager() {
+    return em;
+  }
 
-    public BtaRecordFacade() {
-        super(BtaRecord.class);
-    }
-    
+  public BtaRecordFacade() {
+    super(BtaRecord.class);
+  }
 }

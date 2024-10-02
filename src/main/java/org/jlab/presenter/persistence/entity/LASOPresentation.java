@@ -18,52 +18,57 @@ import org.jlab.presenter.persistence.enumeration.PresentationType;
 import org.jlab.presenter.persistence.enumeration.Shift;
 
 /**
- *
  * @author ryans
  */
 @Entity
 @DiscriminatorValue("LASO_PRESENTATION")
-@Table(name = "LASO_PRESENTATION", schema = "PRESENTER_OWNER", uniqueConstraints = {
-    @UniqueConstraint(columnNames = {"YMD", "SHIFT"})})
+@Table(
+    name = "LASO_PRESENTATION",
+    schema = "PRESENTER_OWNER",
+    uniqueConstraints = {@UniqueConstraint(columnNames = {"YMD", "SHIFT"})})
 @NamedQueries({
-    @NamedQuery(name = "LASOPresentation.findIdByYmdAndShift", query = "SELECT a.presentationId FROM LASOPresentation a WHERE a.ymd = :ymd AND a.shift = :shift")})
+  @NamedQuery(
+      name = "LASOPresentation.findIdByYmdAndShift",
+      query =
+          "SELECT a.presentationId FROM LASOPresentation a WHERE a.ymd = :ymd AND a.shift = :shift")
+})
 public class LASOPresentation extends Presentation {
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "YMD", nullable = false)
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date ymd;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "SHIFT", nullable = false, length = 5)
-    @Enumerated(EnumType.STRING)
-    private Shift shift;
+  @Basic(optional = false)
+  @NotNull
+  @Column(name = "YMD", nullable = false)
+  @Temporal(TemporalType.TIMESTAMP)
+  private Date ymd;
 
-    {
-        setPresentationType(PresentationType.LASO_PRESENTATION);
-    }       
-    
-    public LASOPresentation() {
-    }
+  @Basic(optional = false)
+  @NotNull
+  @Column(name = "SHIFT", nullable = false, length = 5)
+  @Enumerated(EnumType.STRING)
+  private Shift shift;
 
-    public LASOPresentation(Date ymd, Shift shift) {
-        this.ymd = ymd;
-        this.shift = shift;
-    }
+  {
+    setPresentationType(PresentationType.LASO_PRESENTATION);
+  }
 
-    public Date getYmd() {
-        return ymd;
-    }
+  public LASOPresentation() {}
 
-    public void setYmd(Date ymd) {
-        this.ymd = ymd;
-    }
+  public LASOPresentation(Date ymd, Shift shift) {
+    this.ymd = ymd;
+    this.shift = shift;
+  }
 
-    public Shift getShift() {
-        return shift;
-    }
+  public Date getYmd() {
+    return ymd;
+  }
 
-    public void setShift(Shift shift) {
-        this.shift = shift;
-    }
+  public void setYmd(Date ymd) {
+    this.ymd = ymd;
+  }
+
+  public Shift getShift() {
+    return shift;
+  }
+
+  public void setShift(Shift shift) {
+    this.shift = shift;
+  }
 }

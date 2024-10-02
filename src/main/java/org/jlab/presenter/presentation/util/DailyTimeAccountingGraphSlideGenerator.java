@@ -6,9 +6,8 @@ import org.jlab.presenter.persistence.entity.Slide;
 
 public class DailyTimeAccountingGraphSlideGenerator implements DailySlideGenerator {
 
-    @Override
-    public Slide getSlideForDay(Date day) {
-        return UrlUtil.getDailyBeamAccountingSlide(day);
-    }
-    
+  @Override
+  public Slide getSlideForDay(Date day) {
+    return UrlUtil.getDailyBeamAccountingSlide(day);
+  }
 }

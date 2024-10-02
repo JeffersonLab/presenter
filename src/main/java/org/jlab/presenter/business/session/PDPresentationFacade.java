@@ -20,295 +20,299 @@ import org.jlab.presenter.presentation.util.DailyTimeAccountingGraphSlideGenerat
 import org.jlab.presenter.presentation.util.PDPresentationUtil;
 
 /**
- *
  * @author ryans
  */
 @Stateless
 @DeclareRoles({"pd", "presenter-admin"})
 public class PDPresentationFacade extends AbstractFacade<PDPresentation> {
 
-    @PersistenceContext(unitName = "presenterPU")
-    private EntityManager em;
-    @EJB
-    SlideFacade slideFacade;
-    @EJB
-    PresentationFacade presentationFacade;
-    @EJB
-    LASOPresentationFacade lasoPresentationFacade;
-    @EJB
-    CCPresentationFacade ccPresentationFacade;
-    @EJB
-    LOPresentationFacade loPresentationFacade;
-    @EJB
-    UITFPresentationFacade uitfPresentationFacade;
+  @PersistenceContext(unitName = "presenterPU")
+  private EntityManager em;
 
-    @Override
-    protected EntityManager getEntityManager() {
-        return em;
-    }
+  @EJB SlideFacade slideFacade;
+  @EJB PresentationFacade presentationFacade;
+  @EJB LASOPresentationFacade lasoPresentationFacade;
+  @EJB CCPresentationFacade ccPresentationFacade;
+  @EJB LOPresentationFacade loPresentationFacade;
+  @EJB UITFPresentationFacade uitfPresentationFacade;
 
-    public PDPresentationFacade() {
-        super(PDPresentation.class);
-    }
+  @Override
+  protected EntityManager getEntityManager() {
+    return em;
+  }
 
-    @PermitAll
-    public PDPresentation findWithSlides(BigInteger id) {
-        PDPresentation p = find(id);
+  public PDPresentationFacade() {
+    super(PDPresentation.class);
+  }
 
-        return p;
-    }
+  @PermitAll
+  public PDPresentation findWithSlides(BigInteger id) {
+    PDPresentation p = find(id);
 
-    @PermitAll
-    public PdInfoSlide findFirstGoalSlide(Date ymd) {
-        PdInfoSlide goalSlide = null;
+    return p;
+  }
 
-        PDPresentation p = findByYmdAndPDType(ymd, PDPresentationType.SUM1);
+  @PermitAll
+  public PdInfoSlide findFirstGoalSlide(Date ymd) {
+    PdInfoSlide goalSlide = null;
 
-        if(p != null && p.getSlideList() != null) {
-            for (Slide s : p.getSlideList()) {
-                if (Objects.requireNonNull(s.getSlideType()) == SlideType.PD_INFO_SLIDE) {
-                    goalSlide = (PdInfoSlide) s;
+    PDPresentation p = findByYmdAndPDType(ymd, PDPresentationType.SUM1);
 
-                    if (goalSlide.getPdInfoSlideType() != PdInfoSlideType.FIRST_SUMMARY) {
-                        goalSlide = null;
-                    } else {
-                        break;
-                    }
-                }
-            }
+    if (p != null && p.getSlideList() != null) {
+      for (Slide s : p.getSlideList()) {
+        if (Objects.requireNonNull(s.getSlideType()) == SlideType.PD_INFO_SLIDE) {
+          goalSlide = (PdInfoSlide) s;
+
+          if (goalSlide.getPdInfoSlideType() != PdInfoSlideType.FIRST_SUMMARY) {
+            goalSlide = null;
+          } else {
+            break;
+          }
         }
-
-        return goalSlide;
+      }
     }
 
-    @PermitAll
-    public BodySlide findSecondGoalSlide(Date ymd) {
-        BodySlide goalSlide = null;
+    return goalSlide;
+  }
 
-        PDPresentation p = findByYmdAndPDType(ymd, PDPresentationType.SUM2);
+  @PermitAll
+  public BodySlide findSecondGoalSlide(Date ymd) {
+    BodySlide goalSlide = null;
 
-        if(p != null && p.getSlideList() != null) {
-            for (Slide s : p.getSlideList()) {
-                if (Objects.requireNonNull(s.getSlideType()) == SlideType.BODY_SLIDE) {
-                    goalSlide = (BodySlide) s;
+    PDPresentation p = findByYmdAndPDType(ymd, PDPresentationType.SUM2);
 
-                    if (goalSlide.getBodySlideType() != BodySlideType.PD_SUMMARY_PART_FOUR) {
-                        goalSlide = null;
-                    } else {
-                        break;
-                    }
-                }
-            }
+    if (p != null && p.getSlideList() != null) {
+      for (Slide s : p.getSlideList()) {
+        if (Objects.requireNonNull(s.getSlideType()) == SlideType.BODY_SLIDE) {
+          goalSlide = (BodySlide) s;
+
+          if (goalSlide.getBodySlideType() != BodySlideType.PD_SUMMARY_PART_FOUR) {
+            goalSlide = null;
+          } else {
+            break;
+          }
         }
-
-        return goalSlide;
+      }
     }
 
-    @PermitAll
-    public PDPresentation findByYmdAndPDType(Date ymd, PDPresentationType type) {
-        TypedQuery<PDPresentation> q = em.createQuery(
-                "select a from PDPresentation a where a.deliveryYmd = :ymd and a.pdPresentationType = :pdType",
-                PDPresentation.class);
+    return goalSlide;
+  }
 
-        q.setParameter("ymd", ymd);
-        q.setParameter("pdType", type);
+  @PermitAll
+  public PDPresentation findByYmdAndPDType(Date ymd, PDPresentationType type) {
+    TypedQuery<PDPresentation> q =
+        em.createQuery(
+            "select a from PDPresentation a where a.deliveryYmd = :ymd and a.pdPresentationType = :pdType",
+            PDPresentation.class);
 
-        List<PDPresentation> resultList = q.getResultList();
+    q.setParameter("ymd", ymd);
+    q.setParameter("pdType", type);
 
-        PDPresentation presentation = null;
+    List<PDPresentation> resultList = q.getResultList();
 
-        if (resultList != null && !resultList.isEmpty()) {
-            presentation = resultList.get(0);
-        }
+    PDPresentation presentation = null;
 
-        return presentation;
+    if (resultList != null && !resultList.isEmpty()) {
+      presentation = resultList.get(0);
     }
 
-    @PermitAll
-    public BigInteger findIdByYmdAndPDType(Date ymd, PDPresentationType type) {
-        TypedQuery<BigInteger> q = em.createNamedQuery("PDPresentation.findIdByYmdAndPDType",
-                BigInteger.class);
+    return presentation;
+  }
 
-        q.setParameter("ymd", ymd);
-        q.setParameter("pdType", type);
+  @PermitAll
+  public BigInteger findIdByYmdAndPDType(Date ymd, PDPresentationType type) {
+    TypedQuery<BigInteger> q =
+        em.createNamedQuery("PDPresentation.findIdByYmdAndPDType", BigInteger.class);
 
-        List<BigInteger> result = q.getResultList();
+    q.setParameter("ymd", ymd);
+    q.setParameter("pdType", type);
 
-        return (result.size() > 0) ? result.get(0) : null;
+    List<BigInteger> result = q.getResultList();
+
+    return (result.size() > 0) ? result.get(0) : null;
+  }
+
+  @PermitAll
+  public void importShiftLogs(
+      BigInteger presentationId, int precedingDayCount, boolean includeGraphs) {
+    if (!isValidPrecedingDayCount(precedingDayCount)) {
+      throw new IllegalArgumentException("Preceding day count must be between 1 - 7");
     }
 
-    @PermitAll
-    public void importShiftLogs(BigInteger presentationId, int precedingDayCount,
-            boolean includeGraphs) {
-        if (!isValidPrecedingDayCount(precedingDayCount)) {
-            throw new IllegalArgumentException("Preceding day count must be between 1 - 7");
-        }
+    PDPresentation presentation;
 
-        PDPresentation presentation;
+    if (presentationId != null) {
+      presentation = findWithSlides(presentationId);
 
-        if (presentationId != null) {
-            presentation = findWithSlides(presentationId);
-
-            if (presentation == null) {
-                throw new IllegalArgumentException("Presentation with Id "
-                        + presentationId + " not found");
-            }
-        } else {
-            throw new IllegalArgumentException("Parameter 'presentationId' "
-                    + "must not be null");
-        }
-
-        presentationFacade.removeDailyGraphs(presentation);
-        //presentationFacade.removeSyncedSlides(presentation); /* If using append instead of merge then we need to remove synced slides*/
-
-        DailySlideGenerator[] dailySlideGeneratorArray = null;
-
-        if (includeGraphs) {
-            dailySlideGeneratorArray = new DailySlideGenerator[]{
-                new DailyTimeAccountingGraphSlideGenerator(), new DailyFsdGraphSlideGenerator()};
-        }
-
-        /**
-         * If using "merge" later then don't copy as merge will do it for you;
-         * We do copy slides when initially creating a presentation though
-         */
-        boolean copySlides = false;
-
-        List<Slide> originalShiftSlides = PDPresentationUtil.getShiftLogsInterleaved(presentation,
-                new ShiftPresentationFacade[]{ccPresentationFacade, lasoPresentationFacade}, 1,
-                precedingDayCount, copySlides, dailySlideGeneratorArray);
-
-        long order = originalShiftSlides.size() + 1;
-
-        List<Slide> lerfSlides
-                = PDPresentationUtil.getLerfSlides(presentation, loPresentationFacade, order,
-                        precedingDayCount, copySlides);
-
-        originalShiftSlides.addAll(lerfSlides);
-
-        // UITF
-        order = originalShiftSlides.size() + 1;
-
-        List<Slide> uitfSlides
-                = PDPresentationUtil.getUitfSlides(presentation, uitfPresentationFacade, order,
-                precedingDayCount, copySlides);
-
-        originalShiftSlides.addAll(uitfSlides);
-
-        //presentationFacade.append(presentation, originalShiftSlides);   /*if using "append" then make sure  copySlides is true */ 
-        presentationFacade.merge(presentation, originalShiftSlides, true);
+      if (presentation == null) {
+        throw new IllegalArgumentException("Presentation with Id " + presentationId + " not found");
+      }
+    } else {
+      throw new IllegalArgumentException("Parameter 'presentationId' " + "must not be null");
     }
 
-    @PermitAll
-    public void importIncomingToOutgoing(BigInteger presentationId) {
-        PDPresentation presentation = find(presentationId);
+    presentationFacade.removeDailyGraphs(presentation);
+    // presentationFacade.removeSyncedSlides(presentation); /* If using append instead of merge then
+    // we need to remove synced slides*/
 
-        if (presentation == null) {
-            throw new IllegalArgumentException("Presentation with Id "
-                    + presentationId + " not found");
-        }
+    DailySlideGenerator[] dailySlideGeneratorArray = null;
 
-        List<Slide> incomingSlides = getIncomingSlides(presentation, 1, false);
-
-        presentationFacade.merge(presentation, incomingSlides, false);
+    if (includeGraphs) {
+      dailySlideGeneratorArray =
+          new DailySlideGenerator[] {
+            new DailyTimeAccountingGraphSlideGenerator(), new DailyFsdGraphSlideGenerator()
+          };
     }
 
-    @PermitAll
-    public List<Slide> getIncomingSlides(PDPresentation presentation, long order, boolean copySlides) {
-        List<Slide> slides = new ArrayList<>();
+    /**
+     * If using "merge" later then don't copy as merge will do it for you; We do copy slides when
+     * initially creating a presentation though
+     */
+    boolean copySlides = false;
 
-        BigInteger presentationId = findIdByYmdAndPDType(presentation.getDeliveryYmd(),
-                PDPresentationType.SUM1);
-        if (presentationId != null) {
-            PDPresentation incomingPresentation = find(presentationId);
-            List<Slide> incomingSlides = incomingPresentation.getSlideList();
+    List<Slide> originalShiftSlides =
+        PDPresentationUtil.getShiftLogsInterleaved(
+            presentation,
+            new ShiftPresentationFacade[] {ccPresentationFacade, lasoPresentationFacade},
+            1,
+            precedingDayCount,
+            copySlides,
+            dailySlideGeneratorArray);
 
-            if (incomingSlides != null) {
-                for (Slide s : incomingSlides) {
-                    if (copySlides) {
-                        Slide copy = s.copySlide();
-                        copy.setOrderId(order++);
-                        copy.setPresentation(presentation);
-                        slides.add(copy);
-                    } else {
-                        slides.add(s);
-                    }
-                }
-            }
-        }
+    long order = originalShiftSlides.size() + 1;
 
-        return slides;
+    List<Slide> lerfSlides =
+        PDPresentationUtil.getLerfSlides(
+            presentation, loPresentationFacade, order, precedingDayCount, copySlides);
+
+    originalShiftSlides.addAll(lerfSlides);
+
+    // UITF
+    order = originalShiftSlides.size() + 1;
+
+    List<Slide> uitfSlides =
+        PDPresentationUtil.getUitfSlides(
+            presentation, uitfPresentationFacade, order, precedingDayCount, copySlides);
+
+    originalShiftSlides.addAll(uitfSlides);
+
+    // presentationFacade.append(presentation, originalShiftSlides);   /*if using "append" then make
+    // sure  copySlides is true */
+    presentationFacade.merge(presentation, originalShiftSlides, true);
+  }
+
+  @PermitAll
+  public void importIncomingToOutgoing(BigInteger presentationId) {
+    PDPresentation presentation = find(presentationId);
+
+    if (presentation == null) {
+      throw new IllegalArgumentException("Presentation with Id " + presentationId + " not found");
     }
 
-    @PermitAll
-    public List<PDPresentation> findRecent() {
-        TypedQuery<PDPresentation> q = em.createQuery(
-                "select p from PDPresentation p where p.deliveryYmd > sysdate - 8 order by p.deliveryYmd desc, p.pdPresentationType desc",
-                PDPresentation.class);
+    List<Slide> incomingSlides = getIncomingSlides(presentation, 1, false);
 
-        return q.getResultList();
+    presentationFacade.merge(presentation, incomingSlides, false);
+  }
+
+  @PermitAll
+  public List<Slide> getIncomingSlides(
+      PDPresentation presentation, long order, boolean copySlides) {
+    List<Slide> slides = new ArrayList<>();
+
+    BigInteger presentationId =
+        findIdByYmdAndPDType(presentation.getDeliveryYmd(), PDPresentationType.SUM1);
+    if (presentationId != null) {
+      PDPresentation incomingPresentation = find(presentationId);
+      List<Slide> incomingSlides = incomingPresentation.getSlideList();
+
+      if (incomingSlides != null) {
+        for (Slide s : incomingSlides) {
+          if (copySlides) {
+            Slide copy = s.copySlide();
+            copy.setOrderId(order++);
+            copy.setPresentation(presentation);
+            slides.add(copy);
+          } else {
+            slides.add(s);
+          }
+        }
+      }
     }
 
-    @RolesAllowed({"pd", "presenter-admin"})
-    public void delete(BigInteger presentationId) {
-        Presentation p = presentationFacade.find(presentationId);
+    return slides;
+  }
 
-        if (p != null && p.getPresentationType() == PresentationType.PD_PRESENTATION) {
-            em.remove(p);
-        }
+  @PermitAll
+  public List<PDPresentation> findRecent() {
+    TypedQuery<PDPresentation> q =
+        em.createQuery(
+            "select p from PDPresentation p where p.deliveryYmd > sysdate - 8 order by p.deliveryYmd desc, p.pdPresentationType desc",
+            PDPresentation.class);
+
+    return q.getResultList();
+  }
+
+  @RolesAllowed({"pd", "presenter-admin"})
+  public void delete(BigInteger presentationId) {
+    Presentation p = presentationFacade.find(presentationId);
+
+    if (p != null && p.getPresentationType() == PresentationType.PD_PRESENTATION) {
+      em.remove(p);
+    }
+  }
+
+  @PermitAll
+  public int getPrecedingDays(PDPresentation presentation) {
+    Integer days = presentation.getShiftLogDays();
+
+    if (!isValidPrecedingDayCount(days)) {
+      days = getDefaultPrecedingDays(presentation.getDeliveryYmd());
+      presentation.setShiftLogDays(days);
+      this.edit(presentation);
     }
 
-    @PermitAll
-    public int getPrecedingDays(PDPresentation presentation) {
-        Integer days = presentation.getShiftLogDays();
+    return days;
+  }
 
-        if (!isValidPrecedingDayCount(days)) {
-            days = getDefaultPrecedingDays(presentation.getDeliveryYmd());
-            presentation.setShiftLogDays(days);
-            this.edit(presentation);
-        }
-
-        return days;
+  @PermitAll
+  public int getDefaultPrecedingDays(Date ymd) {
+    int precedingDayCount = 1;
+    if (TimeUtil.getDayOfWeek(ymd) == Calendar.MONDAY) {
+      precedingDayCount = 3;
     }
 
-    @PermitAll
-    public int getDefaultPrecedingDays(Date ymd) {
-        int precedingDayCount = 1;
-        if (TimeUtil.getDayOfWeek(ymd) == Calendar.MONDAY) {
-            precedingDayCount = 3;
-        }
+    return precedingDayCount;
+  }
 
-        return precedingDayCount;
+  @PermitAll
+  public boolean isValidPrecedingDayCount(Integer days) {
+    final int MAX_DAYS = 7; // TODO: Make sure this matches UI
+    final int MIN_DAYS = 1;
+
+    return !(days == null || days > MAX_DAYS || days < MIN_DAYS);
+  }
+
+  @PermitAll
+  public void updatePrecedingDayCount(BigInteger presentationId, int precedingDayCount)
+      throws WebAppException {
+    PDPresentation presentation = this.find(presentationId);
+
+    if (presentation == null) {
+      throw new WebAppException("PD Presentation with ID " + presentationId + " not found");
     }
 
-    @PermitAll
-    public boolean isValidPrecedingDayCount(Integer days) {
-        final int MAX_DAYS = 7; // TODO: Make sure this matches UI
-        final int MIN_DAYS = 1;
-
-        return !(days == null || days > MAX_DAYS || days < MIN_DAYS);
+    if (!isValidPrecedingDayCount(precedingDayCount)) {
+      throw new WebAppException("Preceding day count must be between 1 and 7");
     }
 
-    @PermitAll
-    public void updatePrecedingDayCount(BigInteger presentationId, int precedingDayCount) throws
-            WebAppException {
-        PDPresentation presentation = this.find(presentationId);
+    boolean changed =
+        presentation.getShiftLogDays() == null
+            || presentation.getShiftLogDays() != precedingDayCount;
 
-        if (presentation == null) {
-            throw new WebAppException("PD Presentation with ID " + presentationId + " not found");
-        }
+    if (changed) {
+      presentation.setShiftLogDays(precedingDayCount);
 
-        if (!isValidPrecedingDayCount(precedingDayCount)) {
-            throw new WebAppException("Preceding day count must be between 1 and 7");
-        }
-
-        boolean changed = presentation.getShiftLogDays() == null || presentation.getShiftLogDays()
-                != precedingDayCount;
-
-        if (changed) {
-            presentation.setShiftLogDays(precedingDayCount);
-
-            presentationFacade.edit(presentation); // Also updates last modified
-        }
+      presentationFacade.edit(presentation); // Also updates last modified
     }
+  }
 }

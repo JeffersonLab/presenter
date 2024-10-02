@@ -18,7 +18,6 @@ import org.jlab.presenter.persistence.enumeration.PdInfoSlideType;
 import org.jlab.presenter.persistence.enumeration.SlideType;
 
 /**
- *
  * @author ryans
  */
 @Entity
@@ -26,157 +25,161 @@ import org.jlab.presenter.persistence.enumeration.SlideType;
 @Table(name = "PD_INFO_SLIDE", schema = "PRESENTER_OWNER")
 public class PdInfoSlide extends Slide {
 
-    @Size(max = 64)
-    @Column(name = "PD", length = 64)
-    private String pd;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "FROM_DATE", nullable = false)
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date fromDate;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "TO_DATE", nullable = false)
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date toDate;
-    @Lob
-    @Column(name = "BODY")
-    private String body;
-    @Column(name = "PD_INFO_SLIDE_TYPE", length = 24, nullable = false)
-    @Enumerated(EnumType.STRING)
-    @NotNull
-    private PdInfoSlideType pdInfoSlideType;
+  @Size(max = 64)
+  @Column(name = "PD", length = 64)
+  private String pd;
 
-    {
-        setSlideType(SlideType.PD_INFO_SLIDE);
-    }
+  @Basic(optional = false)
+  @NotNull
+  @Column(name = "FROM_DATE", nullable = false)
+  @Temporal(TemporalType.TIMESTAMP)
+  private Date fromDate;
 
-    public PdInfoSlide() {
-        this(PdInfoSlideType.FIRST_SUMMARY);
-    }
+  @Basic(optional = false)
+  @NotNull
+  @Column(name = "TO_DATE", nullable = false)
+  @Temporal(TemporalType.TIMESTAMP)
+  private Date toDate;
 
-    public PdInfoSlide(PdInfoSlideType pdInfoSlideType) {
-        this(pdInfoSlideType, new Date(), TimeUtil.getOneWeekLater(new Date()));
-    }
-    
-    public PdInfoSlide(PdInfoSlideType pdInfoSlideType, Date fromDate, Date toDate) {
-        this.pdInfoSlideType = pdInfoSlideType;
-        this.fromDate = fromDate;
-        this.toDate = toDate;
+  @Lob
+  @Column(name = "BODY")
+  private String body;
 
-        switch (pdInfoSlideType) {
-            case FIRST_SUMMARY:
-                body =
-                        "                        <h2>PROGRAM (upcoming week)</h2>\n"
-                        + "                        <ul>\n"
-                        + "                            <li></li>\n"
-                        + "                        </ul>    \n"
-                        + "                        <h3>Hall With Beam Delivery Priority</h3>\n"
-                        + "                        <ul>\n"
-                        + "                            <li></li>\n"
-                        + "                        </ul> \n"
-                        + "                        <h2>PROGRAM GOALS (upcoming week)</h2>\n"
-                        + "                        <h3>Must:</h3>\n"
-                        + "                        <ul>\n"
-                        + "                            <li></li>\n"
-                        + "                        </ul>\n"
-                        + "                        <h3>Should:</h3>\n"
-                        + "                        <ul>\n"
-                        + "                            <li></li>\n"
-                        + "                        </ul>\n"
-                        + "                        <h3>Like:</h3>\n"
-                        + "                        <ul>\n"
-                        + "                            <li></li>\n"
-                        + "                        </ul>";
-                setLabel("PD Summary Type I");
-                break;
-            case SECOND_SUMMARY:
-                body =
-                        "                        <h2>PROGRAM (last week)</h2>\n"
-                        + "                        <ul>\n"
-                        + "                            <li></li>\n"
-                        + "                        </ul>    \n"
-                        + "                        <h2>PROGRAM GOALS (last week)</h2>\n"
-                        + "                        <h3>Must:</h3>\n"
-                        + "                        <ul>\n"
-                        + "                            <li></li>\n"
-                        + "                        </ul>\n"
-                        + "                        <h3>Should:</h3>\n"
-                        + "                        <ul>\n"
-                        + "                            <li></li>\n"
-                        + "                        </ul>\n"
-                        + "                        <h3>Like:</h3>\n"
-                        + "                        <ul>\n"
-                        + "                            <li></li>\n"
-                        + "                        </ul>";
-                setLabel("PD Summary Type II #1");
-                break;
-        }
-    }
+  @Column(name = "PD_INFO_SLIDE_TYPE", length = 24, nullable = false)
+  @Enumerated(EnumType.STRING)
+  @NotNull
+  private PdInfoSlideType pdInfoSlideType;
 
-    @Override
-    public Slide copySlide() {
-        PdInfoSlide copy = new PdInfoSlide();
-        
-        copy.setBody(getBody());
-        copy.setFromDate(getFromDate());
-        copy.setToDate(getToDate());
-        copy.setPd(getPd());
-        copy.setPdInfoSlideType(getPdInfoSlideType());
-        copy.setSlideType(getSlideType());
-        copy.setSyncFromSlideId(getSlideId());
-        
-        return copy;
-    }
-    
-    @Override
-    public void mergeSlide(Slide other) {
-        if (other instanceof PdInfoSlide) {
-            PdInfoSlide slide = (PdInfoSlide) other;
-            this.setBody(slide.getBody());
-            this.setFromDate(slide.getFromDate());
-            this.setToDate(slide.getToDate());
-            this.setPd(slide.getPd());
-        }
-    }    
-    
-    public String getPd() {
-        return pd;
-    }
+  {
+    setSlideType(SlideType.PD_INFO_SLIDE);
+  }
 
-    public void setPd(String pd) {
-        this.pd = pd;
-    }
+  public PdInfoSlide() {
+    this(PdInfoSlideType.FIRST_SUMMARY);
+  }
 
-    public Date getFromDate() {
-        return fromDate;
-    }
+  public PdInfoSlide(PdInfoSlideType pdInfoSlideType) {
+    this(pdInfoSlideType, new Date(), TimeUtil.getOneWeekLater(new Date()));
+  }
 
-    public void setFromDate(Date fromDate) {
-        this.fromDate = fromDate;
-    }
+  public PdInfoSlide(PdInfoSlideType pdInfoSlideType, Date fromDate, Date toDate) {
+    this.pdInfoSlideType = pdInfoSlideType;
+    this.fromDate = fromDate;
+    this.toDate = toDate;
 
-    public Date getToDate() {
-        return toDate;
+    switch (pdInfoSlideType) {
+      case FIRST_SUMMARY:
+        body =
+            "                        <h2>PROGRAM (upcoming week)</h2>\n"
+                + "                        <ul>\n"
+                + "                            <li></li>\n"
+                + "                        </ul>    \n"
+                + "                        <h3>Hall With Beam Delivery Priority</h3>\n"
+                + "                        <ul>\n"
+                + "                            <li></li>\n"
+                + "                        </ul> \n"
+                + "                        <h2>PROGRAM GOALS (upcoming week)</h2>\n"
+                + "                        <h3>Must:</h3>\n"
+                + "                        <ul>\n"
+                + "                            <li></li>\n"
+                + "                        </ul>\n"
+                + "                        <h3>Should:</h3>\n"
+                + "                        <ul>\n"
+                + "                            <li></li>\n"
+                + "                        </ul>\n"
+                + "                        <h3>Like:</h3>\n"
+                + "                        <ul>\n"
+                + "                            <li></li>\n"
+                + "                        </ul>";
+        setLabel("PD Summary Type I");
+        break;
+      case SECOND_SUMMARY:
+        body =
+            "                        <h2>PROGRAM (last week)</h2>\n"
+                + "                        <ul>\n"
+                + "                            <li></li>\n"
+                + "                        </ul>    \n"
+                + "                        <h2>PROGRAM GOALS (last week)</h2>\n"
+                + "                        <h3>Must:</h3>\n"
+                + "                        <ul>\n"
+                + "                            <li></li>\n"
+                + "                        </ul>\n"
+                + "                        <h3>Should:</h3>\n"
+                + "                        <ul>\n"
+                + "                            <li></li>\n"
+                + "                        </ul>\n"
+                + "                        <h3>Like:</h3>\n"
+                + "                        <ul>\n"
+                + "                            <li></li>\n"
+                + "                        </ul>";
+        setLabel("PD Summary Type II #1");
+        break;
     }
+  }
 
-    public void setToDate(Date toDate) {
-        this.toDate = toDate;
-    }
+  @Override
+  public Slide copySlide() {
+    PdInfoSlide copy = new PdInfoSlide();
 
-    public String getBody() {
-        return body;
-    }
+    copy.setBody(getBody());
+    copy.setFromDate(getFromDate());
+    copy.setToDate(getToDate());
+    copy.setPd(getPd());
+    copy.setPdInfoSlideType(getPdInfoSlideType());
+    copy.setSlideType(getSlideType());
+    copy.setSyncFromSlideId(getSlideId());
 
-    public void setBody(String body) {
-        this.body = body;
-    }
+    return copy;
+  }
 
-    public PdInfoSlideType getPdInfoSlideType() {
-        return pdInfoSlideType;
+  @Override
+  public void mergeSlide(Slide other) {
+    if (other instanceof PdInfoSlide) {
+      PdInfoSlide slide = (PdInfoSlide) other;
+      this.setBody(slide.getBody());
+      this.setFromDate(slide.getFromDate());
+      this.setToDate(slide.getToDate());
+      this.setPd(slide.getPd());
     }
+  }
 
-    public void setPdInfoSlideType(PdInfoSlideType pdInfoSlideType) {
-        this.pdInfoSlideType = pdInfoSlideType;
-    }
+  public String getPd() {
+    return pd;
+  }
+
+  public void setPd(String pd) {
+    this.pd = pd;
+  }
+
+  public Date getFromDate() {
+    return fromDate;
+  }
+
+  public void setFromDate(Date fromDate) {
+    this.fromDate = fromDate;
+  }
+
+  public Date getToDate() {
+    return toDate;
+  }
+
+  public void setToDate(Date toDate) {
+    this.toDate = toDate;
+  }
+
+  public String getBody() {
+    return body;
+  }
+
+  public void setBody(String body) {
+    this.body = body;
+  }
+
+  public PdInfoSlideType getPdInfoSlideType() {
+    return pdInfoSlideType;
+  }
+
+  public void setPdInfoSlideType(PdInfoSlideType pdInfoSlideType) {
+    this.pdInfoSlideType = pdInfoSlideType;
+  }
 }

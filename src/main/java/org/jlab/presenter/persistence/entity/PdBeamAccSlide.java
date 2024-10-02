@@ -13,7 +13,6 @@ import org.hibernate.annotations.LazyCollectionOption;
 import org.jlab.presenter.persistence.enumeration.SlideType;
 
 /**
- *
  * @author ryans
  */
 @Entity
@@ -21,133 +20,129 @@ import org.jlab.presenter.persistence.enumeration.SlideType;
 @Table(name = "PD_BEAM_ACC_SLIDE", schema = "PRESENTER_OWNER")
 public class PdBeamAccSlide extends Slide {
 
-    @LazyCollection(LazyCollectionOption.FALSE)
-    @OneToMany(mappedBy = "slideId", orphanRemoval = true, cascade = CascadeType.ALL)
-    @OrderBy("orderId asc")
-    private List<AccActivityRecord> accActivityRecordList;
-    @LazyCollection(LazyCollectionOption.FALSE)
-    @OneToMany(mappedBy = "slideId", orphanRemoval = true, cascade = CascadeType.ALL)
-    @OrderBy("orderId asc")
-    private List<BeamToHallRecord> beamToHallRecordList;
+  @LazyCollection(LazyCollectionOption.FALSE)
+  @OneToMany(mappedBy = "slideId", orphanRemoval = true, cascade = CascadeType.ALL)
+  @OrderBy("orderId asc")
+  private List<AccActivityRecord> accActivityRecordList;
 
-    {
-        setSlideType(SlideType.PD_BEAM_ACC_SLIDE);
+  @LazyCollection(LazyCollectionOption.FALSE)
+  @OneToMany(mappedBy = "slideId", orphanRemoval = true, cascade = CascadeType.ALL)
+  @OrderBy("orderId asc")
+  private List<BeamToHallRecord> beamToHallRecordList;
 
-        beamToHallRecordList = new ArrayList<BeamToHallRecord>();
-        char hall = 'A';
-        for (int i = 1; i < 5; i++) {
-            BeamToHallRecord record = new BeamToHallRecord();
-            record.setSlideId(this);
-            record.setOrderId(Long.valueOf(i));
-            record.setHall("Hall " + hall++);
-            beamToHallRecordList.add(record);
-        }
+  {
+    setSlideType(SlideType.PD_BEAM_ACC_SLIDE);
 
-        accActivityRecordList = new ArrayList<AccActivityRecord>();
-
-        String[] types = {
-            "Acc. Beam Studies",
-            "Acc. Restoration",
-            "Acc. Config. Change",
-            "Sched. Acc. Off"
-            //"Down Hard",
-            //"FSD Down Time"
-        };
-        for (int i = 0; i < types.length; i++) {
-            AccActivityRecord activity = new AccActivityRecord();
-            activity.setSlideId(this);
-            activity.setOrderId(Long.valueOf(i + 1));
-            activity.setActivityType(types[i]);
-            accActivityRecordList.add(activity);
-        }
-
-        setLabel("PD Summary Type II #2");
+    beamToHallRecordList = new ArrayList<BeamToHallRecord>();
+    char hall = 'A';
+    for (int i = 1; i < 5; i++) {
+      BeamToHallRecord record = new BeamToHallRecord();
+      record.setSlideId(this);
+      record.setOrderId(Long.valueOf(i));
+      record.setHall("Hall " + hall++);
+      beamToHallRecordList.add(record);
     }
 
-    public PdBeamAccSlide() {
+    accActivityRecordList = new ArrayList<AccActivityRecord>();
+
+    String[] types = {
+      "Acc. Beam Studies", "Acc. Restoration", "Acc. Config. Change", "Sched. Acc. Off"
+      // "Down Hard",
+      // "FSD Down Time"
+    };
+    for (int i = 0; i < types.length; i++) {
+      AccActivityRecord activity = new AccActivityRecord();
+      activity.setSlideId(this);
+      activity.setOrderId(Long.valueOf(i + 1));
+      activity.setActivityType(types[i]);
+      accActivityRecordList.add(activity);
     }
 
-    @Override
-    public Slide copySlide() {
-        PdBeamAccSlide copy = new PdBeamAccSlide();
+    setLabel("PD Summary Type II #2");
+  }
 
-        List<AccActivityRecord> copyOfAccActivityRecordList = new ArrayList<AccActivityRecord>();
+  public PdBeamAccSlide() {}
 
-        long order = 1;
+  @Override
+  public Slide copySlide() {
+    PdBeamAccSlide copy = new PdBeamAccSlide();
 
-        for (AccActivityRecord record : getAccActivityRecordList()) {
-            AccActivityRecord copyOfRecord = record.copyRecord();
-            copyOfRecord.setSlideId(copy);
-            copyOfRecord.setOrderId(order++);
+    List<AccActivityRecord> copyOfAccActivityRecordList = new ArrayList<AccActivityRecord>();
 
-            copyOfAccActivityRecordList.add(copyOfRecord);
-        }
+    long order = 1;
 
-        List<BeamToHallRecord> copyOfBeamToHallRecordList = new ArrayList<BeamToHallRecord>();
+    for (AccActivityRecord record : getAccActivityRecordList()) {
+      AccActivityRecord copyOfRecord = record.copyRecord();
+      copyOfRecord.setSlideId(copy);
+      copyOfRecord.setOrderId(order++);
 
-        order = 1;
-
-        for (BeamToHallRecord record : getBeamToHallRecordList()) {
-            BeamToHallRecord copyOfRecord = record.copyRecord();
-            copyOfRecord.setSlideId(copy);
-            copyOfRecord.setOrderId(order++);
-
-            copyOfBeamToHallRecordList.add(copyOfRecord);
-        }
-
-        copy.setSlideType(getSlideType());
-        copy.setAccActivityRecordList(copyOfAccActivityRecordList);
-        copy.setBeamToHallRecordList(copyOfBeamToHallRecordList);
-        copy.setSyncFromSlideId(getSlideId());
-
-        return copy;
+      copyOfAccActivityRecordList.add(copyOfRecord);
     }
 
-    @Override
-    public void mergeSlide(Slide other) {
-        if (other instanceof PdBeamAccSlide) {
-            PdBeamAccSlide slide = (PdBeamAccSlide) other;
+    List<BeamToHallRecord> copyOfBeamToHallRecordList = new ArrayList<BeamToHallRecord>();
 
-            long order = 1;
+    order = 1;
 
-            this.getAccActivityRecordList().clear();
+    for (BeamToHallRecord record : getBeamToHallRecordList()) {
+      BeamToHallRecord copyOfRecord = record.copyRecord();
+      copyOfRecord.setSlideId(copy);
+      copyOfRecord.setOrderId(order++);
 
-            for (AccActivityRecord record : slide.getAccActivityRecordList()) {
-                AccActivityRecord copyOfRecord = record.copyRecord();
-                copyOfRecord.setSlideId(this);
-                copyOfRecord.setOrderId(order++);
-
-                this.getAccActivityRecordList().add(copyOfRecord);
-            }
-
-            this.getBeamToHallRecordList().clear();
-
-            order = 1;
-
-            for (BeamToHallRecord record : slide.getBeamToHallRecordList()) {
-                BeamToHallRecord copyOfRecord = record.copyRecord();
-                copyOfRecord.setSlideId(this);
-                copyOfRecord.setOrderId(order++);
-
-                this.getBeamToHallRecordList().add(copyOfRecord);
-            }
-
-        }
+      copyOfBeamToHallRecordList.add(copyOfRecord);
     }
 
-    public List<AccActivityRecord> getAccActivityRecordList() {
-        return accActivityRecordList;
-    }
+    copy.setSlideType(getSlideType());
+    copy.setAccActivityRecordList(copyOfAccActivityRecordList);
+    copy.setBeamToHallRecordList(copyOfBeamToHallRecordList);
+    copy.setSyncFromSlideId(getSlideId());
 
-    public void setAccActivityRecordList(List<AccActivityRecord> accActivityRecordList) {
-        this.accActivityRecordList = accActivityRecordList;
-    }
+    return copy;
+  }
 
-    public List<BeamToHallRecord> getBeamToHallRecordList() {
-        return beamToHallRecordList;
-    }
+  @Override
+  public void mergeSlide(Slide other) {
+    if (other instanceof PdBeamAccSlide) {
+      PdBeamAccSlide slide = (PdBeamAccSlide) other;
 
-    public void setBeamToHallRecordList(List<BeamToHallRecord> beamToHallRecordList) {
-        this.beamToHallRecordList = beamToHallRecordList;
+      long order = 1;
+
+      this.getAccActivityRecordList().clear();
+
+      for (AccActivityRecord record : slide.getAccActivityRecordList()) {
+        AccActivityRecord copyOfRecord = record.copyRecord();
+        copyOfRecord.setSlideId(this);
+        copyOfRecord.setOrderId(order++);
+
+        this.getAccActivityRecordList().add(copyOfRecord);
+      }
+
+      this.getBeamToHallRecordList().clear();
+
+      order = 1;
+
+      for (BeamToHallRecord record : slide.getBeamToHallRecordList()) {
+        BeamToHallRecord copyOfRecord = record.copyRecord();
+        copyOfRecord.setSlideId(this);
+        copyOfRecord.setOrderId(order++);
+
+        this.getBeamToHallRecordList().add(copyOfRecord);
+      }
     }
+  }
+
+  public List<AccActivityRecord> getAccActivityRecordList() {
+    return accActivityRecordList;
+  }
+
+  public void setAccActivityRecordList(List<AccActivityRecord> accActivityRecordList) {
+    this.accActivityRecordList = accActivityRecordList;
+  }
+
+  public List<BeamToHallRecord> getBeamToHallRecordList() {
+    return beamToHallRecordList;
+  }
+
+  public void setBeamToHallRecordList(List<BeamToHallRecord> beamToHallRecordList) {
+    this.beamToHallRecordList = beamToHallRecordList;
+  }
 }

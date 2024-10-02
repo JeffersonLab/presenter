@@ -6,9 +6,8 @@ import org.jlab.presenter.persistence.entity.Slide;
 
 public class DailyFsdGraphSlideGenerator implements DailySlideGenerator {
 
-    @Override
-    public Slide getSlideForDay(Date day) {
-        return UrlUtil.getDailyFsdSlide(day);
-    }
-    
+  @Override
+  public Slide getSlideForDay(Date day) {
+    return UrlUtil.getDailyFsdSlide(day);
+  }
 }

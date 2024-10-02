@@ -16,97 +16,104 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 /**
- *
  * @author ryans
  */
 @Entity
 @Table(name = "ACC_ACTIVITY_RECORD", schema = "PRESENTER_OWNER")
 public class AccActivityRecord implements Serializable {
-    private static final long serialVersionUID = 1L;
-    @Id
-    @SequenceGenerator(name="AccActivityRecordId", sequenceName="ACC_ACTIVITY_RECORD_ID", allocationSize=1)
-    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="AccActivityRecordId")       
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "ACC_ACTIVITY_RECORD_ID", nullable = false, precision = 22, scale = 0)
-    private BigInteger accActivityRecordId;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "ORDER_ID", nullable = false)
-    private Long orderId;    
-    @Size(max = 36)
-    @Column(name = "ACTIVITY_TYPE", length = 36)
-    private String activityType;
-    @Column(name = "SCHEDULED", precision = 12, scale = 4)
-    private Float scheduled;
-    @Column(name = "ACTUAL", precision = 12, scale = 4)
-    private Float actual;
-    @JoinColumn(name = "SLIDE_ID", referencedColumnName = "SLIDE_ID")
-    @ManyToOne
-    private PdBeamAccSlide slideId;
+  private static final long serialVersionUID = 1L;
 
-    public AccActivityRecord() {
-    }
+  @Id
+  @SequenceGenerator(
+      name = "AccActivityRecordId",
+      sequenceName = "ACC_ACTIVITY_RECORD_ID",
+      allocationSize = 1)
+  @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "AccActivityRecordId")
+  @Basic(optional = false)
+  @NotNull
+  @Column(name = "ACC_ACTIVITY_RECORD_ID", nullable = false, precision = 22, scale = 0)
+  private BigInteger accActivityRecordId;
 
-    public AccActivityRecord(BigInteger accActivityRecordId) {
-        this.accActivityRecordId = accActivityRecordId;
-    }
+  @Basic(optional = false)
+  @NotNull
+  @Column(name = "ORDER_ID", nullable = false)
+  private Long orderId;
 
-    public AccActivityRecord copyRecord() {
-        AccActivityRecord copy = new AccActivityRecord();
-        
-        copy.setActivityType(activityType);
-        copy.setActual(actual);
-        copy.setScheduled(scheduled);
-        
-        return copy;
-    }
-    
-    public BigInteger getAccActivityRecordId() {
-        return accActivityRecordId;
-    }
+  @Size(max = 36)
+  @Column(name = "ACTIVITY_TYPE", length = 36)
+  private String activityType;
 
-    public void setAccActivityRecordId(BigInteger accActivityRecordId) {
-        this.accActivityRecordId = accActivityRecordId;
-    }
+  @Column(name = "SCHEDULED", precision = 12, scale = 4)
+  private Float scheduled;
 
-    public Long getOrderId() {
-        return orderId;
-    }
+  @Column(name = "ACTUAL", precision = 12, scale = 4)
+  private Float actual;
 
-    public void setOrderId(Long orderId) {
-        this.orderId = orderId;
-    }
+  @JoinColumn(name = "SLIDE_ID", referencedColumnName = "SLIDE_ID")
+  @ManyToOne
+  private PdBeamAccSlide slideId;
 
-    public String getActivityType() {
-        return activityType;
-    }
+  public AccActivityRecord() {}
 
-    public void setActivityType(String activityType) {
-        this.activityType = activityType;
-    }
+  public AccActivityRecord(BigInteger accActivityRecordId) {
+    this.accActivityRecordId = accActivityRecordId;
+  }
 
-    public Float getScheduled() {
-        return scheduled;
-    }
+  public AccActivityRecord copyRecord() {
+    AccActivityRecord copy = new AccActivityRecord();
 
-    public void setScheduled(Float scheduled) {
-        this.scheduled = scheduled;
-    }
+    copy.setActivityType(activityType);
+    copy.setActual(actual);
+    copy.setScheduled(scheduled);
 
-    public Float getActual() {
-        return actual;
-    }
+    return copy;
+  }
 
-    public void setActual(Float actual) {
-        this.actual = actual;
-    }
+  public BigInteger getAccActivityRecordId() {
+    return accActivityRecordId;
+  }
 
-    public PdBeamAccSlide getSlideId() {
-        return slideId;
-    }
+  public void setAccActivityRecordId(BigInteger accActivityRecordId) {
+    this.accActivityRecordId = accActivityRecordId;
+  }
 
-    public void setSlideId(PdBeamAccSlide slideId) {
-        this.slideId = slideId;
-    }    
+  public Long getOrderId() {
+    return orderId;
+  }
+
+  public void setOrderId(Long orderId) {
+    this.orderId = orderId;
+  }
+
+  public String getActivityType() {
+    return activityType;
+  }
+
+  public void setActivityType(String activityType) {
+    this.activityType = activityType;
+  }
+
+  public Float getScheduled() {
+    return scheduled;
+  }
+
+  public void setScheduled(Float scheduled) {
+    this.scheduled = scheduled;
+  }
+
+  public Float getActual() {
+    return actual;
+  }
+
+  public void setActual(Float actual) {
+    this.actual = actual;
+  }
+
+  public PdBeamAccSlide getSlideId() {
+    return slideId;
+  }
+
+  public void setSlideId(PdBeamAccSlide slideId) {
+    this.slideId = slideId;
+  }
 }

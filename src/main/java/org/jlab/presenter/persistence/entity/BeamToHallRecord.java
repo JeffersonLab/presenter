@@ -16,129 +16,139 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 /**
- *
  * @author ryans
  */
 @Entity
 @Table(name = "BEAM_TO_HALL_RECORD", schema = "PRESENTER_OWNER")
 public class BeamToHallRecord implements Serializable {
-    private static final long serialVersionUID = 1L;
-    @Id
-    @SequenceGenerator(name="BeamToHallRecordId", sequenceName="BEAM_TO_HALL_RECORD_ID", allocationSize=1)
-    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="BeamToHallRecordId")       
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "BEAM_TO_HALL_RECORD_ID", nullable = false, precision = 22, scale = 0)
-    private BigInteger beamToHallRecordId;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "ORDER_ID", nullable = false)
-    private Long orderId;    
-    @Size(max = 12)
-    @Column(name = "HALL", length = 12)
-    private String hall;
-    @Column(name = "SCHEDULED", precision = 12, scale = 4)
-    private Float scheduled;
-    @Column(name = "ACC_AVAIL", precision = 12, scale = 4)
-    private Float accAvail;
-    @Column(name = "ACCEPT", precision = 12, scale = 4)
-    private Float accept;
-    @Column(name = "HALL_AVAIL", precision = 12, scale = 4)
-    private Float hallAvail;
-    @Column(name = "ACTUAL", precision = 12, scale = 4)
-    private Float actual;
-    @JoinColumn(name = "SLIDE_ID", referencedColumnName = "SLIDE_ID")
-    @ManyToOne
-    private PdBeamAccSlide slideId;
+  private static final long serialVersionUID = 1L;
 
-    public BeamToHallRecord() {
-    }
+  @Id
+  @SequenceGenerator(
+      name = "BeamToHallRecordId",
+      sequenceName = "BEAM_TO_HALL_RECORD_ID",
+      allocationSize = 1)
+  @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "BeamToHallRecordId")
+  @Basic(optional = false)
+  @NotNull
+  @Column(name = "BEAM_TO_HALL_RECORD_ID", nullable = false, precision = 22, scale = 0)
+  private BigInteger beamToHallRecordId;
 
-    public BeamToHallRecord(BigInteger beamToHallRecordId) {
-        this.beamToHallRecordId = beamToHallRecordId;
-    }
+  @Basic(optional = false)
+  @NotNull
+  @Column(name = "ORDER_ID", nullable = false)
+  private Long orderId;
 
-    public BeamToHallRecord copyRecord() {
-        BeamToHallRecord copy = new BeamToHallRecord();
-        
-        copy.setAccAvail(accAvail);
-        copy.setAccept(accept);
-        copy.setHall(hall);
-        copy.setHallAvail(hallAvail);
-        copy.setScheduled(scheduled);
-        
-        return copy;
-    }
-    
-    public BigInteger getBeamToHallRecordId() {
-        return beamToHallRecordId;
-    }
+  @Size(max = 12)
+  @Column(name = "HALL", length = 12)
+  private String hall;
 
-    public void setBeamToHallRecordId(BigInteger beamToHallRecordId) {
-        this.beamToHallRecordId = beamToHallRecordId;
-    }
+  @Column(name = "SCHEDULED", precision = 12, scale = 4)
+  private Float scheduled;
 
-    public Float getActual() {
-        return actual;
-    }
+  @Column(name = "ACC_AVAIL", precision = 12, scale = 4)
+  private Float accAvail;
 
-    public void setActual(Float actual) {
-        this.actual = actual;
-    }
+  @Column(name = "ACCEPT", precision = 12, scale = 4)
+  private Float accept;
 
-    public Long getOrderId() {
-        return orderId;
-    }
+  @Column(name = "HALL_AVAIL", precision = 12, scale = 4)
+  private Float hallAvail;
 
-    public void setOrderId(Long orderId) {
-        this.orderId = orderId;
-    }
+  @Column(name = "ACTUAL", precision = 12, scale = 4)
+  private Float actual;
 
-    public String getHall() {
-        return hall;
-    }
+  @JoinColumn(name = "SLIDE_ID", referencedColumnName = "SLIDE_ID")
+  @ManyToOne
+  private PdBeamAccSlide slideId;
 
-    public void setHall(String hall) {
-        this.hall = hall;
-    }
+  public BeamToHallRecord() {}
 
-    public Float getScheduled() {
-        return scheduled;
-    }
+  public BeamToHallRecord(BigInteger beamToHallRecordId) {
+    this.beamToHallRecordId = beamToHallRecordId;
+  }
 
-    public void setScheduled(Float scheduled) {
-        this.scheduled = scheduled;
-    }
+  public BeamToHallRecord copyRecord() {
+    BeamToHallRecord copy = new BeamToHallRecord();
 
-    public Float getAccAvail() {
-        return accAvail;
-    }
+    copy.setAccAvail(accAvail);
+    copy.setAccept(accept);
+    copy.setHall(hall);
+    copy.setHallAvail(hallAvail);
+    copy.setScheduled(scheduled);
 
-    public void setAccAvail(Float accAvail) {
-        this.accAvail = accAvail;
-    }
+    return copy;
+  }
 
-    public Float getAccept() {
-        return accept;
-    }
+  public BigInteger getBeamToHallRecordId() {
+    return beamToHallRecordId;
+  }
 
-    public void setAccept(Float accept) {
-        this.accept = accept;
-    }
+  public void setBeamToHallRecordId(BigInteger beamToHallRecordId) {
+    this.beamToHallRecordId = beamToHallRecordId;
+  }
 
-    public Float getHallAvail() {
-        return hallAvail;
-    }
+  public Float getActual() {
+    return actual;
+  }
 
-    public void setHallAvail(Float hallAvail) {
-        this.hallAvail = hallAvail;
-    }
+  public void setActual(Float actual) {
+    this.actual = actual;
+  }
 
-    public PdBeamAccSlide getSlideId() {
-        return slideId;
-    }
+  public Long getOrderId() {
+    return orderId;
+  }
 
-    public void setSlideId(PdBeamAccSlide slideId) {
-        this.slideId = slideId;
-    }
+  public void setOrderId(Long orderId) {
+    this.orderId = orderId;
+  }
+
+  public String getHall() {
+    return hall;
+  }
+
+  public void setHall(String hall) {
+    this.hall = hall;
+  }
+
+  public Float getScheduled() {
+    return scheduled;
+  }
+
+  public void setScheduled(Float scheduled) {
+    this.scheduled = scheduled;
+  }
+
+  public Float getAccAvail() {
+    return accAvail;
+  }
+
+  public void setAccAvail(Float accAvail) {
+    this.accAvail = accAvail;
+  }
+
+  public Float getAccept() {
+    return accept;
+  }
+
+  public void setAccept(Float accept) {
+    this.accept = accept;
+  }
+
+  public Float getHallAvail() {
+    return hallAvail;
+  }
+
+  public void setHallAvail(Float hallAvail) {
+    this.hallAvail = hallAvail;
+  }
+
+  public PdBeamAccSlide getSlideId() {
+    return slideId;
+  }
+
+  public void setSlideId(PdBeamAccSlide slideId) {
+    this.slideId = slideId;
+  }
 }

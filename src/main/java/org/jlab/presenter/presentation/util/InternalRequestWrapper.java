@@ -11,54 +11,55 @@ import javax.servlet.http.HttpServletRequestWrapper;
 
 public class InternalRequestWrapper extends HttpServletRequestWrapper {
 
-    private LinkedHashMap<String, List<String>> params = new LinkedHashMap<String, List<String>>();
+  private LinkedHashMap<String, List<String>> params = new LinkedHashMap<String, List<String>>();
 
-    public InternalRequestWrapper(HttpServletRequest request, LinkedHashMap<String, List<String>> params) {
-        super(request);
-        
-        this.params = params;
+  public InternalRequestWrapper(
+      HttpServletRequest request, LinkedHashMap<String, List<String>> params) {
+    super(request);
+
+    this.params = params;
+  }
+
+  @Override
+  public String getParameter(String name) {
+    List<String> values = params.get(name);
+    String value = null;
+    if (values != null && values.size() > 0) {
+      value = values.get(0);
+    }
+    return value;
+  }
+
+  @Override
+  public Map<String, String[]> getParameterMap() {
+    Map<String, String[]> paramArrays = new LinkedHashMap<String, String[]>();
+
+    for (String key : params.keySet()) {
+      paramArrays.put(key, params.get(key).toArray(new String[0]));
     }
 
-    @Override
-    public String getParameter(String name) {
-        List<String> values = params.get(name);
-        String value = null;
-        if (values != null && values.size() > 0) {
-            value = values.get(0);
-        }
-        return value;
+    return paramArrays;
+  }
+
+  @Override
+  public Enumeration<String> getParameterNames() {
+    return Collections.enumeration(params.keySet());
+  }
+
+  @Override
+  public String[] getParameterValues(String name) {
+    return params.get(name).toArray(new String[0]);
+  }
+
+  public void addParameter(String name, String value) {
+    List<String> values = params.get(name);
+
+    if (values == null) {
+      values = new ArrayList<String>();
     }
 
-    @Override
-    public Map<String, String[]> getParameterMap() {
-        Map<String, String[]> paramArrays = new LinkedHashMap<String, String[]>();
-        
-        for(String key: params.keySet()) {
-            paramArrays.put(key, params.get(key).toArray(new String[0]));
-        }
-        
-        return paramArrays;
-    }
+    values.add(value);
 
-    @Override
-    public Enumeration<String> getParameterNames() {
-        return Collections.enumeration(params.keySet());
-    }
-
-    @Override
-    public String[] getParameterValues(String name) {
-        return params.get(name).toArray(new String[0]);
-    }
-
-    public void addParameter(String name, String value) {
-        List<String> values = params.get(name);
-
-        if (values == null) {
-            values = new ArrayList<String>();
-        } 
-        
-        values.add(value);
-        
-        params.put(name, values);
-    }
+    params.put(name, values);
+  }
 }

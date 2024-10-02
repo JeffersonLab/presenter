@@ -32,110 +32,118 @@ import org.jlab.presenter.business.util.TimeUtil;
 import org.jlab.presenter.persistence.enumeration.PresentationType;
 
 /**
- *
  * @author ryans
  */
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
 /*Note: Hibernate doesn't like a DiscriminatorColumn in combination with Inheritance type JOINED.  Use property hibernate.discriminator.ignore_explicit_for_joined to make this work.  See HHH-6911*/
-@DiscriminatorColumn(name = "PRESENTATION_TYPE", discriminatorType = DiscriminatorType.STRING, length
-        = 24)
+@DiscriminatorColumn(
+    name = "PRESENTATION_TYPE",
+    discriminatorType = DiscriminatorType.STRING,
+    length = 24)
 @DiscriminatorValue("PRESENTATION")
 @Table(name = "PRESENTATION", schema = "PRESENTER_OWNER")
 @NamedQueries({
-    @NamedQuery(name = "Presentation.delete", query
-            = "DELETE FROM Presentation a WHERE a.presentationId = :presentationId")})
+  @NamedQuery(
+      name = "Presentation.delete",
+      query = "DELETE FROM Presentation a WHERE a.presentationId = :presentationId")
+})
 public class Presentation implements Serializable {
 
-    private static final long serialVersionUID = 1L;
-    @Id
-    @SequenceGenerator(name = "PresentationId", sequenceName = "PRESENTATION_ID", allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "PresentationId")
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "PRESENTATION_ID", nullable = false, precision = 22, scale = 0)
-    private BigInteger presentationId;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "PRESENTATION_TYPE", nullable = false, length = 24)
-    @Enumerated(EnumType.STRING)
-    private PresentationType presentationType;
-    @Column(name = "LAST_MODIFIED_DATE")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date lastModified;
-    @Column(name = "LAST_USERNAME")
-    @Basic(optional = true)
-    private String lastUsername;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "presentation", fetch = FetchType.LAZY)
-    @OrderBy("orderId asc")
-    private List<Slide> slideList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "presentation")
-    private List<PresentationLog> presentationLogList;
+  private static final long serialVersionUID = 1L;
 
-    {
-        setPresentationType(PresentationType.PRESENTATION);
-        lastModified = TimeUtil.nowWithoutMillis();
-        
-        /*System.err.println("New Last Modified: " + lastModified.getTime());*/
-    }
+  @Id
+  @SequenceGenerator(name = "PresentationId", sequenceName = "PRESENTATION_ID", allocationSize = 1)
+  @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "PresentationId")
+  @Basic(optional = false)
+  @NotNull
+  @Column(name = "PRESENTATION_ID", nullable = false, precision = 22, scale = 0)
+  private BigInteger presentationId;
 
-    public Presentation() {
-    }
+  @Basic(optional = false)
+  @NotNull
+  @Column(name = "PRESENTATION_TYPE", nullable = false, length = 24)
+  @Enumerated(EnumType.STRING)
+  private PresentationType presentationType;
 
-    public Presentation(BigInteger presentationId) {
-        this.presentationId = presentationId;
-    }
+  @Column(name = "LAST_MODIFIED_DATE")
+  @Temporal(TemporalType.TIMESTAMP)
+  private Date lastModified;
 
-    public Presentation(BigInteger presentationId, PresentationType presentationType) {
-        this.presentationId = presentationId;
-        this.presentationType = presentationType;
-    }
+  @Column(name = "LAST_USERNAME")
+  @Basic(optional = true)
+  private String lastUsername;
 
-    public Date getLastModified() {
-        return lastModified;
-    }
+  @OneToMany(cascade = CascadeType.ALL, mappedBy = "presentation", fetch = FetchType.LAZY)
+  @OrderBy("orderId asc")
+  private List<Slide> slideList;
 
-    public void setLastModified(Date lastModified) {
-        this.lastModified = lastModified;
-    }
+  @OneToMany(cascade = CascadeType.ALL, mappedBy = "presentation")
+  private List<PresentationLog> presentationLogList;
 
-    public String getLastUsername() {
-        return lastUsername;
-    }
+  {
+    setPresentationType(PresentationType.PRESENTATION);
+    lastModified = TimeUtil.nowWithoutMillis();
 
-    public void setLastUsername(String lastUsername) {
-        this.lastUsername = lastUsername;
-    }
+    /*System.err.println("New Last Modified: " + lastModified.getTime());*/
+  }
 
-    public BigInteger getPresentationId() {
-        return presentationId;
-    }
+  public Presentation() {}
 
-    public void setPresentationId(BigInteger presentationId) {
-        this.presentationId = presentationId;
-    }
+  public Presentation(BigInteger presentationId) {
+    this.presentationId = presentationId;
+  }
 
-    public PresentationType getPresentationType() {
-        return presentationType;
-    }
+  public Presentation(BigInteger presentationId, PresentationType presentationType) {
+    this.presentationId = presentationId;
+    this.presentationType = presentationType;
+  }
 
-    public void setPresentationType(PresentationType presentationType) {
-        this.presentationType = presentationType;
-    }
+  public Date getLastModified() {
+    return lastModified;
+  }
 
-    public List<Slide> getSlideList() {
-        return slideList;
-    }
+  public void setLastModified(Date lastModified) {
+    this.lastModified = lastModified;
+  }
 
-    public void setSlideList(List<Slide> slideList) {
-        this.slideList = slideList;
-    }
+  public String getLastUsername() {
+    return lastUsername;
+  }
 
-    public List<PresentationLog> getPresentationLogList() {
-        return presentationLogList;
-    }
+  public void setLastUsername(String lastUsername) {
+    this.lastUsername = lastUsername;
+  }
 
-    public void setPresentationLogList(List<PresentationLog> presentationLogList) {
-        this.presentationLogList = presentationLogList;
-    }
+  public BigInteger getPresentationId() {
+    return presentationId;
+  }
+
+  public void setPresentationId(BigInteger presentationId) {
+    this.presentationId = presentationId;
+  }
+
+  public PresentationType getPresentationType() {
+    return presentationType;
+  }
+
+  public void setPresentationType(PresentationType presentationType) {
+    this.presentationType = presentationType;
+  }
+
+  public List<Slide> getSlideList() {
+    return slideList;
+  }
+
+  public void setSlideList(List<Slide> slideList) {
+    this.slideList = slideList;
+  }
+
+  public List<PresentationLog> getPresentationLogList() {
+    return presentationLogList;
+  }
+
+  public void setPresentationLogList(List<PresentationLog> presentationLogList) {
+    this.presentationLogList = presentationLogList;
+  }
 }

@@ -10,7 +10,6 @@ import javax.validation.constraints.Size;
 import org.jlab.presenter.persistence.enumeration.SlideType;
 
 /**
- *
  * @author ryans
  */
 @Entity
@@ -18,51 +17,52 @@ import org.jlab.presenter.persistence.enumeration.SlideType;
 @Table(name = "IFRAME_SLIDE", schema = "PRESENTER_OWNER")
 public class IFrameSlide extends Slide {
 
-    private static final long serialVersionUID = 1L;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 1024)
-    @Column(name = "IFRAME_URL", nullable = false, length = 1024)
-    private String iframeUrl;
+  private static final long serialVersionUID = 1L;
 
-    {
-        setSlideType(SlideType.IFRAME_SLIDE);
+  @Basic(optional = false)
+  @NotNull
+  @Size(min = 1, max = 1024)
+  @Column(name = "IFRAME_URL", nullable = false, length = 1024)
+  private String iframeUrl;
+
+  {
+    setSlideType(SlideType.IFRAME_SLIDE);
+  }
+
+  public IFrameSlide() {
+    this("about:blank", "Embedded Webpage");
+  }
+
+  public IFrameSlide(String iframeUrl, String label) {
+    this.iframeUrl = iframeUrl;
+    this.label = label;
+  }
+
+  @Override
+  public Slide copySlide() {
+    IFrameSlide copy = new IFrameSlide();
+
+    copy.setIframeUrl(getIframeUrl());
+    copy.setSlideType(getSlideType());
+    copy.setSyncFromSlideId(getSlideId());
+    copy.setLabel(getLabel());
+
+    return copy;
+  }
+
+  @Override
+  public void mergeSlide(Slide other) {
+    if (other instanceof IFrameSlide) {
+      IFrameSlide slide = (IFrameSlide) other;
+      this.setIframeUrl(slide.getIframeUrl());
     }
+  }
 
-    public IFrameSlide() {
-        this("about:blank", "Embedded Webpage");
-    }
+  public String getIframeUrl() {
+    return iframeUrl;
+  }
 
-    public IFrameSlide(String iframeUrl, String label) {
-        this.iframeUrl = iframeUrl;
-        this.label = label;
-    }
-
-    @Override
-    public Slide copySlide() {
-        IFrameSlide copy = new IFrameSlide();
-
-        copy.setIframeUrl(getIframeUrl());
-        copy.setSlideType(getSlideType());
-        copy.setSyncFromSlideId(getSlideId());
-        copy.setLabel(getLabel());
-
-        return copy;
-    }
-
-    @Override
-    public void mergeSlide(Slide other) {
-        if (other instanceof IFrameSlide) {
-            IFrameSlide slide = (IFrameSlide) other;
-            this.setIframeUrl(slide.getIframeUrl());
-        }
-    }       
-
-    public String getIframeUrl() {
-        return iframeUrl;
-    }
-
-    public void setIframeUrl(String iframeUrl) {
-        this.iframeUrl = iframeUrl;
-    }
+  public void setIframeUrl(String iframeUrl) {
+    this.iframeUrl = iframeUrl;
+  }
 }

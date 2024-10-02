@@ -10,41 +10,39 @@ import javax.servlet.annotation.WebListener;
 @WebListener
 public class ConfigurationParameterInit implements ServletContextListener {
 
-    private static final Logger LOGGER = Logger.getLogger(
-            ConfigurationParameterInit.class.getName());
+  private static final Logger LOGGER = Logger.getLogger(ConfigurationParameterInit.class.getName());
 
-    @Override
-    public void contextInitialized(ServletContextEvent sce) {
-        ServletContext context = sce.getServletContext();
+  @Override
+  public void contextInitialized(ServletContextEvent sce) {
+    ServletContext context = sce.getServletContext();
 
-        String cdnHostname = System.getenv("CDN_SERVER");
-        if (cdnHostname == null || cdnHostname.trim().isEmpty()) {
-            // Let's use a sensible default
-            cdnHostname = "cdn.acc.jlab.org";
-        }
-
-        context.setInitParameter("cdnContextPath", "//" + cdnHostname);
-        LOGGER.log(Level.FINEST, "Setting CDN_SERVER: {0}", cdnHostname);
-
-        String notification = System.getenv("SERVER_MESSAGE");
-
-        // If not null, but empty set to null
-        if (notification != null && notification.trim().isEmpty()) {
-            notification = null;
-        }
-
-        if (notification != null) {
-            context.setInitParameter("notification", notification);
-        }
-        LOGGER.log(Level.FINEST, "Setting notification: {0}", notification);
-
-        // We will just expose all environment variables!
-        context.setAttribute("env", System.getenv());
+    String cdnHostname = System.getenv("CDN_SERVER");
+    if (cdnHostname == null || cdnHostname.trim().isEmpty()) {
+      // Let's use a sensible default
+      cdnHostname = "cdn.acc.jlab.org";
     }
 
-    @Override
-    public void contextDestroyed(ServletContextEvent sce) {
-        // Nothing to do
+    context.setInitParameter("cdnContextPath", "//" + cdnHostname);
+    LOGGER.log(Level.FINEST, "Setting CDN_SERVER: {0}", cdnHostname);
+
+    String notification = System.getenv("SERVER_MESSAGE");
+
+    // If not null, but empty set to null
+    if (notification != null && notification.trim().isEmpty()) {
+      notification = null;
     }
 
+    if (notification != null) {
+      context.setInitParameter("notification", notification);
+    }
+    LOGGER.log(Level.FINEST, "Setting notification: {0}", notification);
+
+    // We will just expose all environment variables!
+    context.setAttribute("env", System.getenv());
+  }
+
+  @Override
+  public void contextDestroyed(ServletContextEvent sce) {
+    // Nothing to do
+  }
 }
