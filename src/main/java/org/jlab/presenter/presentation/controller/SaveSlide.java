@@ -135,7 +135,7 @@ public class SaveSlide extends HttpServlet {
                         + "must not be null";
             }
         } catch (Exception e) {
-            errorReason = e.getMessage();
+            errorReason = "slideType unknown";
         }
 
         Slide slide = null;
