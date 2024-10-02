@@ -91,6 +91,9 @@ public class Convert extends HttpServlet {
         puppetServer = puppetServer + "?ignoreHTTPSErrors=true&format=Letter&printBackground=true&landscape=true&top=0.5in&waitUntil=load&waitUntil=networkidle2" + "&url=" + internalServer;
 
         if (filename != null && !filename.isEmpty()) {
+
+            filename = removeSpecial(filename);
+
             response.setHeader("content-disposition", "attachment; filename=\"" + filename + "\"");
         }
 
@@ -116,5 +119,9 @@ public class Convert extends HttpServlet {
         in.transferTo(out);
 
         in.close();
+    }
+
+    private static String removeSpecial(String str) {
+        return str.replaceAll("[^a-zA-Z.]", "");
     }
 }
