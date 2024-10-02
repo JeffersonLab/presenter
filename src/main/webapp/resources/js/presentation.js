@@ -722,7 +722,7 @@ presenter.doSlideChange = function ($item) {
 presenter.setSelected = function ($item) {
 
     var slidenum = $item.find(".slide-number").text();
-    window.location.replace("#" + slidenum);
+    window.location.replace("#" + parseInt(slidenum));
 
     presenter.doSlideChange($item);
 };
