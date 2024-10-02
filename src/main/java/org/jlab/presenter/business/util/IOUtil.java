@@ -150,7 +150,7 @@ public class IOUtil {
     }
 
 
-    public static String doHtmlGet(String urlStr, int connectTimeout, int readTimeout, boolean strictChecking) throws IOException {
+    public static String doHtmlGet(String urlStr, int connectTimeout, int readTimeout) throws IOException {
         URL url;
         HttpURLConnection con;
 
@@ -161,18 +161,10 @@ public class IOUtil {
         con.setConnectTimeout(connectTimeout);
         con.setReadTimeout(readTimeout);
 
-        if(!strictChecking) {
-            try {
-                relaxCertificateChecking(con);
-            } catch(Exception e) {
-                throw new RuntimeException("Unable to relax certificate checking", e);
-            }
-        }
-
         return streamToString(con.getInputStream(), "UTF-8");
     }
 
-    public static String doHtmlPost(String urlStr, int connectTimeout, int readTimeout, boolean strictChecking) throws IOException {
+    public static String doHtmlPost(String urlStr, int connectTimeout, int readTimeout) throws IOException {
         URL url;
         HttpURLConnection con;
    
@@ -183,58 +175,6 @@ public class IOUtil {
         con.setConnectTimeout(connectTimeout);
         con.setReadTimeout(readTimeout);
         
-        if(!strictChecking) {
-            try {
-            relaxCertificateChecking(con);
-            } catch(Exception e) {
-                throw new RuntimeException("Unable to relax certificate checking", e);
-            }
-        }
-        
         return streamToString(con.getInputStream(), "UTF-8");
-    }
-    
-    public static void relaxCertificateChecking(HttpURLConnection con) throws NoSuchAlgorithmException, KeyManagementException {
-        if(con instanceof HttpsURLConnection) {
-            HttpsURLConnection httpsCon = (HttpsURLConnection)con;
-            httpsCon.setSSLSocketFactory(getRelaxedFactory());
-            httpsCon.setHostnameVerifier(getRelaxedVerifier());
-        }
-    }
-    
-    public static SSLSocketFactory getRelaxedFactory() throws NoSuchAlgorithmException, KeyManagementException {
-        SSLContext context = SSLContext.getInstance("TLS");
-        
-        context.init(null, new TrustManager[]{new X509TrustManager(){
-
-            @Override
-            public void checkClientTrusted(X509Certificate[] xcs, String string) throws
-                    CertificateException {
-
-            }
-
-            @Override
-            public void checkServerTrusted(X509Certificate[] xcs, String string) throws
-                    CertificateException {
-
-            }
-
-            @Override
-            public X509Certificate[] getAcceptedIssuers() {
-                return null;
-            }
-        }}, null);
-        
-        return context.getSocketFactory();
-    }
-    
-    public static HostnameVerifier getRelaxedVerifier() {
-        return new HostnameVerifier() {
-
-            @Override
-            public boolean verify(String string, SSLSession ssls) {
-                return true;
-            }
-        };
     }
 }
