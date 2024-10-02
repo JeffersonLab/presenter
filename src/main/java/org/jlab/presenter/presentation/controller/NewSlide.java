@@ -150,7 +150,7 @@ public class NewSlide extends HttpServlet {
                         + "a number";
             } catch (Exception e) {
                 LOGGER.log(Level.SEVERE, "Unable to create new slide", e);
-                errorReason = e.getMessage();
+                errorReason = "Unable to create slide";
             }
         }
 

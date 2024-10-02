@@ -69,7 +69,7 @@ public class DeleteSlide extends HttpServlet {
                 errorReason = "SlideId must be a number";
             } catch (Exception e) {
                 LOGGER.log(Level.SEVERE, "Unable to delete slide", e);
-                errorReason = e.getMessage();
+                errorReason = "Unable to delete slide";
             }
         }
 

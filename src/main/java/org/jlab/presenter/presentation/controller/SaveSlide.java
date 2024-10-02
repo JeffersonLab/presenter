@@ -200,7 +200,7 @@ public class SaveSlide extends HttpServlet {
             } catch(EJBAccessException e) {
                 logger.log(Level.WARNING, "Access Denied", e);
                 errorCode = "NOT_AUTHORIZED";
-                errorReason = e.getMessage();
+                errorReason = "Not Logged in / authorized";
             } catch(EJBException e) {
                 Throwable t = ExceptionUtil.getRootCause(e);
                 if(t instanceof ConstraintViolationException) {
@@ -210,13 +210,13 @@ public class SaveSlide extends HttpServlet {
                         errorReason = errorReason + violation.getPropertyPath() + " " + violation.getMessage() + ". ";
                     }
                 } else {
-                    errorReason = t.getClass().getSimpleName() + ": " + t.getMessage();  
+                    errorReason = t.getClass().getSimpleName();
                 }
             } catch(NumberFormatException e) {
-                errorReason = "Invalid number format: " + e.getMessage();
+                errorReason = "Invalid number format";
             } catch (Exception e) {
                 logger.log(Level.SEVERE, "Unable to save slide", e);
-                errorReason = e.getMessage();
+                errorReason = "Unable to save slide";
             }
         }
         

@@ -67,10 +67,10 @@ public class SendToElog extends HttpServlet {
             } catch (EJBAccessException e) {
                 logger.log(Level.WARNING, "Access denied", e);
                 errorCode = "NOT_AUTHORIZED";
-                errorReason = e.getMessage();
+                errorReason = "Not Logged in / authorized";
             } catch (WebAppException e) {
                 logger.log(Level.WARNING, "Unable to send to elog", e);
-                errorReason = e.getMessage();
+                errorReason = e.getUserFriendlyMessage();
             } catch (Exception e) {
                 logger.log(Level.SEVERE, "Unable to send to elog", e);
                 errorReason = "Unexpected Error";

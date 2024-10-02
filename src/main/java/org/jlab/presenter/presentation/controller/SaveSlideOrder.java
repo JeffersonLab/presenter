@@ -96,7 +96,7 @@ public class SaveSlideOrder extends HttpServlet {
                 audit = presentationFacade.getAuditRecord(presentation);
             } catch (Exception e) {
                 logger.log(Level.SEVERE, "Unable to save new slide order", e);
-                errorReason = e.getMessage();
+                errorReason = "Unable to save slide order";
             }
         }
 
