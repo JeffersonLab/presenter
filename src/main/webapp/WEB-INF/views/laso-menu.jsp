@@ -50,7 +50,7 @@
                     <c:if test="${param.elogId ne null}">
                         <c:choose>
                             <c:when test="${param.elogId > 0}">
-                                <span class="success">Log Entry <a target="_blank" href="https://logbooks.jlab.org/entry/${param.elogId}">${param.elogId}</a> Saved</span>                            
+                                <span class="success">Log Entry <a target="_blank" href="https://logbooks.jlab.org/entry/${fn:escapeXml(param.elogId)}"><c:out value="${param.elogId}"/></a> Saved</span>
                             </c:when>
                             <c:when test="${param.elogId eq 0}">
                                 <span class="success">Log Entry Queued</span>                            
