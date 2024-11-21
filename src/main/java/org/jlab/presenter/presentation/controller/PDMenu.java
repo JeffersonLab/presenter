@@ -143,7 +143,7 @@ public class PDMenu extends HttpServlet {
       int dayOfWeek = TimeUtil.getDayOfWeek(ymd);
       switch (type) {
         case RUN:
-        case SAD:
+        case SAM:
         case LSD:
         case HCO:
         case PD:
@@ -219,7 +219,7 @@ public class PDMenu extends HttpServlet {
           case RUN:
             slides = getNewRunSlides(request, response, presentation);
             break;
-          case SAD:
+          case SAM:
             slides = getNewSADSlides(request, response, presentation);
             break;
           case LSD:
@@ -247,7 +247,7 @@ public class PDMenu extends HttpServlet {
         presentationFacade.create(presentation); // This method sets last modified by
 
         presentationId = presentation.getPresentationId();
-      } else { // Refresh shift logs (If RUN, HCO, SAD, or SUM3)
+      } else { // Refresh shift logs (If RUN, HCO, SAM, or SUM3)
         int precedingDayCount = pdPresentationFacade.getPrecedingDays(presentation);
 
         switch (type) {
@@ -255,7 +255,7 @@ public class PDMenu extends HttpServlet {
             pdPresentationFacade.importShiftLogs(presentationId, precedingDayCount, true);
             break;
           case HCO:
-          case SAD:
+          case SAM:
             pdPresentationFacade.importShiftLogs(presentationId, precedingDayCount, false);
             break;
           case SUM3:

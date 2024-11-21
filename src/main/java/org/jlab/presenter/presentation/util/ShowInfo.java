@@ -36,7 +36,7 @@ public abstract class ShowInfo {
       case SUM3:
         tags = new String[] {"PDWeeklySummary"};
         break;
-      case SAD:
+      case SAM:
       case RUN:
       case LSD:
       case HCO:
@@ -210,7 +210,7 @@ class PDShowInfo extends ShowInfo {
         allowShiftImport = true;
         includeGraphsInShiftImport = true;
         break;
-      case SAD:
+      case SAM:
       case PD:
       case HCO:
         allowShiftImport = true;
@@ -256,7 +256,7 @@ class PDShowInfo extends ShowInfo {
 
         templates.addAll(generalTemplates);
         break;
-      case SAD:
+      case SAM:
         templates.add(
             new ShiftInfoSlide(
                 TimeUtil.getLSDContentDate(presentation.getDeliveryYmd()),

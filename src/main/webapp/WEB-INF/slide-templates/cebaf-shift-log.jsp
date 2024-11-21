@@ -58,7 +58,7 @@
                             <tr>
                                 <th></th>
                                 <th>Sched.</th>
-                                <th>Actual<a title="Physics: UP + BNR | Internal: Restore, ACC, SAD, or Studies (Click for details...)" href="${url}" target="_blank">*</a></th>
+                                <th>Actual<a title="Physics: UP + BNR | Internal: Restore, ACC, SAM, or Studies (Click for details...)" href="${url}" target="_blank">*</a></th>
                                 <th>ABU</th>
                                 <th>BANU</th>
                             </tr>

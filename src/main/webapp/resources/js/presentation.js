@@ -866,7 +866,7 @@ presenter.deleteSlide = function () {
 presenter.doSyncSlideGroupOrder = function () {
     /*We only do synced slide grouping for certiain presentations*/
     if (presenter.presentationSubType !== 'RUN' &&
-            presenter.presentationSubType !== 'SAD' &&
+            presenter.presentationSubType !== 'SAM' &&
             presenter.presentationSubType !== 'HCO') {
         return;
     }

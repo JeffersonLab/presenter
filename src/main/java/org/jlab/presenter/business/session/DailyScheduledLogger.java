@@ -64,7 +64,7 @@ public class DailyScheduledLogger {
   private void send8AMElog() {
     Date ymd = TimeUtil.getCurrentYearMonthDay();
     PDPresentationType[] typeArray = {
-      PDPresentationType.RUN, PDPresentationType.HCO, PDPresentationType.SAD
+      PDPresentationType.RUN, PDPresentationType.HCO, PDPresentationType.SAM
     };
     for (PDPresentationType type : typeArray) {
       BigInteger presentationId = pdPresentationFacade.findIdByYmdAndPDType(ymd, type);

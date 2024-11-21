@@ -160,7 +160,7 @@ public class UrlUtil {
   }
 
   public static IFrameSlide getCalendarSlide(Date date) {
-    return new IFrameSlide(getCalendarUrl(date), "SAD Calendar");
+    return new IFrameSlide(getCalendarUrl(date), "SAM Calendar");
   }
 
   public static Slide getDailyBeamAccountingSlide(Date date) {

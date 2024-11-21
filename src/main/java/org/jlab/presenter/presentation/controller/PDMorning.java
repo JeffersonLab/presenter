@@ -57,7 +57,7 @@ public class PDMorning extends HttpServlet {
     if (error == null) {
 
       PDPresentationType[] typeArray = {
-        PDPresentationType.RUN, PDPresentationType.SAD, PDPresentationType.HCO
+        PDPresentationType.RUN, PDPresentationType.SAM, PDPresentationType.HCO
       };
       for (PDPresentationType type : typeArray) {
         presentationId = pdPresentationFacade.findIdByYmdAndPDType(ymd, type);
