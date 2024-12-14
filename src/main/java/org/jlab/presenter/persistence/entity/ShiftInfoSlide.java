@@ -93,7 +93,7 @@ public class ShiftInfoSlide extends Slide {
             + "                    <p><br/></p>"
             + "                    <p><b>S&amp;A:</b>&nbsp;</p>\n"
             + "                    <p><br/></p>"
-            + "                    <p><b>SW:</b>&nbsp;</p>\n"
+            + "                    <p><b>ACG:</b>&nbsp;</p>\n"
             + "                    <p><br/></p>"
             + "                    <p><b>Cryo:</b>&nbsp;</p>\n"
             + "                    <p><br/></p>"
