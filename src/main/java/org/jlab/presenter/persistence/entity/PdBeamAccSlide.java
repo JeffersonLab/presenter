@@ -46,7 +46,7 @@ public class PdBeamAccSlide extends Slide {
     accActivityRecordList = new ArrayList<AccActivityRecord>();
 
     String[] types = {
-      "Acc. Beam Studies", "Acc. Restoration", "Acc. Config. Change", "Sched. Acc. Off"
+      "Acc. Beam Studies", "Acc. Restoration", "Acc. Config. Change", "Sched. Acc. Main."
       // "Down Hard",
       // "FSD Down Time"
     };

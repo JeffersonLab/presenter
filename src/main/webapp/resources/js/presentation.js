@@ -1349,7 +1349,7 @@ presenter.updateShiftInfo = function () {
             var sad = json['acc-sad-seconds'],
                     sadPlan = json['plan-sad-seconds'];
             if (sad > 0 || sadPlan > 0) {
-                presenter.doShiftAccRowAdd('Sched. Acc. Down', sad, sadPlan);
+                presenter.doShiftAccRowAdd('Sched. Acc. Main.', sad, sadPlan);
             }
 
             $.each(json.halls, function (index, value) {
@@ -1447,7 +1447,7 @@ presenter.updateWeekInfo = function () {
 
             var sad = json['acc-sad-seconds'],
                     sadPlan = json['plan-sad-seconds'];
-            presenter.doWeekAccRowAdd('Sched. Acc. Down', sad, sadPlan);
+            presenter.doWeekAccRowAdd('Sched. Acc. Main.', sad, sadPlan);
 
             $.each(json.halls, function (index, value) {
                 presenter.doWeekHallRowAdd(value);
