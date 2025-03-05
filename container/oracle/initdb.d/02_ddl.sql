@@ -323,3 +323,13 @@ CREATE TABLE PRESENTER_OWNER.SHIFT_PLANS
     "BEGINS_AT"             DATE NOT NULL,
     "PROGRAM_DEPUTY"        NUMBER(10,0) NOT NULL
 );
+
+/*create or replace view presenter_owner.staff as
+(
+select STAFF_ID, USERNAME from support.staff
+);*/
+CREATE TABLE PRESENTER_OWNER.STAFF
+(
+    "STAFF_ID"              NUMBER(*,0) NOT NULL,
+    "USERNAME"              VARCHAR2(32)
+);
