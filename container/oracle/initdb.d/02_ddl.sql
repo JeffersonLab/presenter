@@ -311,17 +311,17 @@ CREATE TABLE PRESENTER_OWNER.IFRAME_SLIDE
 );
 
 
---GRANT SELECT ON PD_OWNER.SHIFT_PLANS TO PRESENTER_OWNER;
-/*create or replace view presenter_owner.shift_plans as
+--GRANT SELECT ON PD_OWNER.ASSIGNMENTS TO PRESENTER_OWNER;
+/*create or replace view presenter_owner.assignments as
 (
-select BEGINS_AT, PROGRAM_DEPUTY from pd_owner.shift_plans
+select USER_ID, START_DATE, END_DATE from pd_owner.assignments
 );*/
 
-CREATE TABLE PRESENTER_OWNER.SHIFT_PLANS
+CREATE TABLE PRESENTER_OWNER.ASSIGNMENTS
 (
-    "ID"                    NUMBER(10,0) NOT NULL,
-    "BEGINS_AT"             DATE NOT NULL,
-    "PROGRAM_DEPUTY"        NUMBER(10,0) NOT NULL
+    "USER_ID"          NUMBER(10,0) NOT NULL,
+    "START_DATE"       DATE NOT NULL,
+    "END_DATE"         DATE NOT NULL
 );
 
 /*create or replace view presenter_owner.staff as

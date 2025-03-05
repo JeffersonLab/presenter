@@ -446,7 +446,7 @@ public class PresentationFacade extends AbstractFacade<Presentation> {
 
     Query q =
         em.createNativeQuery(
-            "select username from presenter_owner.shift_plans, presenter_owner.staff where program_deputy = staff_id and begins_at = ( select max(begins_at) from presenter_owner.shift_plans where begins_at <= sysdate)");
+            "select username from presenter_owner.assignments, presenter_owner.staff where user_id = staff_id and start_date < sysdate and end_date > sysdate");
 
     List<Object[]> results = q.getResultList();
 
