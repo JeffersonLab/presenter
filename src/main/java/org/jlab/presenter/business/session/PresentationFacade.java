@@ -374,7 +374,13 @@ public class PresentationFacade extends AbstractFacade<Presentation> {
 
     String entrymaker = context.getCallerPrincipal().getName();
 
-    String username = "alarms";
+    final String DEFAULT_USERNAME = "presenter";
+
+    String username = findPDUsername();
+
+    if (username == null) {
+      username = DEFAULT_USERNAME;
+    }
 
     if (presentationType != PresentationType.PD_PRESENTATION
         && entrymaker != null
@@ -433,6 +439,24 @@ public class PresentationFacade extends AbstractFacade<Presentation> {
     }
 
     return logId;
+  }
+
+  private String findPDUsername() {
+    String username = null;
+
+    Query q =
+        em.createNativeQuery(
+            "select username from presenter_owner.assignments, presenter_owner.staff where user_id = staff_id and start_date < sysdate and end_date > sysdate");
+
+    List<Object[]> results = q.getResultList();
+
+    if (results != null && !results.isEmpty()) {
+      Object[] row = results.get(0);
+
+      username = (String) row[0];
+    }
+
+    return username;
   }
 
   @PermitAll

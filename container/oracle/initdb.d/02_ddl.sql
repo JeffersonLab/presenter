@@ -309,3 +309,27 @@ CREATE TABLE PRESENTER_OWNER.IFRAME_SLIDE
     CONSTRAINT IFRAME_SLIDE_PK PRIMARY KEY (SLIDE_ID),
     CONSTRAINT IFRAME_SLIDE_FK1 FOREIGN KEY (SLIDE_ID) REFERENCES PRESENTER_OWNER.SLIDE (SLIDE_ID) ON DELETE CASCADE
 );
+
+
+--GRANT SELECT ON PD_OWNER.ASSIGNMENTS TO PRESENTER_OWNER;
+/*create or replace view presenter_owner.assignments as
+(
+select USER_ID, START_DATE, END_DATE from pd_owner.assignments
+);*/
+
+CREATE TABLE PRESENTER_OWNER.ASSIGNMENTS
+(
+    "USER_ID"          NUMBER(10,0) NOT NULL,
+    "START_DATE"       DATE NOT NULL,
+    "END_DATE"         DATE NOT NULL
+);
+
+/*create or replace view presenter_owner.staff as
+(
+select STAFF_ID, USERNAME from support.staff
+);*/
+CREATE TABLE PRESENTER_OWNER.STAFF
+(
+    "STAFF_ID"              NUMBER(*,0) NOT NULL,
+    "USERNAME"              VARCHAR2(32)
+);
