@@ -378,7 +378,7 @@ public class PresentationFacade extends AbstractFacade<Presentation> {
 
     String username = findPDUsername();
 
-    if(username == null) {
+    if (username == null) {
       username = DEFAULT_USERNAME;
     }
 
@@ -450,7 +450,7 @@ public class PresentationFacade extends AbstractFacade<Presentation> {
 
     List<Object[]> results = q.getResultList();
 
-    if(results != null && !results.isEmpty()) {
+    if (results != null && !results.isEmpty()) {
       Object[] row = results.get(0);
 
       username = (String) row[0];
