@@ -376,7 +376,11 @@ public class PresentationFacade extends AbstractFacade<Presentation> {
 
     final String DEFAULT_USERNAME = "presenter";
 
-    String username = findPDUsername();
+    String username = null;
+
+    if (PresentationType.PD_PRESENTATION.equals(presentationType)) {
+      username = findPDUsername();
+    }
 
     if (username == null) {
       username = DEFAULT_USERNAME;
@@ -444,16 +448,20 @@ public class PresentationFacade extends AbstractFacade<Presentation> {
   private String findPDUsername() {
     String username = null;
 
-    Query q =
-        em.createNativeQuery(
-            "select username from presenter_owner.assignments, presenter_owner.staff where user_id = staff_id and start_date < sysdate and end_date > sysdate");
+    try {
+      Query q =
+          em.createNativeQuery(
+              "select username from presenter_owner.assignments, presenter_owner.staff where user_id = staff_id and start_date < sysdate and end_date > sysdate");
 
-    List<Object[]> results = q.getResultList();
+      List<Object> results = q.getResultList();
 
-    if (results != null && !results.isEmpty()) {
-      Object[] row = results.get(0);
+      if (results != null && !results.isEmpty()) {
+        // Object[] row = results.get(0);
 
-      username = (String) row[0];
+        username = (String) results.get(0);
+      }
+    } catch (Exception e) {
+      LOGGER.log(Level.SEVERE, "Error finding pd username", e);
     }
 
     return username;
