@@ -195,6 +195,8 @@ public class SaveSlide extends HttpServlet {
         }
       } catch (NumberFormatException e) {
         errorReason = "Invalid number format";
+      } catch (IllegalArgumentException e) {
+        errorReason = e.getMessage();
       } catch (Exception e) {
         logger.log(Level.SEVERE, "Unable to save slide", e);
         errorReason = "Unable to save slide";
