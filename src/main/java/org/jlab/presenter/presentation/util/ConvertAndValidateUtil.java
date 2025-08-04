@@ -185,7 +185,7 @@ public class ConvertAndValidateUtil {
       HttpServletRequest request, BtaShiftInfoSlide slide) {
     List<BtaRecord> records = new ArrayList<BtaRecord>();
 
-    final int MAX_ROWS = 6;
+    final int MAX_ROWS = 9;
 
     String[] row;
     long i = 1;
