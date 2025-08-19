@@ -4,20 +4,19 @@ plugins {
 }
 
 description = "Presentation app"
-group 'org.jlab'
-version new File("./VERSION").text
+group = 'org.jlab'
+version = new File("./VERSION").text
+ext.version = project.version
 ext.releaseDate = new Date().format('MMM dd yyyy')
 
-tasks.withType(JavaCompile) {
+tasks.withType(JavaCompile).configureEach {
     options.release = 11
     options.encoding = 'UTF-8'
     options.compilerArgs += ["-Xlint:deprecation", "-Xlint:unchecked"]
 }
-
 repositories {
     mavenCentral()
 }
-
 dependencies {
     // Java 11 / Java EE 8 oddly doesn't support POSTING multipart/form-data
     implementation 'org.apache.httpcomponents:httpmime:4.5.14'
@@ -33,19 +32,20 @@ dependencies {
                     'org.hibernate:hibernate-envers:5.3.28.Final',
                     'org.jsoup:jsoup:1.14.2'
 }
-
+tasks.named('jar') {
+    enabled = false
+}
 war {
     archiveFileName='presenter.war'
     filesMatching('WEB-INF/web.xml') {
         filter {
-            String line -> line.replaceAll("@VERSION@", project.version)
+            String line -> line.replaceAll("@VERSION@", version)
         }
         filter {
             String line -> line.replaceAll("@RELEASE_DATE@", releaseDate)
         }
     }
 }
-
 spotless {
     java {
         googleJavaFormat()
