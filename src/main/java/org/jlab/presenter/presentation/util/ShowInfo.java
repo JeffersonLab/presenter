@@ -155,12 +155,6 @@ public abstract class ShowInfo {
       case SUM3:
         name = "Program Deputy Weekly Summary, presented " + formatter.format(deliveryYmd);
         break;
-        /*case LSD:
-        name = "Long Shutdown Summary, presented " + formatter.format(deliveryYmd);
-        break;
-        case HCO:
-        name = "Hot Checkout Summary, presented " + formatter.format(deliveryYmd);
-        break;*/
       default:
         name = "Program Deputy Summary, presented " + formatter.format(deliveryYmd);
     }
