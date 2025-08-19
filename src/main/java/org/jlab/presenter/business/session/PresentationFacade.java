@@ -445,6 +445,7 @@ public class PresentationFacade extends AbstractFacade<Presentation> {
     return logId;
   }
 
+  @SuppressWarnings("unchecked")
   private String findPDUsername() {
     String username = null;
 
