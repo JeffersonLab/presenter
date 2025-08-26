@@ -1624,7 +1624,7 @@ presenter.doWeekHallRowAdd = function (data) {
             abuPercent = '0.0';
             hallAvail = '0.0';
         } else {
-            accAvail = ((data['abu-seconds'] + data['banu-seconds']) / (hall_sched_seconds - data['acc-seconds']) * 100).toFixed(1);
+            accAvail = ((data['abu-seconds'] + data['banu-seconds']) / hall_sched_seconds * 100).toFixed(1);
             abuPercent = (data['abu-seconds'] / hall_sched_seconds * 100).toFixed(1);
             hallAvail = ((data['er-seconds'] + data['pcc-seconds']) / hall_sched_seconds * 100).toFixed(1);
         }
