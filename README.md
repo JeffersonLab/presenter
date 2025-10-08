@@ -76,7 +76,7 @@ Uses a subset of the [Smoothness Environment Variables](https://github.com/Jeffe
 **See**: Docker [config](https://github.com/JeffersonLab/presenter/blob/main/compose.yaml) example.
 
 ### Database
-The application requires an Oracle 18+ database with the following [schema](https://github.com/JeffersonLab/presenter/tree/main/docker/oracle/setup) installed.   The application server hosting the app must also be configured with a JNDI datasource.
+The application requires an Oracle 19+ database with the following [schema](https://github.com/JeffersonLab/presenter/tree/main/docker/oracle/setup) installed.   The application server hosting the app must also be configured with a JNDI datasource.
 
 ## Build
 This project is built with [Java 21](https://adoptium.net/) (compiled to Java 17 bytecode), and uses the [Gradle 9](https://gradle.org/) build tool to automatically download dependencies and build the project from source:
