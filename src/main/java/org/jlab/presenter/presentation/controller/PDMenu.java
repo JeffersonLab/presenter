@@ -322,7 +322,8 @@ public class PDMenu extends HttpServlet {
     slides.add(summarySlide);
 
     // Extra PD
-    Slide extraPD = new TitleBodySlide(TitleBodySlideType.DYNAMIC_TWO_COLUMN);
+    TitleBodySlide extraPD = new TitleBodySlide(TitleBodySlideType.DYNAMIC_TWO_COLUMN);
+    extraPD.setTitle("PD Summary");
     extraPD.setOrderId(order++);
     extraPD.setPresentation(presentation);
     slides.add(extraPD);
@@ -493,6 +494,13 @@ public class PDMenu extends HttpServlet {
     summarySlide.setOrderId(order++);
     summarySlide.setPresentation(presentation);
     slides.add(summarySlide);
+
+    // Extra PD
+    TitleBodySlide extraPD = new TitleBodySlide(TitleBodySlideType.DYNAMIC_TWO_COLUMN);
+    extraPD.setTitle("PD Summary");
+    extraPD.setOrderId(order++);
+    extraPD.setPresentation(presentation);
+    slides.add(extraPD);
 
     // Workmap
     IFrameSlide workmapSlide = UrlUtil.getWorkmapSlide(presentation.getDeliveryYmd());
