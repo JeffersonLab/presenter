@@ -21,19 +21,8 @@ import javax.servlet.http.HttpSession;
 import org.jlab.presenter.business.session.*;
 import org.jlab.presenter.business.util.TimeUtil;
 import org.jlab.presenter.business.util.UrlUtil;
-import org.jlab.presenter.persistence.entity.BodySlide;
-import org.jlab.presenter.persistence.entity.IFrameSlide;
-import org.jlab.presenter.persistence.entity.PDPresentation;
-import org.jlab.presenter.persistence.entity.PdAccessSlide;
-import org.jlab.presenter.persistence.entity.PdBeamAccSlide;
-import org.jlab.presenter.persistence.entity.PdInfoSlide;
-import org.jlab.presenter.persistence.entity.ShiftInfoSlide;
-import org.jlab.presenter.persistence.entity.Slide;
-import org.jlab.presenter.persistence.enumeration.BodySlideType;
-import org.jlab.presenter.persistence.enumeration.PDPresentationType;
-import org.jlab.presenter.persistence.enumeration.PdInfoSlideType;
-import org.jlab.presenter.persistence.enumeration.PresentationType;
-import org.jlab.presenter.persistence.enumeration.ShiftSlideType;
+import org.jlab.presenter.persistence.entity.*;
+import org.jlab.presenter.persistence.enumeration.*;
 import org.jlab.presenter.presentation.util.ConvertAndValidateUtil;
 import org.jlab.presenter.presentation.util.DailyFsdGraphSlideGenerator;
 import org.jlab.presenter.presentation.util.DailySlideGenerator;
@@ -332,6 +321,19 @@ public class PDMenu extends HttpServlet {
     summarySlide.setPresentation(presentation);
     slides.add(summarySlide);
 
+    // Extra PD
+    TitleBodySlide extraPD = new TitleBodySlide(TitleBodySlideType.DYNAMIC_TWO_COLUMN);
+    extraPD.setTitle("PD Summary");
+    extraPD.setOrderId(order++);
+    extraPD.setPresentation(presentation);
+    slides.add(extraPD);
+
+    // HCO Graph Slide
+    Slide hcoSlide = UrlUtil.getHcoSlide();
+    hcoSlide.setOrderId(order++);
+    hcoSlide.setPresentation(presentation);
+    slides.add(hcoSlide);
+
     // Workmap Slide
     IFrameSlide workmapSlide = UrlUtil.getWorkmapSlide(presentation.getDeliveryYmd());
     workmapSlide.setOrderId(order++);
@@ -343,12 +345,6 @@ public class PDMenu extends HttpServlet {
     calendarSlide.setOrderId(order++);
     calendarSlide.setPresentation(presentation);
     slides.add(calendarSlide);
-
-    // HCO Graph Slide
-    Slide hcoSlide = UrlUtil.getHcoSlide();
-    hcoSlide.setOrderId(order++);
-    hcoSlide.setPresentation(presentation);
-    slides.add(hcoSlide);
 
     // LERF Slides
     List<Slide> lerfSlides =
@@ -498,6 +494,13 @@ public class PDMenu extends HttpServlet {
     summarySlide.setOrderId(order++);
     summarySlide.setPresentation(presentation);
     slides.add(summarySlide);
+
+    // Extra PD
+    TitleBodySlide extraPD = new TitleBodySlide(TitleBodySlideType.DYNAMIC_TWO_COLUMN);
+    extraPD.setTitle("PD Summary");
+    extraPD.setOrderId(order++);
+    extraPD.setPresentation(presentation);
+    slides.add(extraPD);
 
     // Workmap
     IFrameSlide workmapSlide = UrlUtil.getWorkmapSlide(presentation.getDeliveryYmd());
