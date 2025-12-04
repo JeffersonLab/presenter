@@ -322,14 +322,17 @@ public class PDMenu extends HttpServlet {
     slides.add(summarySlide);
 
     // Extra PD
-    TitleBodySlide extraPD = new TitleBodySlide(TitleBodySlideType.DYNAMIC_TWO_COLUMN);
-    extraPD.setTitle("PD Summary");
-    extraPD.setOrderId(order++);
-    extraPD.setPresentation(presentation);
-    slides.add(extraPD);
+    ShiftInfoSlide summarySlide2 = new ShiftInfoSlide();
+    summarySlide2.setShiftSlideType(ShiftSlideType.HCO);
+    summarySlide2.setBody("");
+    summarySlide2.setProgram("HCO");
+    summarySlide2.setYmd(TimeUtil.getLSDContentDate(presentation.getDeliveryYmd()));
+    summarySlide2.setOrderId(order++);
+    summarySlide2.setPresentation(presentation);
+    slides.add(summarySlide2);
 
     // HCO Graph Slide
-    Slide hcoSlide = UrlUtil.getHcoSlide();
+    Slide hcoSlide = new IFrameSlide();
     hcoSlide.setOrderId(order++);
     hcoSlide.setPresentation(presentation);
     slides.add(hcoSlide);
@@ -496,11 +499,14 @@ public class PDMenu extends HttpServlet {
     slides.add(summarySlide);
 
     // Extra PD
-    TitleBodySlide extraPD = new TitleBodySlide(TitleBodySlideType.DYNAMIC_TWO_COLUMN);
-    extraPD.setTitle("PD Summary");
-    extraPD.setOrderId(order++);
-    extraPD.setPresentation(presentation);
-    slides.add(extraPD);
+    ShiftInfoSlide summarySlide2 = new ShiftInfoSlide();
+    summarySlide2.setShiftSlideType(ShiftSlideType.PD);
+    summarySlide2.setBody("");
+    summarySlide2.setProgram("");
+    summarySlide2.setYmd(TimeUtil.getLSDContentDate(presentation.getDeliveryYmd()));
+    summarySlide2.setOrderId(order++);
+    summarySlide2.setPresentation(presentation);
+    slides.add(summarySlide2);
 
     // Workmap
     IFrameSlide workmapSlide = UrlUtil.getWorkmapSlide(presentation.getDeliveryYmd());
