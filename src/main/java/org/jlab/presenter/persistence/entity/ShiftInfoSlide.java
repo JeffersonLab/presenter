@@ -94,7 +94,7 @@ public class ShiftInfoSlide extends Slide {
             + "                    <p><br/></p>"
             + "                    <p><b>Accelerator Computing:</b>&nbsp;</p>\n"
             + "                    <p><br/></p>"
-            + "                    <p><b>Cyrogenics:</b>&nbsp;</p>\n"
+            + "                    <p><b>Cryogenics:</b>&nbsp;</p>\n"
             + "                    <p><br/></p>"
             + "                    <p><b>FML:</b>&nbsp;</p>\n"
             + "                    <p><br/></p>"
