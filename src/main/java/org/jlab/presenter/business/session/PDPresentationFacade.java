@@ -246,7 +246,7 @@ public class PDPresentationFacade extends AbstractFacade<PDPresentation> {
   public List<PDPresentation> findRecent() {
     TypedQuery<PDPresentation> q =
         em.createQuery(
-            "select p from PDPresentation p where p.deliveryYmd > sysdate - 8 order by p.deliveryYmd desc, p.pdPresentationType desc",
+            "select p from PDPresentation p where p.deliveryYmd > (current_timestamp - 8 day) order by p.deliveryYmd desc, p.pdPresentationType desc",
             PDPresentation.class);
 
     return q.getResultList();
