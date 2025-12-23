@@ -40,19 +40,19 @@ public class AccessRecord implements Serializable {
   @Column(name = "ACCESS_TYPE", length = 64)
   private String accessType;
 
-  @Column(name = "HALL_A", precision = 12, scale = 4)
+  @Column(name = "HALL_A", precision = 12)
   private Float hallA;
 
-  @Column(name = "HALL_B", precision = 12, scale = 4)
+  @Column(name = "HALL_B", precision = 12)
   private Float hallB;
 
-  @Column(name = "HALL_C", precision = 12, scale = 4)
+  @Column(name = "HALL_C", precision = 12)
   private Float hallC;
 
-  @Column(name = "HALL_D", precision = 12, scale = 4)
+  @Column(name = "HALL_D", precision = 12)
   private Float hallD;
 
-  @Column(name = "ACCEL", precision = 12, scale = 4)
+  @Column(name = "ACCEL", precision = 12)
   private Float accel;
 
   @JoinColumn(name = "SLIDE_ID", referencedColumnName = "SLIDE_ID")

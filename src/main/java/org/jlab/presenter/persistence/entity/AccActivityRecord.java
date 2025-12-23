@@ -43,10 +43,10 @@ public class AccActivityRecord implements Serializable {
   @Column(name = "ACTIVITY_TYPE", length = 36)
   private String activityType;
 
-  @Column(name = "SCHEDULED", precision = 12, scale = 4)
+  @Column(name = "SCHEDULED", precision = 12)
   private Float scheduled;
 
-  @Column(name = "ACTUAL", precision = 12, scale = 4)
+  @Column(name = "ACTUAL", precision = 12)
   private Float actual;
 
   @JoinColumn(name = "SLIDE_ID", referencedColumnName = "SLIDE_ID")

@@ -43,19 +43,19 @@ public class BeamToHallRecord implements Serializable {
   @Column(name = "HALL", length = 12)
   private String hall;
 
-  @Column(name = "SCHEDULED", precision = 12, scale = 4)
+  @Column(name = "SCHEDULED", precision = 12)
   private Float scheduled;
 
-  @Column(name = "ACC_AVAIL", precision = 12, scale = 4)
+  @Column(name = "ACC_AVAIL", precision = 12)
   private Float accAvail;
 
-  @Column(name = "ACCEPT", precision = 12, scale = 4)
+  @Column(name = "ACCEPT", precision = 12)
   private Float accept;
 
-  @Column(name = "HALL_AVAIL", precision = 12, scale = 4)
+  @Column(name = "HALL_AVAIL", precision = 12)
   private Float hallAvail;
 
-  @Column(name = "ACTUAL", precision = 12, scale = 4)
+  @Column(name = "ACTUAL", precision = 12)
   private Float actual;
 
   @JoinColumn(name = "SLIDE_ID", referencedColumnName = "SLIDE_ID")
