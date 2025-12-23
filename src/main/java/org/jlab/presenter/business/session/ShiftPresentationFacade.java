@@ -1,8 +1,8 @@
 package org.jlab.presenter.business.session;
 
+import jakarta.annotation.security.PermitAll;
 import java.math.BigInteger;
 import java.util.Date;
-import javax.annotation.security.PermitAll;
 import org.jlab.presenter.persistence.entity.Presentation;
 import org.jlab.presenter.persistence.enumeration.Shift;
 

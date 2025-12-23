@@ -1,12 +1,12 @@
 package org.jlab.presenter.presentation.util;
 
+import jakarta.servlet.http.HttpServletRequest;
 import java.math.BigInteger;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import javax.servlet.http.HttpServletRequest;
 import org.jlab.presenter.persistence.entity.AccActivityRecord;
 import org.jlab.presenter.persistence.entity.AccessRecord;
 import org.jlab.presenter.persistence.entity.BeamToHallRecord;

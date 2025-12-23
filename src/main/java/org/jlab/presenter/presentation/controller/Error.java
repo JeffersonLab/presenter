@@ -1,12 +1,12 @@
 package org.jlab.presenter.presentation.controller;
 
+import jakarta.ejb.EJBAccessException;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import javax.ejb.EJBAccessException;
-import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 /**
  * @author ryans
@@ -27,10 +27,10 @@ public class Error extends HttpServlet {
   @Override
   protected void doGet(HttpServletRequest request, HttpServletResponse response)
       throws ServletException, IOException {
-    Throwable throwable = (Throwable) request.getAttribute("javax.servlet.error.exception");
-    Integer statusCode = (Integer) request.getAttribute("javax.servlet.error.status_code");
-    String servletName = (String) request.getAttribute("javax.servlet.error.servlet_name");
-    String requestUri = (String) request.getAttribute("javax.servlet.error.request_uri");
+    Throwable throwable = (Throwable) request.getAttribute("jakarta.servlet.error.exception");
+    Integer statusCode = (Integer) request.getAttribute("jakarta.servlet.error.status_code");
+    String servletName = (String) request.getAttribute("jakarta.servlet.error.servlet_name");
+    String requestUri = (String) request.getAttribute("jakarta.servlet.error.request_uri");
 
     String message = "An unknown error has occurred.";
 
