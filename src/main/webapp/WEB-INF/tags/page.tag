@@ -1,11 +1,11 @@
 <%@tag description="The Site Page Template Tag" pageEncoding="UTF-8"%>
-<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%@taglib prefix="c" uri="jakarta.tags.core"%>
+<%@taglib prefix="fn" uri="jakarta.tags.functions"%>
 <%@attribute name="title"%>
 <%@attribute name="stylesheets" fragment="true"%>
 <%@attribute name="scripts" fragment="true"%>
-<c:url var="domainRelativeReturnUrl" scope="request" context="/" value="${requestScope['javax.servlet.forward.request_uri']}${requestScope['javax.servlet.forward.query_string'] ne null ? '?'.concat(requestScope['javax.servlet.forward.query_string']) : ''}"/>
-<c:set var="currentPath" scope="request" value="${requestScope['javax.servlet.forward.servlet_path']}"/>
+<c:url var="domainRelativeReturnUrl" scope="request" context="/" value="${requestScope['jakarta.servlet.forward.request_uri']}${requestScope['jakarta.servlet.forward.query_string'] ne null ? '?'.concat(requestScope['jakarta.servlet.forward.query_string']) : ''}"/>
+<c:set var="currentPath" scope="request" value="${requestScope['jakarta.servlet.forward.servlet_path']}"/>
 <!DOCTYPE html>
 <html>
     <head>        

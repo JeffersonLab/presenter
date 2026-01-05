@@ -1,9 +1,9 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
-<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@taglib prefix="c" uri="jakarta.tags.core"%>
+<%@taglib prefix="fn" uri="jakarta.tags.functions"%>
+<%@taglib prefix="fmt" uri="jakarta.tags.fmt"%>
 <%@taglib prefix="p" uri="http://jlab.org/presenter/functions"%>
-<c:url var="domainRelativeReturnUrl" scope="request" context="/" value="${requestScope['javax.servlet.forward.request_uri']}${requestScope['javax.servlet.forward.query_string'] ne null ? '?'.concat(requestScope['javax.servlet.forward.query_string']) : ''}"/>
+<c:url var="domainRelativeReturnUrl" scope="request" context="/" value="${requestScope['jakarta.servlet.forward.request_uri']}${requestScope['jakarta.servlet.forward.query_string'] ne null ? '?'.concat(requestScope['jakarta.servlet.forward.query_string']) : ''}"/>
 <!DOCTYPE html>
 <html class="${initParam.notification ne null ? 'special-notification' : ''}">
     <head>

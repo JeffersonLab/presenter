@@ -1,6 +1,6 @@
 package org.jlab.presenter.business.exception;
 
-import javax.ejb.ApplicationException;
+import jakarta.ejb.ApplicationException;
 
 /**
  * @author ryans

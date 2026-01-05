@@ -1,5 +1,7 @@
 package org.jlab.presenter.presentation.util;
 
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -15,8 +17,6 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import org.jlab.jlog.exception.AttachmentSizeException;
 import org.jlab.jlog.exception.InvalidXMLException;
 import org.jlab.jlog.exception.LogCertificateException;

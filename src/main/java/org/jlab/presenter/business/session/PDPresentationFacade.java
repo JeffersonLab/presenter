@@ -1,15 +1,15 @@
 package org.jlab.presenter.business.session;
 
+import jakarta.annotation.security.DeclareRoles;
+import jakarta.annotation.security.PermitAll;
+import jakarta.annotation.security.RolesAllowed;
+import jakarta.ejb.EJB;
+import jakarta.ejb.Stateless;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
+import jakarta.persistence.TypedQuery;
 import java.math.BigInteger;
 import java.util.*;
-import javax.annotation.security.DeclareRoles;
-import javax.annotation.security.PermitAll;
-import javax.annotation.security.RolesAllowed;
-import javax.ejb.EJB;
-import javax.ejb.Stateless;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import javax.persistence.TypedQuery;
 import org.jlab.presenter.business.exception.WebAppException;
 import org.jlab.presenter.business.util.TimeUtil;
 import org.jlab.presenter.persistence.entity.*;
@@ -246,7 +246,7 @@ public class PDPresentationFacade extends AbstractFacade<PDPresentation> {
   public List<PDPresentation> findRecent() {
     TypedQuery<PDPresentation> q =
         em.createQuery(
-            "select p from PDPresentation p where p.deliveryYmd > sysdate - 8 order by p.deliveryYmd desc, p.pdPresentationType desc",
+            "select p from PDPresentation p where p.deliveryYmd > (current_timestamp - 8 day) order by p.deliveryYmd desc, p.pdPresentationType desc",
             PDPresentation.class);
 
     return q.getResultList();

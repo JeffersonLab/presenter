@@ -1,19 +1,19 @@
 package org.jlab.presenter.persistence.entity;
 
+import jakarta.persistence.Basic;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.SequenceGenerator;
+import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import java.io.Serializable;
 import java.math.BigInteger;
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.SequenceGenerator;
-import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 
 /**
  * @author ryans
@@ -40,19 +40,19 @@ public class AccessRecord implements Serializable {
   @Column(name = "ACCESS_TYPE", length = 64)
   private String accessType;
 
-  @Column(name = "HALL_A", precision = 12, scale = 4)
+  @Column(name = "HALL_A", precision = 12)
   private Float hallA;
 
-  @Column(name = "HALL_B", precision = 12, scale = 4)
+  @Column(name = "HALL_B", precision = 12)
   private Float hallB;
 
-  @Column(name = "HALL_C", precision = 12, scale = 4)
+  @Column(name = "HALL_C", precision = 12)
   private Float hallC;
 
-  @Column(name = "HALL_D", precision = 12, scale = 4)
+  @Column(name = "HALL_D", precision = 12)
   private Float hallD;
 
-  @Column(name = "ACCEL", precision = 12, scale = 4)
+  @Column(name = "ACCEL", precision = 12)
   private Float accel;
 
   @JoinColumn(name = "SLIDE_ID", referencedColumnName = "SLIDE_ID")

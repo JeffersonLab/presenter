@@ -1,19 +1,19 @@
 package org.jlab.presenter.persistence.entity;
 
+import jakarta.persistence.Basic;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.SequenceGenerator;
+import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import java.io.Serializable;
 import java.math.BigInteger;
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.SequenceGenerator;
-import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 
 /**
  * @author ryans
@@ -43,19 +43,19 @@ public class BeamToHallRecord implements Serializable {
   @Column(name = "HALL", length = 12)
   private String hall;
 
-  @Column(name = "SCHEDULED", precision = 12, scale = 4)
+  @Column(name = "SCHEDULED", precision = 12)
   private Float scheduled;
 
-  @Column(name = "ACC_AVAIL", precision = 12, scale = 4)
+  @Column(name = "ACC_AVAIL", precision = 12)
   private Float accAvail;
 
-  @Column(name = "ACCEPT", precision = 12, scale = 4)
+  @Column(name = "ACCEPT", precision = 12)
   private Float accept;
 
-  @Column(name = "HALL_AVAIL", precision = 12, scale = 4)
+  @Column(name = "HALL_AVAIL", precision = 12)
   private Float hallAvail;
 
-  @Column(name = "ACTUAL", precision = 12, scale = 4)
+  @Column(name = "ACTUAL", precision = 12)
   private Float actual;
 
   @JoinColumn(name = "SLIDE_ID", referencedColumnName = "SLIDE_ID")
