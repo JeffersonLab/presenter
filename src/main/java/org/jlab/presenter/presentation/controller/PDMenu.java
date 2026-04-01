@@ -462,7 +462,11 @@ public class PDMenu extends HttpServlet {
     order = slides.size() + 1;
 
     // Summary Slide
-    ShiftInfoSlide summarySlide = new ShiftInfoSlide(TimeUtil.getLSDContentDate(presentation.getDeliveryYmd()), Shift.DAY, ShiftSlideType.PD);
+    ShiftInfoSlide summarySlide =
+        new ShiftInfoSlide(
+            TimeUtil.getLSDContentDate(presentation.getDeliveryYmd()),
+            Shift.DAY,
+            ShiftSlideType.PD);
     summarySlide.setOrderId(order++);
     summarySlide.setPresentation(presentation);
     slides.add(summarySlide);
@@ -497,7 +501,11 @@ public class PDMenu extends HttpServlet {
     long order = slides.size() + 1;
 
     // Summary Slide
-    ShiftInfoSlide summarySlide = new ShiftInfoSlide(TimeUtil.getLSDContentDate(presentation.getDeliveryYmd()), Shift.DAY, ShiftSlideType.LSD);
+    ShiftInfoSlide summarySlide =
+        new ShiftInfoSlide(
+            TimeUtil.getLSDContentDate(presentation.getDeliveryYmd()),
+            Shift.DAY,
+            ShiftSlideType.LSD);
     summarySlide.setOrderId(order++);
     summarySlide.setPresentation(presentation);
     slides.add(summarySlide);

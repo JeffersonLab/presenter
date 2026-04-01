@@ -74,7 +74,8 @@ public class ShiftInfoSlide extends Slide {
     this.shiftSlideType = shiftSlideType;
 
     // Off as scheduled has been labeled many things over the years:
-    // Long ShutDown (LSD) / Scheduled Accelerator Down (SAD) / Scheduled Accelerator Maintenance (SAM) Body
+    // Long ShutDown (LSD) / Scheduled Accelerator Down (SAD) / Scheduled Accelerator Maintenance
+    // (SAM) Body
     body =
         "                    <p><b>Injector:</b>&nbsp;</p>\n"
             + "                    <p><br/></p>"
@@ -118,7 +119,7 @@ public class ShiftInfoSlide extends Slide {
             + "                    </ul> ";
 
     switch (shiftSlideType) {
-      //case SAM:
+      // case SAM:
       case LSD:
         setLabel("PD Summary (SAM)");
         program = "LSD";
@@ -131,28 +132,28 @@ public class ShiftInfoSlide extends Slide {
         setLabel("PD Summary (RUN)");
         program = "";
         body =
-                          "                    <p><b>FML:</b>&nbsp;</p>\n"
-                        + "                    <p><br/></p>"
-                        + "                    <p><b>ES&H:</b>&nbsp;</p>\n"
-                        + "                    <p><br/></p>"
-                        + "                    <p><b>MOLLER Install:</b>&nbsp;</p>\n"
-                        + "                    <p><br/></p>"
-                        + "                    <p><b>Hall B:</b>&nbsp;</p>\n"
-                        + "                    <p><br/></p>"
-                        + "                    <p><b>Hall C:</b>&nbsp;</p>\n"
-                        + "                    <p><br/></p>"
-                        + "                    <p><b>Hall D:</b>&nbsp;</p>\n"
-                        + "                    <p><br/></p>"
-                        + "                    <p><b>LERF:</b>&nbsp;</p>\n"
-                        + "                    <p><br/></p>"
-                        + "                    <p><b>Gun Test Stand:</b>&nbsp;</p>\n"
-                        + "                    <p><br/></p>"
-                        + "                    <p><b>UITF:</b>&nbsp;</p>\n"
-                        + "                    <p><br/></p>"
-                        + "                    <h1>Problems Requiring Attention</h1>\n"
-                        + "                    <ul>\n"
-                        + "                        <li></li>\n"
-                        + "                    </ul> ";
+            "                    <p><b>FML:</b>&nbsp;</p>\n"
+                + "                    <p><br/></p>"
+                + "                    <p><b>ES&H:</b>&nbsp;</p>\n"
+                + "                    <p><br/></p>"
+                + "                    <p><b>MOLLER Install:</b>&nbsp;</p>\n"
+                + "                    <p><br/></p>"
+                + "                    <p><b>Hall B:</b>&nbsp;</p>\n"
+                + "                    <p><br/></p>"
+                + "                    <p><b>Hall C:</b>&nbsp;</p>\n"
+                + "                    <p><br/></p>"
+                + "                    <p><b>Hall D:</b>&nbsp;</p>\n"
+                + "                    <p><br/></p>"
+                + "                    <p><b>LERF:</b>&nbsp;</p>\n"
+                + "                    <p><br/></p>"
+                + "                    <p><b>Gun Test Stand:</b>&nbsp;</p>\n"
+                + "                    <p><br/></p>"
+                + "                    <p><b>UITF:</b>&nbsp;</p>\n"
+                + "                    <p><br/></p>"
+                + "                    <h1>Problems Requiring Attention</h1>\n"
+                + "                    <ul>\n"
+                + "                        <li></li>\n"
+                + "                    </ul> ";
         break;
       case LO:
         setLabel("LERF Shift Log");
