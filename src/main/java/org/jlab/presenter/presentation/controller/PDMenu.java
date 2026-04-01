@@ -461,6 +461,17 @@ public class PDMenu extends HttpServlet {
 
     order = slides.size() + 1;
 
+    // Summary Slide
+    ShiftInfoSlide summarySlide =
+        new ShiftInfoSlide(
+            TimeUtil.getLSDContentDate(presentation.getDeliveryYmd()),
+            Shift.DAY,
+            ShiftSlideType.PD);
+    summarySlide.setOrderId(order++);
+    summarySlide.setPresentation(presentation);
+    slides.add(summarySlide);
+
+    // Whiteboard
     Slide whiteboardSlide = UrlUtil.getWhiteboardSlide();
     whiteboardSlide.setOrderId(order++);
     whiteboardSlide.setPresentation(presentation);
@@ -490,17 +501,18 @@ public class PDMenu extends HttpServlet {
     long order = slides.size() + 1;
 
     // Summary Slide
-    ShiftInfoSlide summarySlide = new ShiftInfoSlide();
-    summarySlide.setShiftSlideType(ShiftSlideType.PD);
-    summarySlide.setProgram("");
-    summarySlide.setYmd(TimeUtil.getLSDContentDate(presentation.getDeliveryYmd()));
+    ShiftInfoSlide summarySlide =
+        new ShiftInfoSlide(
+            TimeUtil.getLSDContentDate(presentation.getDeliveryYmd()),
+            Shift.DAY,
+            ShiftSlideType.LSD);
     summarySlide.setOrderId(order++);
     summarySlide.setPresentation(presentation);
     slides.add(summarySlide);
 
     // Extra PD
     ShiftInfoSlide summarySlide2 = new ShiftInfoSlide();
-    summarySlide2.setShiftSlideType(ShiftSlideType.PD);
+    summarySlide2.setShiftSlideType(ShiftSlideType.LSD);
     summarySlide2.setBody("");
     summarySlide2.setProgram("");
     summarySlide2.setYmd(TimeUtil.getLSDContentDate(presentation.getDeliveryYmd()));
