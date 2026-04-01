@@ -255,7 +255,7 @@ class PDShowInfo extends ShowInfo {
             new ShiftInfoSlide(
                 TimeUtil.getLSDContentDate(presentation.getDeliveryYmd()),
                 Shift.DAY,
-                ShiftSlideType.PD));
+                ShiftSlideType.LSD));
         templates.add(UrlUtil.getWeatherSlide());
         templates.add(UrlUtil.getWorkmapSlide(presentation.getDeliveryYmd()));
         templates.add(UrlUtil.getCalendarSlide(presentation.getDeliveryYmd()));
@@ -267,7 +267,7 @@ class PDShowInfo extends ShowInfo {
       case LSD:
         templates.add(
             new ShiftInfoSlide(
-                TimeUtil.getLSDContentDate(presentation.getDeliveryYmd()), Shift.DAY));
+                TimeUtil.getLSDContentDate(presentation.getDeliveryYmd()), Shift.DAY, ShiftSlideType.LSD));
         templates.add(UrlUtil.getWorkmapSlide(presentation.getDeliveryYmd()));
         templates.add(UrlUtil.getCalendarSlide(presentation.getDeliveryYmd()));
         templates.addAll(generalTemplates);
