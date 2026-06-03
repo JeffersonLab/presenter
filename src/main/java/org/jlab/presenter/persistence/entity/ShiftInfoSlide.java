@@ -99,7 +99,7 @@ public class ShiftInfoSlide extends Slide {
             + "                    <p><br/></p>"
             + "                    <p><b>Cryogenics:</b>&nbsp;</p>\n"
             + "                    <p><br/></p>"
-            + "                    <p><b>FML:</b>&nbsp;</p>\n"
+            + "                    <p><b>F&amp;O:</b>&nbsp;</p>\n"
             + "                    <p><br/></p>"
             + "                    <p><b>ES&H:</b>&nbsp;</p>\n"
             + "                    <p><br/></p>"
@@ -132,7 +132,7 @@ public class ShiftInfoSlide extends Slide {
         setLabel("PD Summary (RUN)");
         program = "";
         body =
-            "                    <p><b>FML:</b>&nbsp;</p>\n"
+            "                    <p><b>F&amp;O:</b>&nbsp;</p>\n"
                 + "                    <p><br/></p>"
                 + "                    <p><b>ES&H:</b>&nbsp;</p>\n"
                 + "                    <p><br/></p>"
