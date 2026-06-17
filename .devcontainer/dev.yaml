@@ -1,0 +1,30 @@
+name: presenter-devcontainers
+services:
+  oracle:
+    extends:
+      file: ../compose.yaml
+      service: oracle
+    container_name: presenter-oracle-devc
+
+  keycloak:
+    extends:
+      file: ../compose.yaml
+      service: keycloak
+    container_name: presenter-keycloak-devc
+
+  puppet:
+    extends:
+      file: ../compose.yaml
+      service: puppet
+    container_name: presenter-puppet-devc
+
+  resize:
+    extends:
+      file: ../compose.yaml
+      service: resize
+    container_name: presenter-resize-devc
+
+  dev:
+    image: jeffersonlab/presenter:latest
+    hostname: dev
+    container_name: presenter-dev-devc

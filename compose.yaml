@@ -3,25 +3,29 @@ services:
     extends:
       file: deps.yaml
       service: oracle
+    container_name: presenter-oracle
 
   keycloak:
     extends:
       file: deps.yaml
       service: keycloak
+    container_name: presenter-keycloak
 
   puppet:
     extends:
       file: deps.yaml
       service: puppet
+    container_name: presenter-puppet
 
   resize:
     extends:
       file: deps.yaml
       service: resize
+    container_name: presenter-resize
 
   presenter:
     hostname: presenter
-    container_name: presenter
+    container_name: presenter-dev
     ports:
       - "8443:8443"
       - "8080:8080"
