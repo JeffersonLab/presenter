@@ -16,7 +16,7 @@ import org.jlab.presenter.persistence.enumeration.Shift;
  */
 @Stateless(mappedName = "CCPresentationFacade")
 public class CCPresentationFacade extends ShiftPresentationFacade<CCPresentation> {
-  @PersistenceContext(unitName = "presenterPU")
+  @PersistenceContext(unitName = "webappPU")
   private EntityManager em;
 
   @Override

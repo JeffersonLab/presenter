@@ -17,7 +17,7 @@ import org.jlab.presenter.persistence.enumeration.Shift;
 @Stateless
 public class UITFPresentationFacade extends ShiftPresentationFacade<UITFPresentation> {
 
-  @PersistenceContext(unitName = "presenterPU")
+  @PersistenceContext(unitName = "webappPU")
   private EntityManager em;
 
   @Override

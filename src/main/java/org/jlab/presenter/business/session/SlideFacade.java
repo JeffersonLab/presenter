@@ -22,7 +22,7 @@ import org.jlab.presenter.persistence.enumeration.PresentationType;
 @DeclareRoles({"pd", "cc", "presenter-admin"})
 public class SlideFacade extends AbstractFacade<Slide> {
 
-  @PersistenceContext(unitName = "presenterPU")
+  @PersistenceContext(unitName = "webappPU")
   private EntityManager em;
 
   @Resource private SessionContext context;
