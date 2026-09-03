@@ -14,7 +14,10 @@ public class TeamStatusReport implements Serializable {
   private static final long serialVersionUID = 1L;
 
   @Id
-  @SequenceGenerator(name = "TeamStatusReportId", sequenceName = "TEAM_STATUS_REPORT_ID", allocationSize = 1)
+  @SequenceGenerator(
+      name = "TeamStatusReportId",
+      sequenceName = "TEAM_STATUS_REPORT_ID",
+      allocationSize = 1)
   @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "TeamStatusReportId")
   @Basic(optional = false)
   @NotNull

@@ -6,16 +6,10 @@ import jakarta.ejb.Stateless;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.criteria.*;
+import java.util.ArrayList;
+import java.util.List;
 import org.jlab.presenter.persistence.entity.Team;
 import org.jlab.presenter.persistence.entity.TeamStatusReport;
-import org.jlab.presenter.persistence.enumeration.Include;
-import org.jlab.smoothness.business.service.UserAuthorizationService;
-import org.jlab.smoothness.persistence.view.User;
-
-import java.math.BigInteger;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
 
 /**
  * @author ryans

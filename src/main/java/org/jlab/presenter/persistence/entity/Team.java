@@ -3,12 +3,11 @@ package org.jlab.presenter.persistence.entity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
-import org.jlab.smoothness.persistence.util.YnStringToBoolean;
-import org.jlab.smoothness.persistence.view.User;
-
 import java.io.Serializable;
 import java.math.BigInteger;
 import java.util.List;
+import org.jlab.smoothness.persistence.util.YnStringToBoolean;
+import org.jlab.smoothness.persistence.view.User;
 
 /**
  * @author ryans
