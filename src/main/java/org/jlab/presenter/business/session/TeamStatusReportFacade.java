@@ -5,6 +5,7 @@ import jakarta.annotation.security.PermitAll;
 import jakarta.ejb.Stateless;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
+import jakarta.persistence.TypedQuery;
 import jakarta.persistence.criteria.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -70,5 +71,22 @@ public class TeamStatusReportFacade extends AbstractFacade<TeamStatusReport> {
         .setFirstResult(offset)
         .setMaxResults(max)
         .getResultList();
+  }
+
+  @PermitAll
+  public long countList(Team team) {
+    CriteriaBuilder cb = getEntityManager().getCriteriaBuilder();
+    CriteriaQuery<Long> cq = cb.createQuery(Long.class);
+    Root<TeamStatusReport> root = cq.from(TeamStatusReport.class);
+
+    List<Predicate> filters = getFilters(cb, cq, root, team);
+
+    if (!filters.isEmpty()) {
+      cq.where(cb.and(filters.toArray(new Predicate[] {})));
+    }
+
+    cq.select(cb.count(root));
+    TypedQuery<Long> q = getEntityManager().createQuery(cq);
+    return q.getSingleResult();
   }
 }
