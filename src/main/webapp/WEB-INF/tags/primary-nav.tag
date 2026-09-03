@@ -10,6 +10,9 @@
     <li${fn:startsWith(currentPath, '/shift-logs') ? ' class="current-primary"' : ''}>
         <a href="${pageContext.request.contextPath}/shift-logs/cebaf">Shift Logs</a>
     </li>
+    <li${'/status-reports' eq currentPath ? ' class="current-primary"' : ''}>
+        <a href="${pageContext.request.contextPath}/status-reports">Status Reports</a>
+    </li>
     <c:if test="${pageContext.request.isUserInRole('template-admin')}">
         <li${fn:startsWith(currentPath, '/setup') ? ' class="current-primary"' : ''}>
             <a href="${pageContext.request.contextPath}/setup/settings">Setup</a>
