@@ -7,9 +7,12 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.jlab.presenter.business.session.TeamFacade;
+import org.jlab.presenter.business.session.TeamStatusReportFacade;
 import org.jlab.presenter.persistence.entity.Team;
+import org.jlab.presenter.persistence.entity.TeamStatusReport;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -22,6 +25,9 @@ public class StatusReports extends HttpServlet {
 
   @EJB
   TeamFacade teamFacade;
+
+  @EJB
+  TeamStatusReportFacade teamStatusReportFacade;
 
   /**
    * Handles the HTTP <code>GET</code> method.
@@ -36,8 +42,10 @@ public class StatusReports extends HttpServlet {
       throws ServletException, IOException {
 
     List<Team> teamList = teamFacade.findAllWithMembers(null);
+    List<TeamStatusReport> teamStatusReportList = teamStatusReportFacade.filterList(null, 0, Integer.MAX_VALUE);
 
     request.setAttribute("teamList", teamList);
+    request.setAttribute("teamStatusReportList", teamStatusReportList);
 
     request.getRequestDispatcher("/WEB-INF/views/status-reports.jsp").forward(request, response);
   }

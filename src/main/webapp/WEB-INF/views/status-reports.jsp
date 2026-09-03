@@ -33,7 +33,7 @@
                 </fieldset>
             <c:choose>
                 <c:when test="${componentList eq null}">
-                    <div class="message-box">Select a group to continue</div>
+                    <div class="message-box">Select a team to continue</div>
                 </c:when>
                 <c:otherwise>
                     <div class="message-box">
@@ -41,6 +41,28 @@
                     </div>
                 </c:otherwise>
             </c:choose>
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Day</th>
+                        <th>Team</th>
+                        <th>Accomplished</th>
+                        <th>In Progress</th>
+                        <th>Planned</th>
+                        <th>Roadblocks</th>
+                    </tr>
+                </thead>
+                <tbody>
+                <c:forEach items="${teamStatusReportList}" var="report">
+                    <td><c:out value="${report.ymd}"/></td>
+                    <td><c:out value="${report.team.name}"/></td>
+                    <td><c:out value="${report.accomplished}"/></td>
+                    <td><c:out value="${report.inProgress}"/></td>
+                    <td><c:out value="${report.planned}"/></td>
+                    <td><c:out value="${report.roadblocks}"/></td>
+                </c:forEach>
+                </tbody>
+            </table>
         </section>
     </jsp:body>         
 </s:page>

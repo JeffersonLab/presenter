@@ -19,7 +19,7 @@ import java.util.List;
  * @author ryans
  */
 @Stateless
-@DeclareRoles("srm-admin")
+@DeclareRoles("presenter-admin")
 public class TeamFacade extends AbstractFacade<Team> {
 
   @PersistenceContext(unitName = "webappPU")

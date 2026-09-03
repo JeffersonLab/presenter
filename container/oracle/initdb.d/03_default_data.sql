@@ -9,4 +9,5 @@ insert into PRESENTER_OWNER.TEAM (TEAM_ID, NAME, DESCRIPTION, DIRECTORY_GROUP_NA
 insert into PRESENTER_OWNER.TEAM (TEAM_ID, NAME, DESCRIPTION, DIRECTORY_GROUP_NAME, WEIGHT, ARCHIVED_YN) values (PRESENTER_OWNER.TEAM_ID.nextval, 'Hall A', 'Physics division Hall A', 'halla', 6, 'N');
 
 
-insert into PRESENTER_OWNER.TEAM_STATUS_REPORT(TEAM_STATUS_REPORT_ID) values (PRESENTER_OWNER.TEAM_STATUS_REPORT_ID.nextval, 1, sysdate, 'Nothing Accomplished!', 'Nothing in progress!', 'Nothing planned', 'Nothing blocking!')
+insert into PRESENTER_OWNER.TEAM_STATUS_REPORT(TEAM_STATUS_REPORT_ID, TEAM_ID, YMD, ACCOMPLISHED, IN_PROGRESS, PLANNED, ROADBLOCKS) values (PRESENTER_OWNER.TEAM_STATUS_REPORT_ID.nextval, 1, TRUNC(SYSDATE), 'Nothing Accomplished!', 'Nothing in progress!', 'Nothing planned', 'Nothing blocking!');
+
