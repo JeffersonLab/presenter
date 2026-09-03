@@ -3,9 +3,6 @@
          xmlns="https://jakarta.ee/xml/ns/jakartaee"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee https://jakarta.ee/xml/ns/jakartaee/web-app_6_0.xsd">
-    <welcome-file-list>
-        <welcome-file>pd-menu</welcome-file>
-    </welcome-file-list>
     <context-param>
         <param-name>appName</param-name>
         <param-value>Presenter</param-value>
@@ -23,13 +20,14 @@
         <param-value>@RELEASE_DATE@</param-value>
     </context-param>
     <context-param>
-        <param-name>contentContact</param-name>
-        <param-value>Daniel Moser (moser)</param-value>
+        <param-name>smoothnessVersion</param-name>
+        <param-value>@SMOOTHNESS_VERSION@</param-value>
+        <description>Needed if you enable CDN.  Set once in build.gradle.</description>
     </context-param>
-    <context-param>
-        <param-name>technicalContact</param-name>
-        <param-value>Ryan Slominski (ryans)</param-value>
-    </context-param>
+    <listener>
+        <listener-class>org.jlab.smoothness.presentation.util.SettingsCacheInit</listener-class>
+        <description>We don't use @WebListener because we want this listener to be first in case others use DB Setting Cache</description>
+    </listener>
     <filter>
         <filter-name>UrlRewriteFilter</filter-name>
         <filter-class>org.tuckey.web.filters.urlrewrite.UrlRewriteFilter</filter-class>
@@ -69,6 +67,16 @@
         <user-data-constraint>
             <transport-guarantee>CONFIDENTIAL</transport-guarantee>
         </user-data-constraint>
+    </security-constraint>
+    <security-constraint>
+        <display-name>Enforce Admin on setup pages</display-name>
+        <web-resource-collection>
+            <web-resource-name>Setup Pages</web-resource-name>
+            <url-pattern>/setup/*</url-pattern>
+        </web-resource-collection>
+        <auth-constraint>
+            <role-name>presenter-admin</role-name>
+        </auth-constraint>
     </security-constraint>
     <login-config>
         <auth-method>OIDC</auth-method>

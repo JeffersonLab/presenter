@@ -2,9 +2,10 @@
 <%@taglib prefix="c" uri="jakarta.tags.core"%>
 <%@taglib prefix="fn" uri="jakarta.tags.functions"%>
 <%@taglib prefix="fmt" uri="jakarta.tags.fmt"%>
+<%@taglib prefix="s" uri="jlab.tags.smoothness"%>
 <%@taglib prefix="t" tagdir="/WEB-INF/tags"%> 
 <c:set var="title" value="Error"/>
-<t:page title="${title}">  
+<s:page title="${title}">
     <jsp:attribute name="stylesheets">
         <style type="text/css">
             #notification-bar {
@@ -28,4 +29,4 @@
             <div class="error-message message-box"><c:out value="${message}"/></div>
         </section>
     </jsp:body>         
-</t:page>
+</s:page>

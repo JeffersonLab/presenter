@@ -10,7 +10,7 @@ import org.jlab.presenter.persistence.entity.PdAccessSlide;
  */
 @Stateless
 public class PdAccessSlideFacade extends AbstractFacade<PdAccessSlide> {
-  @PersistenceContext(unitName = "presenterPU")
+  @PersistenceContext(unitName = "webappPU")
   private EntityManager em;
 
   @Override

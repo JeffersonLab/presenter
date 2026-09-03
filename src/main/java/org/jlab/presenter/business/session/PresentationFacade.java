@@ -63,7 +63,7 @@ public class PresentationFacade extends AbstractFacade<Presentation> {
 
   private static final Logger LOGGER = Logger.getLogger(PresentationFacade.class.getName());
 
-  @PersistenceContext(unitName = "presenterPU")
+  @PersistenceContext(unitName = "webappPU")
   private EntityManager em;
 
   @Resource private SessionContext context;

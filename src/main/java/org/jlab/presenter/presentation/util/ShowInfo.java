@@ -361,7 +361,7 @@ class PDShowInfo extends ShowInfo {
 
   @Override
   public String getMenuUrl() {
-    return "pd-menu";
+    return "presentations";
   }
 
   @Override
