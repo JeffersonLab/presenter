@@ -31,9 +31,9 @@ import org.jlab.presenter.presentation.util.PresentationMenuUtil;
  * @author ryans
  */
 @WebServlet(
-    name = "LOMenu",
-    urlPatterns = {"/lo-menu"})
-public class LOMenu extends HttpServlet {
+    name = "LerfShiftLogs",
+    urlPatterns = {"/shift-logs/lerf"})
+public class LerfShiftLogs extends HttpServlet {
 
   @EJB PresentationFacade presentationFacade;
   @EJB LOPresentationFacade loPresentationFacade;
@@ -68,7 +68,7 @@ public class LOMenu extends HttpServlet {
 
     getServletConfig()
         .getServletContext()
-        .getRequestDispatcher("/WEB-INF/views/lo-menu.jsp")
+        .getRequestDispatcher("/WEB-INF/views/lerf-shift-logs.jsp")
         .forward(request, response);
   }
 
@@ -126,7 +126,7 @@ public class LOMenu extends HttpServlet {
     if (!messages.isEmpty()) {
       getServletConfig()
           .getServletContext()
-          .getRequestDispatcher("/WEB-INF/views/lo-menu.jsp")
+          .getRequestDispatcher("/WEB-INF/views/lerf-shift-logs.jsp")
           .forward(request, response);
     } else {
 

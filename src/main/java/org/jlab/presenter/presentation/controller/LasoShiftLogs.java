@@ -31,9 +31,9 @@ import org.jlab.presenter.presentation.util.PresentationMenuUtil;
  * @author ryans
  */
 @WebServlet(
-    name = "LASOMenu",
-    urlPatterns = {"/laso-menu"})
-public class LASOMenu extends HttpServlet {
+    name = "LasoShiftLogs",
+    urlPatterns = {"/shift-logs/laso"})
+public class LasoShiftLogs extends HttpServlet {
 
   @EJB PresentationFacade presentationFacade;
   @EJB LASOPresentationFacade lasoPresentationFacade;
@@ -68,7 +68,7 @@ public class LASOMenu extends HttpServlet {
 
     getServletConfig()
         .getServletContext()
-        .getRequestDispatcher("/WEB-INF/views/laso-menu.jsp")
+        .getRequestDispatcher("/WEB-INF/views/laso-shift-logs.jsp")
         .forward(request, response);
   }
 
@@ -125,7 +125,7 @@ public class LASOMenu extends HttpServlet {
     if (!messages.isEmpty()) {
       getServletConfig()
           .getServletContext()
-          .getRequestDispatcher("/WEB-INF/views/laso-menu.jsp")
+          .getRequestDispatcher("/WEB-INF/views/laso-shift-logs.jsp")
           .forward(request, response);
     } else {
 
