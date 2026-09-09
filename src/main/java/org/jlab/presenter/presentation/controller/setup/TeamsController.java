@@ -1,4 +1,4 @@
-package org.jlab.presenter.presentation.controller.inventory;
+package org.jlab.presenter.presentation.controller.setup;
 
 import jakarta.ejb.EJB;
 import jakarta.servlet.ServletException;
@@ -16,7 +16,7 @@ import org.jlab.presenter.persistence.entity.Team;
  */
 @WebServlet(
     name = "TeamsController",
-    urlPatterns = {"/inventory/teams"})
+    urlPatterns = {"/setup/teams"})
 public class TeamsController extends HttpServlet {
 
   @EJB TeamFacade teamFacade;
@@ -46,6 +46,6 @@ public class TeamsController extends HttpServlet {
     request.setAttribute("selectionMessage", selectionMessage);
     request.setAttribute("teamList", teamList);
 
-    request.getRequestDispatcher("/WEB-INF/views/inventory/teams.jsp").forward(request, response);
+    request.getRequestDispatcher("/WEB-INF/views/setup/teams.jsp").forward(request, response);
   }
 }

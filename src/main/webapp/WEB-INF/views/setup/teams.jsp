@@ -5,7 +5,7 @@
 <%@taglib prefix="s" uri="jlab.tags.smoothness" %>
 <%@taglib prefix="t" tagdir="/WEB-INF/tags" %>
 <c:set var="title" value="Teams"/>
-<t:inventory-page title="${title}">
+<s:setup-page title="${title}">
     <jsp:attribute name="stylesheets">
             <link rel="stylesheet" type="text/css"
                   href="${pageContext.request.contextPath}/resources/v${initParam.releaseNumber}/css/teams.css"/>
@@ -65,4 +65,4 @@
             </div>
         </section>
     </jsp:body>
-</t:inventory-page>
+</s:setup-page>

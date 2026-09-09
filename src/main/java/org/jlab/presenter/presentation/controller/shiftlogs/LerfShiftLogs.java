@@ -1,4 +1,4 @@
-package org.jlab.presenter.presentation.controller;
+package org.jlab.presenter.presentation.controller.shiftlogs;
 
 import jakarta.ejb.EJB;
 import jakarta.servlet.ServletException;
@@ -68,7 +68,7 @@ public class LerfShiftLogs extends HttpServlet {
 
     getServletConfig()
         .getServletContext()
-        .getRequestDispatcher("/WEB-INF/views/lerf-shift-logs.jsp")
+        .getRequestDispatcher("/WEB-INF/views/shiftlogs/lerf.jsp")
         .forward(request, response);
   }
 
@@ -126,7 +126,7 @@ public class LerfShiftLogs extends HttpServlet {
     if (!messages.isEmpty()) {
       getServletConfig()
           .getServletContext()
-          .getRequestDispatcher("/WEB-INF/views/lerf-shift-logs.jsp")
+          .getRequestDispatcher("/WEB-INF/views/shiftlogs/lerf.jsp")
           .forward(request, response);
     } else {
 

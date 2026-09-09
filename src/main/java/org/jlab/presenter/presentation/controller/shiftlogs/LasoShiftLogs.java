@@ -1,4 +1,4 @@
-package org.jlab.presenter.presentation.controller;
+package org.jlab.presenter.presentation.controller.shiftlogs;
 
 import jakarta.ejb.EJB;
 import jakarta.servlet.ServletException;
@@ -10,13 +10,17 @@ import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
 import java.math.BigInteger;
 import java.text.ParseException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import org.jlab.presenter.business.session.LASOPresentationFacade;
 import org.jlab.presenter.business.session.PresentationFacade;
-import org.jlab.presenter.business.session.UITFPresentationFacade;
 import org.jlab.presenter.business.util.TimeUtil;
+import org.jlab.presenter.persistence.entity.LASOPresentation;
 import org.jlab.presenter.persistence.entity.ShiftInfoSlide;
 import org.jlab.presenter.persistence.entity.Slide;
-import org.jlab.presenter.persistence.entity.UITFPresentation;
 import org.jlab.presenter.persistence.enumeration.PresentationType;
 import org.jlab.presenter.persistence.enumeration.Shift;
 import org.jlab.presenter.persistence.enumeration.ShiftSlideType;
@@ -27,12 +31,12 @@ import org.jlab.presenter.presentation.util.PresentationMenuUtil;
  * @author ryans
  */
 @WebServlet(
-    name = "UitfShiftLogs",
-    urlPatterns = {"/shift-logs/uitf"})
-public class UitfShiftLogs extends HttpServlet {
+    name = "LasoShiftLogs",
+    urlPatterns = {"/shift-logs/laso"})
+public class LasoShiftLogs extends HttpServlet {
 
   @EJB PresentationFacade presentationFacade;
-  @EJB UITFPresentationFacade uitfPresentationFacade;
+  @EJB LASOPresentationFacade lasoPresentationFacade;
 
   /**
    * Handles the HTTP <code>GET</code> method.
@@ -48,23 +52,23 @@ public class UitfShiftLogs extends HttpServlet {
 
     /* Note: We use a 'SECURE' cookie so session changes every request unless over SSL/TLS */
     HttpSession session = request.getSession(true);
-    Shift shift = (Shift) session.getAttribute("defaultShift");
-    Date date = (Date) session.getAttribute("defaultDate");
+    Shift lasoShift = (Shift) session.getAttribute("lasoShift");
+    Date lasoDate = (Date) session.getAttribute("lasoDate");
 
-    if (shift == null) {
-      shift = TimeUtil.getCurrentShift();
+    if (lasoShift == null) {
+      lasoShift = TimeUtil.getCurrentShift();
     }
 
-    if (date == null) {
-      date = TimeUtil.getCurrentYearMonthDay();
+    if (lasoDate == null) {
+      lasoDate = TimeUtil.getCurrentYearMonthDay();
     }
 
-    request.setAttribute("defaultDate", date);
-    request.setAttribute("defaultShift", shift);
+    request.setAttribute("defaultDate", lasoDate);
+    request.setAttribute("defaultShift", lasoShift);
 
     getServletConfig()
         .getServletContext()
-        .getRequestDispatcher("/WEB-INF/views/uitf-shift-logs.jsp")
+        .getRequestDispatcher("/WEB-INF/views/shiftlogs/laso.jsp")
         .forward(request, response);
   }
 
@@ -109,32 +113,31 @@ public class UitfShiftLogs extends HttpServlet {
     BigInteger presentationId = null;
 
     if (messages.isEmpty()) {
-      presentationId = uitfPresentationFacade.findIdByYmdAndShift(ymd, shift);
+      presentationId = lasoPresentationFacade.findIdByYmdAndShift(ymd, shift);
 
       if (presentationId == null
-          && !presentationFacade.isAuthorized(PresentationType.UITF_PRESENTATION)) {
+          && !presentationFacade.isAuthorized(PresentationType.LASO_PRESENTATION)) {
         messages.put(
-            "error",
-            "No presentation found for specified criteria.  Login as UITF Operator to create.");
+            "error", "No presentation found for specified criteria.  Login as LASO to create.");
       }
     }
 
     if (!messages.isEmpty()) {
       getServletConfig()
           .getServletContext()
-          .getRequestDispatcher("/WEB-INF/views/uitf-shift-logs.jsp")
+          .getRequestDispatcher("/WEB-INF/views/shiftlogs/laso.jsp")
           .forward(request, response);
     } else {
 
       /* Remember user selection */
       /* Note: We use a 'SECURE' cookie so session changes every request unless over SSL/TLS */
       HttpSession session = request.getSession(true);
-      session.setAttribute("defaultShift", shift);
-      session.setAttribute("defaultDate", ymd);
+      session.setAttribute("lasoShift", shift);
+      session.setAttribute("lasoDate", ymd);
 
       if (presentationId == null) {
 
-        UITFPresentation presentation = new UITFPresentation();
+        LASOPresentation presentation = new LASOPresentation();
         presentation.setYmd(ymd);
         presentation.setShift(shift);
 
@@ -152,13 +155,13 @@ public class UitfShiftLogs extends HttpServlet {
   }
 
   public List<Slide> getNewShiftLogSlides(
-      HttpServletRequest request, HttpServletResponse response, UITFPresentation presentation)
+      HttpServletRequest request, HttpServletResponse response, LASOPresentation presentation)
       throws ServletException, IOException {
     ArrayList<Slide> slides = new ArrayList<>();
 
     // Slide 1
     ShiftInfoSlide shiftSlide =
-        new ShiftInfoSlide(presentation.getYmd(), presentation.getShift(), ShiftSlideType.UITF);
+        new ShiftInfoSlide(presentation.getYmd(), presentation.getShift(), ShiftSlideType.LASO);
     shiftSlide.setOrderId(1L);
     shiftSlide.setPresentation(presentation);
 

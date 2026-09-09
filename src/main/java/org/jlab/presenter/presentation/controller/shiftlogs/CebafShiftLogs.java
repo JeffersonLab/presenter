@@ -1,4 +1,4 @@
-package org.jlab.presenter.presentation.controller;
+package org.jlab.presenter.presentation.controller.shiftlogs;
 
 import jakarta.ejb.EJB;
 import jakarta.servlet.ServletException;
@@ -67,7 +67,7 @@ public class CebafShiftLogs extends HttpServlet {
 
     getServletConfig()
         .getServletContext()
-        .getRequestDispatcher("/WEB-INF/views/cebaf-shift-logs.jsp")
+        .getRequestDispatcher("/WEB-INF/views/shiftlogs/cebaf.jsp")
         .forward(request, response);
   }
 
@@ -124,7 +124,7 @@ public class CebafShiftLogs extends HttpServlet {
     if (!messages.isEmpty()) {
       getServletConfig()
           .getServletContext()
-          .getRequestDispatcher("/WEB-INF/views/cebaf-shift-logs.jsp")
+          .getRequestDispatcher("/WEB-INF/views/shiftlogs/cebaf.jsp")
           .forward(request, response);
     } else {
 

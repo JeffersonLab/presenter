@@ -13,8 +13,8 @@
     <li${'/status-reports' eq currentPath ? ' class="current-primary"' : ''}>
         <a href="${pageContext.request.contextPath}/status-reports">Status Reports</a>
     </li>
-    <li${fn:startsWith(currentPath, '/inventory') ? ' class="current-primary"' : ''}>
-        <a href="${pageContext.request.contextPath}/inventory/teams">Inventory</a>
+    <li${fn:startsWith(currentPath, '/dashboard') ? ' class="current-primary"' : ''}>
+        <a href="${pageContext.request.contextPath}/dashboard">Dashboard</a>
     </li>
     <c:if test="${pageContext.request.isUserInRole('presenter-admin')}">
         <li${fn:startsWith(currentPath, '/setup') ? ' class="current-primary"' : ''}>
