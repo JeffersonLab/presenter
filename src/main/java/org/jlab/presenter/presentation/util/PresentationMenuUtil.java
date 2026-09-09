@@ -38,7 +38,7 @@ public class PresentationMenuUtil {
   public static void delete(
       HttpServletRequest request, HttpServletResponse response, BigInteger presentationId)
       throws IOException {
-    response.sendRedirect("pd-menu");
+    response.sendRedirect("presentations");
   }
 
   private PresentationMenuUtil() {

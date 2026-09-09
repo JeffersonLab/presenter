@@ -34,7 +34,7 @@ public class IPAuthFilter implements Filter {
         "/resources",
         "/keep-alive",
         "/logout",
-        "/pd-menu" // welcome page
+        "/presentations" // welcome page
       };
 
   public static final String LOCAL_PATTERN_STRING = "127\\.0\\.0\\.1";

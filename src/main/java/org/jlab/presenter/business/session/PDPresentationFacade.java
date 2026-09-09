@@ -26,7 +26,7 @@ import org.jlab.presenter.presentation.util.PDPresentationUtil;
 @DeclareRoles({"pd", "presenter-admin"})
 public class PDPresentationFacade extends AbstractFacade<PDPresentation> {
 
-  @PersistenceContext(unitName = "presenterPU")
+  @PersistenceContext(unitName = "webappPU")
   private EntityManager em;
 
   @EJB SlideFacade slideFacade;

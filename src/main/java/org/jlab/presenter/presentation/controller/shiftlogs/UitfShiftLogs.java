@@ -1,4 +1,4 @@
-package org.jlab.presenter.presentation.controller;
+package org.jlab.presenter.presentation.controller.shiftlogs;
 
 import jakarta.ejb.EJB;
 import jakarta.servlet.ServletException;
@@ -10,17 +10,13 @@ import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
 import java.math.BigInteger;
 import java.text.ParseException;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import org.jlab.presenter.business.session.LASOPresentationFacade;
+import java.util.*;
 import org.jlab.presenter.business.session.PresentationFacade;
+import org.jlab.presenter.business.session.UITFPresentationFacade;
 import org.jlab.presenter.business.util.TimeUtil;
-import org.jlab.presenter.persistence.entity.LASOPresentation;
 import org.jlab.presenter.persistence.entity.ShiftInfoSlide;
 import org.jlab.presenter.persistence.entity.Slide;
+import org.jlab.presenter.persistence.entity.UITFPresentation;
 import org.jlab.presenter.persistence.enumeration.PresentationType;
 import org.jlab.presenter.persistence.enumeration.Shift;
 import org.jlab.presenter.persistence.enumeration.ShiftSlideType;
@@ -31,12 +27,12 @@ import org.jlab.presenter.presentation.util.PresentationMenuUtil;
  * @author ryans
  */
 @WebServlet(
-    name = "LASOMenu",
-    urlPatterns = {"/laso-menu"})
-public class LASOMenu extends HttpServlet {
+    name = "UitfShiftLogs",
+    urlPatterns = {"/shift-logs/uitf"})
+public class UitfShiftLogs extends HttpServlet {
 
   @EJB PresentationFacade presentationFacade;
-  @EJB LASOPresentationFacade lasoPresentationFacade;
+  @EJB UITFPresentationFacade uitfPresentationFacade;
 
   /**
    * Handles the HTTP <code>GET</code> method.
@@ -52,23 +48,23 @@ public class LASOMenu extends HttpServlet {
 
     /* Note: We use a 'SECURE' cookie so session changes every request unless over SSL/TLS */
     HttpSession session = request.getSession(true);
-    Shift lasoShift = (Shift) session.getAttribute("lasoShift");
-    Date lasoDate = (Date) session.getAttribute("lasoDate");
+    Shift shift = (Shift) session.getAttribute("defaultShift");
+    Date date = (Date) session.getAttribute("defaultDate");
 
-    if (lasoShift == null) {
-      lasoShift = TimeUtil.getCurrentShift();
+    if (shift == null) {
+      shift = TimeUtil.getCurrentShift();
     }
 
-    if (lasoDate == null) {
-      lasoDate = TimeUtil.getCurrentYearMonthDay();
+    if (date == null) {
+      date = TimeUtil.getCurrentYearMonthDay();
     }
 
-    request.setAttribute("defaultDate", lasoDate);
-    request.setAttribute("defaultShift", lasoShift);
+    request.setAttribute("defaultDate", date);
+    request.setAttribute("defaultShift", shift);
 
     getServletConfig()
         .getServletContext()
-        .getRequestDispatcher("/WEB-INF/views/laso-menu.jsp")
+        .getRequestDispatcher("/WEB-INF/views/shiftlogs/uitf.jsp")
         .forward(request, response);
   }
 
@@ -113,31 +109,32 @@ public class LASOMenu extends HttpServlet {
     BigInteger presentationId = null;
 
     if (messages.isEmpty()) {
-      presentationId = lasoPresentationFacade.findIdByYmdAndShift(ymd, shift);
+      presentationId = uitfPresentationFacade.findIdByYmdAndShift(ymd, shift);
 
       if (presentationId == null
-          && !presentationFacade.isAuthorized(PresentationType.LASO_PRESENTATION)) {
+          && !presentationFacade.isAuthorized(PresentationType.UITF_PRESENTATION)) {
         messages.put(
-            "error", "No presentation found for specified criteria.  Login as LASO to create.");
+            "error",
+            "No presentation found for specified criteria.  Login as UITF Operator to create.");
       }
     }
 
     if (!messages.isEmpty()) {
       getServletConfig()
           .getServletContext()
-          .getRequestDispatcher("/WEB-INF/views/laso-menu.jsp")
+          .getRequestDispatcher("/WEB-INF/views/shiftlogs/uitf.jsp")
           .forward(request, response);
     } else {
 
       /* Remember user selection */
       /* Note: We use a 'SECURE' cookie so session changes every request unless over SSL/TLS */
       HttpSession session = request.getSession(true);
-      session.setAttribute("lasoShift", shift);
-      session.setAttribute("lasoDate", ymd);
+      session.setAttribute("defaultShift", shift);
+      session.setAttribute("defaultDate", ymd);
 
       if (presentationId == null) {
 
-        LASOPresentation presentation = new LASOPresentation();
+        UITFPresentation presentation = new UITFPresentation();
         presentation.setYmd(ymd);
         presentation.setShift(shift);
 
@@ -155,13 +152,13 @@ public class LASOMenu extends HttpServlet {
   }
 
   public List<Slide> getNewShiftLogSlides(
-      HttpServletRequest request, HttpServletResponse response, LASOPresentation presentation)
+      HttpServletRequest request, HttpServletResponse response, UITFPresentation presentation)
       throws ServletException, IOException {
     ArrayList<Slide> slides = new ArrayList<>();
 
     // Slide 1
     ShiftInfoSlide shiftSlide =
-        new ShiftInfoSlide(presentation.getYmd(), presentation.getShift(), ShiftSlideType.LASO);
+        new ShiftInfoSlide(presentation.getYmd(), presentation.getShift(), ShiftSlideType.UITF);
     shiftSlide.setOrderId(1L);
     shiftSlide.setPresentation(presentation);
 

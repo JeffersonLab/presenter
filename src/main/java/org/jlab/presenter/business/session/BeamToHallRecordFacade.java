@@ -10,7 +10,7 @@ import org.jlab.presenter.persistence.entity.BeamToHallRecord;
  */
 @Stateless
 public class BeamToHallRecordFacade extends AbstractFacade<BeamToHallRecord> {
-  @PersistenceContext(unitName = "presenterPU")
+  @PersistenceContext(unitName = "webappPU")
   private EntityManager em;
 
   @Override

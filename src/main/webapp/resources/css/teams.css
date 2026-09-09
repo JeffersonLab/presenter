@@ -1,0 +1,55 @@
+/* Prevent text highlighting across the entire row while dragging */
+.draggable-row {
+    user-select: none;
+    -webkit-user-select: none; /* Safari support */
+}
+
+/* Minimize the width of the handle column so it doesn't waste space */
+.handle-cell {
+    width: 40px;
+    text-align: center;
+    vertical-align: middle;
+    padding: 8px; /* Control spacing inside the cell */
+}
+
+/* The styled Up-Down Arrow Handle */
+.drag-handle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    /* Creates a comfortable touch/click target size */
+    width: 32px;
+    height: 32px;
+    border-radius: 6px;
+
+    /* Subtle, clean border and background */
+    border: 1px solid #e2e8f0;
+    background-color: #f8fafc;
+    color: #64748b;
+
+    font-size: 16px;
+    cursor: grab;
+    transition: all 0.2s ease;
+}
+
+/* Highlight the handle when hovering anywhere on that specific row */
+.draggable-row:hover .drag-handle {
+    border-color: #cbd5e1;
+    background-color: #f1f5f9;
+    color: #334155;
+}
+
+/* Active dragging state cues */
+.drag-handle:active {
+    cursor: grabbing;
+    background-color: #e2e8f0;
+    transform: scale(0.95);
+}
+
+/* Visual feedback for the row actively being moved */
+.draggable-row.dragging {
+    opacity: 0.4;
+    background-color: #f1f5f9;
+    border: 1px dashed #cbd5e1;
+}

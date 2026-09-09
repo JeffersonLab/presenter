@@ -1,4 +1,4 @@
-package org.jlab.presenter.presentation.controller;
+package org.jlab.presenter.presentation.controller.shiftlogs;
 
 import jakarta.ejb.EJB;
 import jakarta.servlet.ServletException;
@@ -10,16 +10,19 @@ import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
 import java.math.BigInteger;
 import java.text.ParseException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import org.jlab.presenter.business.session.CCPresentationFacade;
 import org.jlab.presenter.business.session.PresentationFacade;
-import org.jlab.presenter.business.session.UITFPresentationFacade;
 import org.jlab.presenter.business.util.TimeUtil;
-import org.jlab.presenter.persistence.entity.ShiftInfoSlide;
+import org.jlab.presenter.persistence.entity.BtaShiftInfoSlide;
+import org.jlab.presenter.persistence.entity.CCPresentation;
 import org.jlab.presenter.persistence.entity.Slide;
-import org.jlab.presenter.persistence.entity.UITFPresentation;
 import org.jlab.presenter.persistence.enumeration.PresentationType;
 import org.jlab.presenter.persistence.enumeration.Shift;
-import org.jlab.presenter.persistence.enumeration.ShiftSlideType;
 import org.jlab.presenter.presentation.util.ConvertAndValidateUtil;
 import org.jlab.presenter.presentation.util.PresentationMenuUtil;
 
@@ -27,12 +30,12 @@ import org.jlab.presenter.presentation.util.PresentationMenuUtil;
  * @author ryans
  */
 @WebServlet(
-    name = "UITFMenu",
-    urlPatterns = {"/uitf-menu"})
-public class UITFMenu extends HttpServlet {
+    name = "CebafShiftLogs",
+    urlPatterns = {"/shift-logs/cebaf"})
+public class CebafShiftLogs extends HttpServlet {
 
   @EJB PresentationFacade presentationFacade;
-  @EJB UITFPresentationFacade uitfPresentationFacade;
+  @EJB CCPresentationFacade ccPresentationFacade;
 
   /**
    * Handles the HTTP <code>GET</code> method.
@@ -48,23 +51,23 @@ public class UITFMenu extends HttpServlet {
 
     /* Note: We use a 'SECURE' cookie so session changes every request unless over SSL/TLS */
     HttpSession session = request.getSession(true);
-    Shift shift = (Shift) session.getAttribute("defaultShift");
-    Date date = (Date) session.getAttribute("defaultDate");
+    Shift ccShift = (Shift) session.getAttribute("ccShift");
+    Date ccDate = (Date) session.getAttribute("ccDate");
 
-    if (shift == null) {
-      shift = TimeUtil.getCurrentShift();
+    if (ccShift == null) {
+      ccShift = TimeUtil.getCurrentShift();
     }
 
-    if (date == null) {
-      date = TimeUtil.getCurrentYearMonthDay();
+    if (ccDate == null) {
+      ccDate = TimeUtil.getCurrentYearMonthDay();
     }
 
-    request.setAttribute("defaultDate", date);
-    request.setAttribute("defaultShift", shift);
+    request.setAttribute("defaultDate", ccDate);
+    request.setAttribute("defaultShift", ccShift);
 
     getServletConfig()
         .getServletContext()
-        .getRequestDispatcher("/WEB-INF/views/uitf-menu.jsp")
+        .getRequestDispatcher("/WEB-INF/views/shiftlogs/cebaf.jsp")
         .forward(request, response);
   }
 
@@ -109,32 +112,31 @@ public class UITFMenu extends HttpServlet {
     BigInteger presentationId = null;
 
     if (messages.isEmpty()) {
-      presentationId = uitfPresentationFacade.findIdByYmdAndShift(ymd, shift);
+      presentationId = ccPresentationFacade.findIdByYmdAndShift(ymd, shift);
 
       if (presentationId == null
-          && !presentationFacade.isAuthorized(PresentationType.UITF_PRESENTATION)) {
+          && !presentationFacade.isAuthorized(PresentationType.CC_PRESENTATION)) {
         messages.put(
-            "error",
-            "No presentation found for specified criteria.  Login as UITF Operator to create.");
+            "error", "No presentation found for specified criteria.  Login as CC to create.");
       }
     }
 
     if (!messages.isEmpty()) {
       getServletConfig()
           .getServletContext()
-          .getRequestDispatcher("/WEB-INF/views/uitf-menu.jsp")
+          .getRequestDispatcher("/WEB-INF/views/shiftlogs/cebaf.jsp")
           .forward(request, response);
     } else {
 
       /* Remember user selection */
       /* Note: We use a 'SECURE' cookie so session changes every request unless over SSL/TLS */
       HttpSession session = request.getSession(true);
-      session.setAttribute("defaultShift", shift);
-      session.setAttribute("defaultDate", ymd);
+      session.setAttribute("ccShift", shift);
+      session.setAttribute("ccDate", ymd);
 
       if (presentationId == null) {
 
-        UITFPresentation presentation = new UITFPresentation();
+        CCPresentation presentation = new CCPresentation();
         presentation.setYmd(ymd);
         presentation.setShift(shift);
 
@@ -152,13 +154,14 @@ public class UITFMenu extends HttpServlet {
   }
 
   public List<Slide> getNewShiftLogSlides(
-      HttpServletRequest request, HttpServletResponse response, UITFPresentation presentation)
+      HttpServletRequest request, HttpServletResponse response, CCPresentation presentation)
       throws ServletException, IOException {
     ArrayList<Slide> slides = new ArrayList<>();
 
     // Slide 1
-    ShiftInfoSlide shiftSlide =
-        new ShiftInfoSlide(presentation.getYmd(), presentation.getShift(), ShiftSlideType.UITF);
+    BtaShiftInfoSlide shiftSlide = new BtaShiftInfoSlide();
+    shiftSlide.setYmd(presentation.getYmd());
+    shiftSlide.setShift(presentation.getShift());
     shiftSlide.setOrderId(1L);
     shiftSlide.setPresentation(presentation);
 

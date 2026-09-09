@@ -361,7 +361,7 @@ class PDShowInfo extends ShowInfo {
 
   @Override
   public String getMenuUrl() {
-    return "pd-menu";
+    return "presentations";
   }
 
   @Override
@@ -411,7 +411,7 @@ class CCShowInfo extends ShowInfo {
 
   @Override
   public String getMenuUrl() {
-    return "cc-menu";
+    return "shift-logs/cebaf";
   }
 
   @Override
@@ -456,7 +456,7 @@ class LASOShowInfo extends ShowInfo {
 
   @Override
   public String getMenuUrl() {
-    return "laso-menu";
+    return "shift-logs/laso";
   }
 
   @Override
@@ -505,7 +505,7 @@ class LOShowInfo extends ShowInfo {
 
   @Override
   public String getMenuUrl() {
-    return "lo-menu";
+    return "shift-logs/lerf";
   }
 
   @Override
@@ -550,7 +550,7 @@ class UITFShowInfo extends ShowInfo {
 
   @Override
   public String getMenuUrl() {
-    return "uitf-menu";
+    return "shift-logs/uitf";
   }
 
   @Override

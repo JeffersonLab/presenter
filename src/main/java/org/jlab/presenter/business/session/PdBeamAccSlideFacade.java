@@ -10,7 +10,7 @@ import org.jlab.presenter.persistence.entity.PdBeamAccSlide;
  */
 @Stateless
 public class PdBeamAccSlideFacade extends AbstractFacade<PdBeamAccSlide> {
-  @PersistenceContext(unitName = "presenterPU")
+  @PersistenceContext(unitName = "webappPU")
   private EntityManager em;
 
   @Override

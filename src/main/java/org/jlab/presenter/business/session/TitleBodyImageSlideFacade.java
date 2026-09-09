@@ -10,7 +10,7 @@ import org.jlab.presenter.persistence.entity.TitleBodyImageSlide;
  */
 @Stateless
 public class TitleBodyImageSlideFacade extends AbstractFacade<TitleBodyImageSlide> {
-  @PersistenceContext(unitName = "presenterPU")
+  @PersistenceContext(unitName = "webappPU")
   private EntityManager em;
 
   @Override

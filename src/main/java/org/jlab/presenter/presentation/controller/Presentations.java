@@ -34,11 +34,11 @@ import org.jlab.presenter.presentation.util.PresentationMenuUtil;
  * @author ryans
  */
 @WebServlet(
-    name = "PDMenu",
-    urlPatterns = {"/pd-menu"})
-public class PDMenu extends HttpServlet {
+    name = "Presentations",
+    urlPatterns = {"/presentations"})
+public class Presentations extends HttpServlet {
 
-  private static final Logger logger = Logger.getLogger(PDMenu.class.getName());
+  private static final Logger logger = Logger.getLogger(Presentations.class.getName());
   @EJB PresentationFacade presentationFacade;
   @EJB PDPresentationFacade pdPresentationFacade;
   @EJB CCPresentationFacade ccPresentationFacade;
@@ -85,7 +85,7 @@ public class PDMenu extends HttpServlet {
 
     getServletConfig()
         .getServletContext()
-        .getRequestDispatcher("/WEB-INF/views/pd-menu.jsp")
+        .getRequestDispatcher("/WEB-INF/views/presentations.jsp")
         .forward(request, response);
   }
 
@@ -182,7 +182,7 @@ public class PDMenu extends HttpServlet {
 
       getServletConfig()
           .getServletContext()
-          .getRequestDispatcher("/WEB-INF/views/pd-menu.jsp")
+          .getRequestDispatcher("/WEB-INF/views/presentations.jsp")
           .forward(
               request,
               response); /*This is bad.  Should not forward from POST.   This POST should be done via AJAX*/
