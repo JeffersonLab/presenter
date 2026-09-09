@@ -37,8 +37,8 @@ public class Team implements Serializable {
   private String description;
 
   @NotNull
-  @Column(name = "DIRECTORY_GROUP_NAME", nullable = false, length = 64)
-  private String directoryGroupName;
+  @Column(name = "DIRECTORY_ROLE", nullable = false, length = 64)
+  private String directoryRole;
 
   @Basic(optional = false)
   @Column(name = "WEIGHT", nullable = false, precision = 22, scale = 0)
@@ -93,12 +93,12 @@ public class Team implements Serializable {
     this.archived = archived;
   }
 
-  public String getDirectoryGroupName() {
-    return directoryGroupName;
+  public String getDirectoryRole() {
+    return directoryRole;
   }
 
-  public void setDirectoryGroupName(String directoryGroupName) {
-    this.directoryGroupName = directoryGroupName;
+  public void setDirectoryRole(String directoryRole) {
+    this.directoryRole = directoryRole;
   }
 
   public List<User> getMembers() {

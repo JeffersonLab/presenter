@@ -39,7 +39,7 @@ public class TeamFacade extends AbstractFacade<Team> {
 
     if (team != null) {
       UserAuthorizationService userService = UserAuthorizationService.getInstance();
-      List<User> userList = userService.getUsersInRole(team.getDirectoryGroupName());
+      List<User> userList = userService.getUsersInRole(team.getDirectoryRole());
       team.setMembers(userList);
     }
 
@@ -76,9 +76,12 @@ public class TeamFacade extends AbstractFacade<Team> {
     }
 
     List<Order> orders = new ArrayList<>();
-    Path p0 = root.get("name");
+    Path p0 = root.get("weight");
     Order o0 = cb.asc(p0);
     orders.add(o0);
+    Path p1 = root.get("name");
+    Order o1 = cb.asc(p1);
+    orders.add(o1);
     cq.orderBy(orders);
     return getEntityManager()
         .createQuery(cq)
@@ -93,7 +96,7 @@ public class TeamFacade extends AbstractFacade<Team> {
 
     for (Team team : teamList) {
       UserAuthorizationService userService = UserAuthorizationService.getInstance();
-      List<User> userList = userService.getUsersInRole(team.getDirectoryGroupName());
+      List<User> userList = userService.getUsersInRole(team.getDirectoryRole());
       team.setMembers(userList);
     }
 
