@@ -13,7 +13,7 @@ insert into PRESENTER_OWNER.TEAM (TEAM_ID, NAME, DESCRIPTION, DIRECTORY_ROLE, WE
 insert into PRESENTER_OWNER.TEAM (TEAM_ID, NAME, DESCRIPTION, DIRECTORY_ROLE, WEIGHT, ARCHIVED_YN) values (PRESENTER_OWNER.TEAM_ID.nextval, 'Safety Systems', 'Safety group', 'ssg', 7, 'N');
 insert into PRESENTER_OWNER.TEAM (TEAM_ID, NAME, DESCRIPTION, DIRECTORY_ROLE, WEIGHT, ARCHIVED_YN) values (PRESENTER_OWNER.TEAM_ID.nextval, 'Survey & Alignment', 'Alignment group', 'alignment', 8, 'N');
 insert into PRESENTER_OWNER.TEAM (TEAM_ID, NAME, DESCRIPTION, DIRECTORY_ROLE, WEIGHT, ARCHIVED_YN) values (PRESENTER_OWNER.TEAM_ID.nextval, 'Accelerator Computing', 'Accelerator division computing group', 'acg', 9, 'N');
-insert into PRESENTER_OWNER.TEAM (TEAM_ID, NAME, DESCRIPTION, DIRECTORY_ROLE, WEIGHT, ARCHIVED_YN) values (PRESENTER_OWNER.TEAM_ID.nextval, 'Cyrogenics', 'Cryo group', 'cryo', 10, 'N');
+insert into PRESENTER_OWNER.TEAM (TEAM_ID, NAME, DESCRIPTION, DIRECTORY_ROLE, WEIGHT, ARCHIVED_YN) values (PRESENTER_OWNER.TEAM_ID.nextval, 'Cryogenics', 'Cryo group', 'cryo', 10, 'N');
 insert into PRESENTER_OWNER.TEAM (TEAM_ID, NAME, DESCRIPTION, DIRECTORY_ROLE, WEIGHT, ARCHIVED_YN) values (PRESENTER_OWNER.TEAM_ID.nextval, 'F&O', 'Facilities group', 'facilities', 11, 'N');
 insert into PRESENTER_OWNER.TEAM (TEAM_ID, NAME, DESCRIPTION, DIRECTORY_ROLE, WEIGHT, ARCHIVED_YN) values (PRESENTER_OWNER.TEAM_ID.nextval, 'ES&H', 'ES&H group', 'health', 12, 'N');
 insert into PRESENTER_OWNER.TEAM (TEAM_ID, NAME, DESCRIPTION, DIRECTORY_ROLE, WEIGHT, ARCHIVED_YN) values (PRESENTER_OWNER.TEAM_ID.nextval, 'Hall A (Moller Install)', 'Physics division Hall A', 'halla', 13, 'N');
