@@ -33,7 +33,7 @@ docker compose up
 http://localhost:8080/presenter
 ```
 
-**Note**: Login with demo username "jdoe" and password "password".
+**Note**: Login with demo username "jdoe" and password "password".  Other demo accounts, all with password "password": "user1" (no special role), "user2" (Program Deputy, role `pd`), and "user3" (Crew Chief, role `cc`).  "jdoe" has `presenter-admin`, which may edit every kind of presentation.
 
 ### Ports
 The containers publish these ports on the host, listening only on its local address (127.0.0.1), so other computers can't reach the demo database, accounts, and management consoles.  To use them from another computer, forward them over SSH, such as `ssh -N -L 8443:localhost:8443 -L 8081:localhost:8081 <host>` for the app and Keycloak.  If another project already uses some of them, or you run a second copy of the demo, set other ports in a `.env` file next to `compose.yaml`, which Compose reads, or in the environment:
