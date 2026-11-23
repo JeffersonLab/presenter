@@ -6,17 +6,19 @@ project is, its settings, and how to set it up.
 ## Development
 
 - Set up: JDK 17 or 21 and Docker; use `./gradlew`, which pins Gradle, and `build.gradle` pins
-  Spotless and its google-java-format, so local checks match CI. Services: Oracle (ports 1521
-  and 5500), Keycloak (8081 and 9991), Puppet Show (3000), resize (8082), and presenter built
-  from the working tree (8080, 8443 and 9990), all by `build.yaml`:
+  Spotless and its google-java-format, so local checks match CI. Services: Oracle (default
+  ports 1521 and 5500), Keycloak (8081 and 9991), Puppet Show (3000), resize (8082), and
+  presenter built from the working tree (8080, 8443 and 9990), all by `build.yaml`:
   `docker compose -f build.yaml up -d --build` (under a minute once the images are pulled, then
   about a minute for Oracle's setup). Plain `docker compose up` runs an old published image
   instead, not your working tree.
-- The container names (`presenter-oracle`, `presenter-keycloak`, `presenter-puppet`,
-  `presenter-resize`, `presenter-dev`) and host ports are fixed, with no settings, and other
-  JLab apps use the same ports: only one copy of the stack runs in a VM at a time. Check
-  `ss -ltnp` and `docker ps` first; if a name or port is taken, never stop what holds it: ask
-  the person. Stop your stack when you are done with it.
+- Compose names the containers after the worktree's directory, and every host port has a
+  `PRESENTER_*_PORT` setting, listed in README's [Ports](README.md#ports) section; other JLab
+  apps use the same defaults. Give each worktree free ports in its own `.env` (ignored by git):
+  check `ss -ltnp` and `docker ps` first, and never stop what holds a port. The app's and
+  Keycloak's login URLs follow `PRESENTER_HTTPS_PORT` and `PRESENTER_KEYCLOAK_PORT`. Use the
+  same directory, files and `.env` for tests and cleanup, and stop your stack when you are done
+  with it.
 - On every change, run `./gradlew build` (about 10 seconds). It compiles for Java 17, runs
   `spotlessCheck` (`./gradlew spotlessApply` formats) and builds `build/libs/presenter.war`. CI
   runs the same build.
@@ -26,7 +28,7 @@ project is, its settings, and how to set it up.
 - Before opening a pull request, for a change to behavior or pages, rebuild and restart the app,
   since the container runs the image and not your working tree:
   `docker compose -f build.yaml up -d --build presenter`. Then check the change in a browser at
-  `https://localhost:8443/presenter`, and look for errors in
+  `https://localhost:<PRESENTER_HTTPS_PORT>/presenter` (default 8443), and look for errors in
   `docker compose -f build.yaml logs presenter`.
 - Test data: `container/oracle/initdb.d` builds the schema, with no rows, when the Oracle
   container is created. `docker compose -f build.yaml down -v` deletes the database; the next
