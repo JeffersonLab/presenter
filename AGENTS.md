@@ -35,10 +35,12 @@ project is, its settings, and how to set it up.
   `up` rebuilds it. Schema changes go there; there are no migrations, so give the SQL that
   existing databases need in the pull request.
 - Accounts (Keycloak `test-realm`, password `password`): `jdoe` and `tbrown` have
-  `presenter-admin`, which may edit every kind of presentation; `jadams` and `jsmith` have only
-  `presenter-user`, which may not edit PD (role `pd`) or crew chief (role `cc`) presentations.
-  No account has `pd` or `cc`: `container/keycloak/initdb.d/03_customize.sh`, which would add
-  `cc` and `user1` to `user3`, is not executable, so Keycloak skips it.
+  `presenter-admin`, which may edit every kind of presentation; `jadams`, `jsmith` and `user1`
+  have only `presenter-user`, which may not edit PD (role `pd`) or crew chief (role `cc`)
+  presentations; `user2` also has `pd` and `user3` also has `cc`.
+  `container/keycloak/initdb.d/03_customize.sh` adds `pd`, `cc` and `user1` to `user3`, when the
+  Keycloak container is created; Keycloak runs it only if it is executable, so keep its mode
+  `100755`.
 - Outside systems: Keycloak (login), Oracle, Puppet Show (PDF export) and resize (image
   upload) run as containers. The rest have no stand-in. The image's `DTM_URL`, `BTM_URL`,
   `CALENDAR_URL`, `WORKMAP_URL`, `WEATHER_URL`, `WHITEBOARD_URL` and `POWER_URL` name JLab's

@@ -6,6 +6,8 @@
 echo "----------------"
 echo "| Create Roles |"
 echo "----------------"
+KC_ROLE_NAME=pd
+create_role
 KC_ROLE_NAME=cc
 create_role
 
@@ -28,6 +30,8 @@ KC_LASTNAME=Williams
 KC_EMAIL=user2@example.com
 create_user
 KC_ROLE_NAME=${KC_RESOURCE}-user
+assign_role
+KC_ROLE_NAME=pd
 assign_role
 
 KC_USERNAME=user3
