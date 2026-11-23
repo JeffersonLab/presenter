@@ -43,7 +43,6 @@ ENV BACKEND_SERVER_URL='http://presenter:8080'
 ENV FRONTEND_SERVER_URL='https://localhost:8443'
 
 # App specific
-ENV LOGBOOK_SERVER_URL='https://logbooks.jlab.org'
 ENV DTM_URL='https://ace.jlab.org/dtm'
 ENV BTM_URL='https://ace.jlab.org/btm'
 ENV RESIZE_URL='http://resize:8080/resize'
