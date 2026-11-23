@@ -10,7 +10,7 @@ import org.jlab.presenter.persistence.entity.AccessRecord;
  */
 @Stateless
 public class AccessRecordFacade extends AbstractFacade<AccessRecord> {
-  @PersistenceContext(unitName = "presenterPU")
+  @PersistenceContext(unitName = "webappPU")
   private EntityManager em;
 
   @Override

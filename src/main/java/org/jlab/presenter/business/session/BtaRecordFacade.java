@@ -10,7 +10,7 @@ import org.jlab.presenter.persistence.entity.BtaRecord;
  */
 @Stateless
 public class BtaRecordFacade extends AbstractFacade<BtaRecord> {
-  @PersistenceContext(unitName = "presenterPU")
+  @PersistenceContext(unitName = "webappPU")
   private EntityManager em;
 
   @Override

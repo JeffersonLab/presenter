@@ -7,6 +7,7 @@ description = "Presentation app"
 group = 'org.jlab'
 version = new File("${projectDir}/VERSION").text.trim()
 ext.version = project.version
+ext.smoothnessVersion = '5.2.0'
 ext.releaseDate = new Date().format('MMM dd yyyy')
 
 tasks.withType(JavaCompile).configureEach {
@@ -18,6 +19,9 @@ repositories {
     mavenCentral()
 }
 dependencies {
+    // No matter what smoothness weblib MUST be included in WAR (https://github.com/JeffersonLab/smoothness/issues/4)
+    implementation "org.jlab:smoothness-weblib:${smoothnessVersion}"
+
     // Java 11 / Java EE 8 oddly doesn't support POSTING multipart/form-data
     implementation 'org.apache.httpcomponents:httpmime:4.5.14'
 
@@ -45,6 +49,9 @@ war {
         }
         filter {
             String line -> line.replaceAll("@RELEASE_DATE@", releaseDate)
+        }
+        filter {
+            String line -> line.replaceAll("@SMOOTHNESS_VERSION@", smoothnessVersion)
         }
     }
 }

@@ -10,7 +10,7 @@ import org.jlab.presenter.persistence.entity.PresentationLog;
  */
 @Stateless
 public class PresentationLogFacade extends AbstractFacade<PresentationLog> {
-  @PersistenceContext(unitName = "presenterPU")
+  @PersistenceContext(unitName = "webappPU")
   private EntityManager em;
 
   @Override

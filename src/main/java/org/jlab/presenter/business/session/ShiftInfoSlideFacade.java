@@ -10,7 +10,7 @@ import org.jlab.presenter.persistence.entity.ShiftInfoSlide;
  */
 @Stateless
 public class ShiftInfoSlideFacade extends AbstractFacade<ShiftInfoSlide> {
-  @PersistenceContext(unitName = "presenterPU")
+  @PersistenceContext(unitName = "webappPU")
   private EntityManager em;
 
   @Override

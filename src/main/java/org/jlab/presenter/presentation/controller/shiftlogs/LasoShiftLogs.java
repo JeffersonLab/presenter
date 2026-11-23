@@ -1,4 +1,4 @@
-package org.jlab.presenter.presentation.controller;
+package org.jlab.presenter.presentation.controller.shiftlogs;
 
 import jakarta.ejb.EJB;
 import jakarta.servlet.ServletException;
@@ -15,14 +15,15 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import org.jlab.presenter.business.session.CCPresentationFacade;
+import org.jlab.presenter.business.session.LASOPresentationFacade;
 import org.jlab.presenter.business.session.PresentationFacade;
 import org.jlab.presenter.business.util.TimeUtil;
-import org.jlab.presenter.persistence.entity.BtaShiftInfoSlide;
-import org.jlab.presenter.persistence.entity.CCPresentation;
+import org.jlab.presenter.persistence.entity.LASOPresentation;
+import org.jlab.presenter.persistence.entity.ShiftInfoSlide;
 import org.jlab.presenter.persistence.entity.Slide;
 import org.jlab.presenter.persistence.enumeration.PresentationType;
 import org.jlab.presenter.persistence.enumeration.Shift;
+import org.jlab.presenter.persistence.enumeration.ShiftSlideType;
 import org.jlab.presenter.presentation.util.ConvertAndValidateUtil;
 import org.jlab.presenter.presentation.util.PresentationMenuUtil;
 
@@ -30,12 +31,12 @@ import org.jlab.presenter.presentation.util.PresentationMenuUtil;
  * @author ryans
  */
 @WebServlet(
-    name = "CCMenu",
-    urlPatterns = {"/cc-menu"})
-public class CCMenu extends HttpServlet {
+    name = "LasoShiftLogs",
+    urlPatterns = {"/shift-logs/laso"})
+public class LasoShiftLogs extends HttpServlet {
 
   @EJB PresentationFacade presentationFacade;
-  @EJB CCPresentationFacade ccPresentationFacade;
+  @EJB LASOPresentationFacade lasoPresentationFacade;
 
   /**
    * Handles the HTTP <code>GET</code> method.
@@ -51,23 +52,23 @@ public class CCMenu extends HttpServlet {
 
     /* Note: We use a 'SECURE' cookie so session changes every request unless over SSL/TLS */
     HttpSession session = request.getSession(true);
-    Shift ccShift = (Shift) session.getAttribute("ccShift");
-    Date ccDate = (Date) session.getAttribute("ccDate");
+    Shift lasoShift = (Shift) session.getAttribute("lasoShift");
+    Date lasoDate = (Date) session.getAttribute("lasoDate");
 
-    if (ccShift == null) {
-      ccShift = TimeUtil.getCurrentShift();
+    if (lasoShift == null) {
+      lasoShift = TimeUtil.getCurrentShift();
     }
 
-    if (ccDate == null) {
-      ccDate = TimeUtil.getCurrentYearMonthDay();
+    if (lasoDate == null) {
+      lasoDate = TimeUtil.getCurrentYearMonthDay();
     }
 
-    request.setAttribute("defaultDate", ccDate);
-    request.setAttribute("defaultShift", ccShift);
+    request.setAttribute("defaultDate", lasoDate);
+    request.setAttribute("defaultShift", lasoShift);
 
     getServletConfig()
         .getServletContext()
-        .getRequestDispatcher("/WEB-INF/views/cc-menu.jsp")
+        .getRequestDispatcher("/WEB-INF/views/shiftlogs/laso.jsp")
         .forward(request, response);
   }
 
@@ -112,31 +113,31 @@ public class CCMenu extends HttpServlet {
     BigInteger presentationId = null;
 
     if (messages.isEmpty()) {
-      presentationId = ccPresentationFacade.findIdByYmdAndShift(ymd, shift);
+      presentationId = lasoPresentationFacade.findIdByYmdAndShift(ymd, shift);
 
       if (presentationId == null
-          && !presentationFacade.isAuthorized(PresentationType.CC_PRESENTATION)) {
+          && !presentationFacade.isAuthorized(PresentationType.LASO_PRESENTATION)) {
         messages.put(
-            "error", "No presentation found for specified criteria.  Login as CC to create.");
+            "error", "No presentation found for specified criteria.  Login as LASO to create.");
       }
     }
 
     if (!messages.isEmpty()) {
       getServletConfig()
           .getServletContext()
-          .getRequestDispatcher("/WEB-INF/views/cc-menu.jsp")
+          .getRequestDispatcher("/WEB-INF/views/shiftlogs/laso.jsp")
           .forward(request, response);
     } else {
 
       /* Remember user selection */
       /* Note: We use a 'SECURE' cookie so session changes every request unless over SSL/TLS */
       HttpSession session = request.getSession(true);
-      session.setAttribute("ccShift", shift);
-      session.setAttribute("ccDate", ymd);
+      session.setAttribute("lasoShift", shift);
+      session.setAttribute("lasoDate", ymd);
 
       if (presentationId == null) {
 
-        CCPresentation presentation = new CCPresentation();
+        LASOPresentation presentation = new LASOPresentation();
         presentation.setYmd(ymd);
         presentation.setShift(shift);
 
@@ -154,14 +155,13 @@ public class CCMenu extends HttpServlet {
   }
 
   public List<Slide> getNewShiftLogSlides(
-      HttpServletRequest request, HttpServletResponse response, CCPresentation presentation)
+      HttpServletRequest request, HttpServletResponse response, LASOPresentation presentation)
       throws ServletException, IOException {
     ArrayList<Slide> slides = new ArrayList<>();
 
     // Slide 1
-    BtaShiftInfoSlide shiftSlide = new BtaShiftInfoSlide();
-    shiftSlide.setYmd(presentation.getYmd());
-    shiftSlide.setShift(presentation.getShift());
+    ShiftInfoSlide shiftSlide =
+        new ShiftInfoSlide(presentation.getYmd(), presentation.getShift(), ShiftSlideType.LASO);
     shiftSlide.setOrderId(1L);
     shiftSlide.setPresentation(presentation);
 

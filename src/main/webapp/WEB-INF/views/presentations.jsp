@@ -2,9 +2,10 @@
 <%@taglib prefix="c" uri="jakarta.tags.core"%>
 <%@taglib prefix="fn" uri="jakarta.tags.functions"%>
 <%@taglib prefix="fmt" uri="jakarta.tags.fmt"%>
+<%@taglib prefix="s" uri="jlab.tags.smoothness"%>
 <%@taglib prefix="t" tagdir="/WEB-INF/tags"%> 
 <c:set var="title" value="Program Deputy (PD) Presentations"/>
-<t:page title="${title}">  
+<s:page title="${title}">
     <jsp:attribute name="stylesheets">
         <style type="text/css">
             #recent-table {
@@ -45,7 +46,7 @@
     <jsp:body>
         <section>
             <div>
-                <form action="pd-menu" method="post">
+                <form action="presentations" method="post">
                     <dl>                   
                         <dt><label for="type">Presentation Type</label></dt>
                         <dd>
@@ -108,7 +109,7 @@
                                         <td><c:out value="${recent.pdPresentationType}"/></td>
                                         <td><fmt:formatDate pattern="yyyy-MM-dd" value="${recent.deliveryYmd}" var="fmtDelivery"/><c:out value="${fmtDelivery}"/></td>
                                         <td>
-                                            <form method="post" action="pd-menu">
+                                            <form method="post" action="presentations">
                                                 <input type="hidden" name="type" value="${recent.pdPresentationType}"/>
                                                 <input type="hidden" name="date" value="${fmtDelivery}"/>
                                                 <a class="open-link" href="#">Open</a>
@@ -116,7 +117,7 @@
                                         </td>
                                         <td>
                                             <c:if test="${pageContext.request.isUserInRole('pd')}">
-                                                <form method="post" action="pd-menu">
+                                                <form method="post" action="presentations">
                                                     <input type="hidden" name="type" value="${recent.pdPresentationType}"/>
                                                     <input type="hidden" name="date" value="${fmtDelivery}"/>
                                                     <button type="submit" value="Delete" name="action" onclick="return confirm('Are you sure you want to delete this ${recent.pdPresentationType} ${fmtDelivery} presentation?')">Delete</button>
@@ -151,4 +152,4 @@
             </div>                
         </section>
     </jsp:body>         
-</t:page>      
+</s:page>

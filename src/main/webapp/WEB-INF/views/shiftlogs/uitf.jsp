@@ -3,8 +3,8 @@
 <%@taglib prefix="fn" uri="jakarta.tags.functions"%>
 <%@taglib prefix="fmt" uri="jakarta.tags.fmt"%>
 <%@taglib prefix="t" tagdir="/WEB-INF/tags"%> 
-<c:set var="title" value="Crew Chief (CC) Presentations"/>
-<t:page title="${title}">  
+<c:set var="title" value="UITF"/>
+<t:shift-logs-page title="${title}">
     <jsp:attribute name="stylesheets">
         <style type="text/css">
             #notification-bar {
@@ -25,8 +25,8 @@
     <jsp:body>
         <section>
             <div>
-                <h3>CEBAF SHIFT LOG</h3>
-                <form action="cc-menu" method="post">
+                <h3><c:out value="${title}"/></h3>
+                <form action="uitf" method="post">
                     <dl>                   
                         <dt><label for="date">Date</label></dt>
                         <dd>
@@ -66,4 +66,4 @@
             </div>
         </section>
     </jsp:body>         
-</t:page>      
+</t:shift-logs-page>

@@ -3,8 +3,8 @@
 <%@taglib prefix="fn" uri="jakarta.tags.functions"%>
 <%@taglib prefix="fmt" uri="jakarta.tags.fmt"%>
 <%@taglib prefix="t" tagdir="/WEB-INF/tags"%> 
-<c:set var="title" value="Lead Accelerator Scientist On-shift (LASO) Presentations"/>
-<t:page title="${title}">  
+<c:set var="title" value="CEBAF"/>
+<t:shift-logs-page title="${title}">
     <jsp:attribute name="stylesheets">
         <style type="text/css">
             #notification-bar {
@@ -15,17 +15,18 @@
                 text-align: center;
                 font-size: 24px;
                 box-shadow: 0 8px 8px #979797;
-                z-index: 1000;    
+                z-index: 1000;  
                 font-family: "Verdana",sans-serif;
             }     
-        </style>        
+        </style>
     </jsp:attribute>
     <jsp:attribute name="scripts">              
     </jsp:attribute>            
     <jsp:body>
         <section>
             <div>
-                <form action="laso-menu" method="post">
+                <h3><c:out value="${title}"/></h3>
+                <form action="cebaf" method="post">
                     <dl>                   
                         <dt><label for="date">Date</label></dt>
                         <dd>
@@ -65,4 +66,4 @@
             </div>
         </section>
     </jsp:body>         
-</t:page>      
+</t:shift-logs-page>
